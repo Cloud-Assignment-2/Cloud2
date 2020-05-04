@@ -16,3 +16,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::view('contact', 'contact');
+
+Route::view('booking', 'booking');
+
+Route::view('login', 'login');
+
+Route::view('cp', 'cp');
+
+Route::view('admin', 'admin');
+
+
+Route::get('/location', 'LocationController@index');
