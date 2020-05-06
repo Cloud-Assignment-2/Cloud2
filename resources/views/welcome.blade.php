@@ -21,7 +21,8 @@
 
     var map, infoWindow;
 
-    function initMap() {
+    function initMap()
+	{
         map = new google.maps.Map(document.getElementById('map'), {
             center: {
                 lat: -37.806,
@@ -32,7 +33,8 @@
         infoWindow = new google.maps.InfoWindow;
 
         // Try HTML5 geolocation.
-        if (navigator.geolocation) {
+        if (navigator.geolocation)
+		{
             navigator.geolocation.getCurrentPosition(function(position) {
                 console.log(position.coords.latitude);
 
@@ -51,13 +53,16 @@
             }, function() {
                 handleLocationError(true, infoWindow, map.getCenter());
             });
-        } else {
+        }
+		else
+		{
             // Browser doesn't support Geolocation
             handleLocationError(false, infoWindow, map.getCenter());
         }
     }
 
-    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    function handleLocationError(browserHasGeolocation, infoWindow, pos)
+	{
         infoWindow.setPosition(pos);
         infoWindow.setContent(browserHasGeolocation ?
             'Error: The Geolocation service failed.' :
@@ -74,15 +79,6 @@
 
     <!-- Wrapper -->
     <div id="wrapper">
-
-        <style>
-        #title {
-            font-size: 30px;
-
-        }
-        </style>
-
-
 
 
         <!-- Banner -->
@@ -128,12 +124,9 @@
             </nav>
         </div>
 
-
-
-
-
-
     </div>
+	
+	<div id="map" style="height:800px;"></div>
 
     <!-- Scripts -->
     <script src="assets/js/jquery.min.js"></script>
