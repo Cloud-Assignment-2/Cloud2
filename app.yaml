@@ -1,0 +1,11 @@
+runtime: php55
+api_version: 1
+threadsafe: true
+
+handlers:
+
+- url: /(.+\.php)$
+  script: \1
+
+- url: /.*
+  script: login.php
