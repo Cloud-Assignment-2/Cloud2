@@ -8,7 +8,7 @@ handlers:
   script: \1
 
 - url: /.*
-  script: login.php
+  script: index.php
 
 env_variables:
   ## Put production environment variables here.
