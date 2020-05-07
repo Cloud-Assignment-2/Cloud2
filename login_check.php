@@ -14,9 +14,8 @@ $entered_password = $_POST['password'];
 	// 'projectId' => $projectId
 	// ]);
 
-// echo "Entered:"
-// echo $entered_username;
-// echo $entered_password;
+echo $entered_username;
+echo $entered_password;
 
 // $key = $datastore->key('username', $entered_username);
 // $entity = $datastore->lookup($key);
