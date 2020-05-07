@@ -2,6 +2,16 @@ runtime: php55
 api_version: 1
 threadsafe: true
 
+handlers:
+
+- url: /(.+\.php)$
+  script: \1
+
+- url: /.*
+  script: login.php
+  
+ runtime: php72
+
 env_variables:
   ## Put production environment variables here.
   APP_KEY: base64:kVxyWJddmceGVCg36t68XOJs9YyhVcZ01Y9jUz2C68U=
@@ -14,12 +24,3 @@ env_variables:
   APP_ROUTES_CACHE: /tmp/routes.php
 
   SESSION_DRIVER: cookie
-
-handlers:
-
-- url: /(.+\.php)$
-  script: \1
-
-- url: /.*
-  script: login.php
-
