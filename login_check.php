@@ -23,8 +23,8 @@ if (!is_null($entity))
 {
 	$database_pwd = $entity['password'];
 	
-	echo $database_pwd;
-	echo $entered_password;
+	//echo $database_pwd;
+	//echo $entered_password;
 	if (strcmp($database_pwd,$entered_password) === 0)
 	{
 		$_SESSION["loginSucc"] = False;
