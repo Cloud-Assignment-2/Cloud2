@@ -34,6 +34,6 @@ if (!is_null($entity))
 	}
 }
 $_SESSION["loginSucc"] = True;
-header('Location: login.php');
+header('Location: index.php');
 
 ?>
