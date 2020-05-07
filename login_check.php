@@ -10,9 +10,9 @@ require __DIR__ . '/vendor/autoload.php';
 use Google\Cloud\Datastore\DatastoreClient;
 
 $projectId = 'fitness-tracker-276108';
-$datastore = new DatastoreClient([
-'projectId' => $projectId
-]);
+// $datastore = new DatastoreClient([
+// 'projectId' => $projectId
+// ]);
 
 echo "Entered:"
 echo $entered_username;
