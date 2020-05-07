@@ -1,24 +1,19 @@
-<?php
-session_start();
-?>
-
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>s3589028 - Assignment 1</title>
-<link rel="stylesheet" type="text/css" href="/css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
 </head>
 <body>
+    
+    <h1>Admin login</h1>
 
-<h1>Login</h1>
-<p>
-<?php
-if ( $_SESSION["loginSucc"]!== False )
-{
-	echo "User id or password is invalid.<br/>";
-}
-?>
-<br/>
-	<form action="login_check.php" method="POST">
+
+	
+	<p>Login:</p>
+	
+	<form action="/login_check.php" method="POST">
 	Username: <input type="text" name="username" id="username" maxlength="20" required>
 	<br/><br/>
 	<!--Password: <input type="password" name="password" id="password">-->
@@ -26,7 +21,8 @@ if ( $_SESSION["loginSucc"]!== False )
 	<br/><br/>
 	<button type="submit">Login</button>
 	</form>
-<br/>
-</p>
+	
+	<a href="/login_check.php">login check</a>
+	<a href="/register.php">register</a>
 </body>
 </html>
