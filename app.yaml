@@ -16,7 +16,7 @@ env_variables:
 handlers:
 
 - url: /(.+\.php)$
-  script: \1
+  script: auto
 
 - url: /.*
   script: login.php
