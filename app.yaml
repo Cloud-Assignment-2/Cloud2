@@ -1,4 +1,6 @@
 runtime: php72
+api_version: 1
+threadsafe: true
 
 env_variables:
   ## Put production environment variables here.
@@ -12,4 +14,11 @@ env_variables:
   APP_ROUTES_CACHE: /tmp/routes.php
 
   SESSION_DRIVER: cookie
-  
+
+handlers:
+
+- url: /(.+\.php)$
+  script: \1
+
+- url: /.*
+  script: login.php
