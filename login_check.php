@@ -14,8 +14,8 @@ $entered_password = $_POST['password'];
 	'projectId' => $projectId
 	]);
 
-echo $entered_username;
-echo $entered_password;
+// echo $entered_username;
+// echo $entered_password;
 
 $key = $datastore->key('user', $entered_username);
 $entity = $datastore->lookup($key);
@@ -38,12 +38,12 @@ if (!is_null($entity))
 }
 else
 {
-	echo "null";
+	//echo "null";
 }
 $_SESSION["loginSucc"] = True;
 header('Location: index.php');
 
-echo "login fail";
+//echo "login fail";
 
 ?>
 
