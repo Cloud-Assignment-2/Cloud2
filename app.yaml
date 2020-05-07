@@ -1,6 +1,5 @@
 runtime: php72
 api_version: 1
-threadsafe: true
 
 env_variables:
   ## Put production environment variables here.
