@@ -26,6 +26,10 @@ if ( $_SESSION["loginSucc"]!== False )
 	<br/><br/>
 	<button type="submit">Login</button>
 	</form>
+	
+	<p>Debug account: admin, admin.<\p>
+	
+	<a href="/register.php">register</a>
 <br/>
 </p>
 </body>
