@@ -18,29 +18,29 @@ echo "Entered:"
 echo $entered_username;
 echo $entered_password;
 
-$key = $datastore->key('username', $entered_username);
-$entity = $datastore->lookup($key);
-if (!is_null($entity))
-{
-	$database_pwd = $entity['password'];
+// $key = $datastore->key('username', $entered_username);
+// $entity = $datastore->lookup($key);
+// if (!is_null($entity))
+// {
+	// $database_pwd = $entity['password'];
 	
-	echo $database_pwd;
-	echo $entered_password;
-	if (strcmp($database_pwd,$entered_password) === 0)
-	{
-		$_SESSION["loginSucc"] = False;
-			// save name and key for later
-		$_SESSION["login_id"] = $entered_username;
-		$_SESSION["login_name"] = $entity['name'];
-		// password is correct, redirect to main page
-		//header('Location: main.php');
-		exit();
-	}
-}
-else
-{
-	echo "null";
-}
+	// echo $database_pwd;
+	// echo $entered_password;
+	// if (strcmp($database_pwd,$entered_password) === 0)
+	// {
+		// $_SESSION["loginSucc"] = False;
+			// // save name and key for later
+		// $_SESSION["login_id"] = $entered_username;
+		// $_SESSION["login_name"] = $entity['name'];
+		// // password is correct, redirect to main page
+		// //header('Location: main.php');
+		// exit();
+	// }
+// }
+// else
+// {
+	// echo "null";
+// }
 $_SESSION["loginSucc"] = True;
 //header('Location: index.php');
 
