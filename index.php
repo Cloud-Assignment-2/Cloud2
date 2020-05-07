@@ -4,7 +4,7 @@ session_start();
 
 <html>
 <head>
-<title>s3589028 - Assignment 1</title>
+<title>Fitness Tracker - Login</title>
 <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
@@ -27,7 +27,7 @@ if ( $_SESSION["loginSucc"]!== False )
 	<button type="submit">Login</button>
 	</form>
 	
-	<p>Debug account: admin, admin.<\p>
+	<p>Debug account: admin, admin.</p>
 	
 	<a href="/register.php">register</a>
 <br/>

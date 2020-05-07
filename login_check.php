@@ -9,7 +9,7 @@ $entered_password = $_POST['password'];
 require __DIR__ . '/vendor/autoload.php';
 use Google\Cloud\Datastore\DatastoreClient;
 
-$projectId = 'cloud-assignment1-part2-272304';
+$projectId = 'fitness-tracker-276108';
 $datastore = new DatastoreClient([
 'projectId' => $projectId
 ]);
