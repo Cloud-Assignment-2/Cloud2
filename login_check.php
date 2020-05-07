@@ -20,8 +20,8 @@ if (!is_null($entity))
 {
 	$database_pwd = $entity['password'];
 	
-	//echo $database_pwd;
-	//echo $entered_password;
+	echo $database_pwd;
+	echo $entered_password;
 	if (strcmp($database_pwd,$entered_password) === 0)
 	{
 		$_SESSION["loginSucc"] = False;
@@ -29,11 +29,13 @@ if (!is_null($entity))
 		$_SESSION["login_id"] = $entered_username;
 		$_SESSION["login_name"] = $entity['name'];
 		// password is correct, redirect to main page
-		header('Location: main.php');
+		//header('Location: main.php');
 		exit();
 	}
 }
 $_SESSION["loginSucc"] = True;
-header('Location: index.php');
+//header('Location: index.php');
+
+echo "login fail";
 
 ?>
