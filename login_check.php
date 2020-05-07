@@ -6,10 +6,10 @@ $entered_username = $_POST['username'];
 //Receive password from client side
 $entered_password = $_POST['password'];
 
-require __DIR__ . '/vendor/autoload.php';
-use Google\Cloud\Datastore\DatastoreClient;
+// require __DIR__ . '/vendor/autoload.php';
+// use Google\Cloud\Datastore\DatastoreClient;
 
-$projectId = 'fitness-tracker-276108';
+// $projectId = 'fitness-tracker-276108';
 // $datastore = new DatastoreClient([
 // 'projectId' => $projectId
 // ]);
