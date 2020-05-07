@@ -18,7 +18,7 @@ if ( $_SESSION["loginSucc"]!== False )
 }
 ?>
 <br/>
-	<form action="/login_check.php" method="POST">
+	<form action="login_check.php" method="POST">
 	Username: <input type="text" name="username" id="username" maxlength="20" required>
 	<br/><br/>
 	<!--Password: <input type="password" name="password" id="password">-->

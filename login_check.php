@@ -2,21 +2,21 @@
 session_start();
 
 //Receive username from client side
-$entered_username = $_POST['username'];
+//$entered_username = $_POST['username'];
 //Receive password from client side
-$entered_password = $_POST['password'];
+//$entered_password = $_POST['password'];
 
-// require __DIR__ . '/vendor/autoload.php';
-// use Google\Cloud\Datastore\DatastoreClient;
+	// require __DIR__ . '/vendor/autoload.php';
+	// use Google\Cloud\Datastore\DatastoreClient;
 
-// $projectId = 'fitness-tracker-276108';
-// $datastore = new DatastoreClient([
-// 'projectId' => $projectId
-// ]);
+	// $projectId = 'fitness-tracker-276108';
+	// $datastore = new DatastoreClient([
+	// 'projectId' => $projectId
+	// ]);
 
-echo "Entered:"
-echo $entered_username;
-echo $entered_password;
+// echo "Entered:"
+// echo $entered_username;
+// echo $entered_password;
 
 // $key = $datastore->key('username', $entered_username);
 // $entity = $datastore->lookup($key);
@@ -41,9 +41,11 @@ echo $entered_password;
 // {
 	// echo "null";
 // }
-$_SESSION["loginSucc"] = True;
+//$_SESSION["loginSucc"] = True;
 //header('Location: index.php');
 
-echo "login fail";
+//echo "login fail";
 
 ?>
+
+<p>Hello</p>
