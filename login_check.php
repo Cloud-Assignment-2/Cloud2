@@ -17,7 +17,7 @@ $entered_password = $_POST['password'];
 echo $entered_username;
 echo $entered_password;
 
-$key = $datastore->key('username', $entered_username);
+$key = $datastore->key('user', $entered_username);
 $entity = $datastore->lookup($key);
 if (!is_null($entity))
 {
