@@ -12,11 +12,3 @@ env_variables:
   APP_ROUTES_CACHE: /tmp/routes.php
 
   SESSION_DRIVER: cookie
-
-handlers:
-
-- url: /(.+\.php)$
-  script: auto
-
-- url: /.*
-  script: login.php
