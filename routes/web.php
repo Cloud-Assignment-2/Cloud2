@@ -17,15 +17,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::view('contact', 'contact');
-
-Route::view('booking', 'booking');
 
 Route::view('login', 'login');
-
-Route::view('cp', 'cp');
-
-Route::view('admin', 'admin');
+Route::view('login_check', 'login_check');
 
 
 Route::get('/location', 'LocationController@index');
