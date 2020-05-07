@@ -33,6 +33,10 @@ if (!is_null($entity))
 		exit();
 	}
 }
+else
+{
+	echo "null";
+}
 $_SESSION["loginSucc"] = True;
 //header('Location: index.php');
 
