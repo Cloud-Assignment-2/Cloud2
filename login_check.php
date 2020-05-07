@@ -14,6 +14,10 @@ $datastore = new DatastoreClient([
 'projectId' => $projectId
 ]);
 
+echo "Entered:"
+echo $entered_username;
+echo $entered_password;
+
 $key = $datastore->key('user', $entered_username);
 $entity = $datastore->lookup($key);
 if (!is_null($entity))
