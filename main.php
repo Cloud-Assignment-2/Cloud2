@@ -106,6 +106,8 @@ $_SESSION["passSucc"] = True;
 		var map, infoWindow;
 		function initMap()
 		{
+			alert("init map");
+			
 			map = new google.maps.Map(document.getElementById('map'),
 			{
 				center: {lat: -37, lng: 145},
