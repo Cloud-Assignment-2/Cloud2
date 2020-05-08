@@ -210,7 +210,7 @@ $_SESSION["passSucc"] = True;
 
     </script>
     <script async defer
-    src="https://maps-api-ssl.google.com/maps/api/js?v=3&amp;sensor=false&callback=initMap">
+    src="https://maps.google.com/maps/api/js?v=3.5&sensor=true&callback=initMap">
     </script>
 	
 	
