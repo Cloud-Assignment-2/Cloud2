@@ -114,31 +114,37 @@ $_SESSION["passSucc"] = True;
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
 			
-			navigator.geolocation.getCurrentPosition(
-				function(position) {
-					 //alert("Lat: " + position.coords.latitude + "\nLon: " + position.coords.longitude);
-				},
-				function(error){
-					 //alert(error.message);
-				}, {
-					 enableHighAccuracy: true
-							,timeout : 5000
-				}
-			);
+			// navigator.geolocation.getCurrentPosition(
+				// function(position) {
+					 // //alert("Lat: " + position.coords.latitude + "\nLon: " + position.coords.longitude);
+				// },
+				// function(error){
+					 // //alert(error.message);
+				// }, {
+					 // enableHighAccuracy: true
+							// ,timeout : 5000
+				// }
+			// );
 			
-          navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
+          navigator.geolocation.getCurrentPosition(
+		  
+		  function(position)
+		  { 
+			var pos = { lat: position.coords.latitude, lng: position.coords.longitude };
 
-            infoWindow.setPosition(pos);
-            infoWindow.setContent('Location found.');
-            infoWindow.open(map);
-            map.setCenter(pos);
-          }, function() {
-            handleLocationError(true, infoWindow, map.getCenter());
-          });
+			infoWindow.setPosition(pos);
+			infoWindow.setContent('Location found.');
+			infoWindow.open(map);
+			map.setCenter(pos);
+			},
+			function()
+			{
+				handleLocationError(true, infoWindow, map.getCenter());
+			},
+			{
+				enableHighAccuracy: true,timeout : 5000
+			}		  
+		  );
         } else {
           // Browser doesn't support Geolocation
           handleLocationError(false, infoWindow, map.getCenter());
