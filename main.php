@@ -110,7 +110,7 @@ $_SESSION["passSucc"] = True;
 			
 			map = new google.maps.Map(document.getElementById('map'),
 			{
-				center: {lat: -37, lng: 145},
+				center: {lat: -37.8, lng: 145.1},
 				zoom: 10
 			});
 			infoWindow = new google.maps.InfoWindow;
