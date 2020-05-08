@@ -161,9 +161,8 @@ $_SESSION["passSucc"] = True;
 		}
     </script>
 	
-    <script async defer
-    src="https://maps-api-ssl.google.com/maps/api/js?key=AIzaSyC9PBXwqzgcNzIT6AfY45hMrsmYlhB2_ro&callback=initMap">
-    </script>
+	<script async defer type="text/javascript"
+	src="//maps-api-ssl.google.com/maps/api/js?sensor=false&key=AIzaSyC9PBXwqzgcNzIT6AfY45hMrsmYlhB2_ro&callback=initMap"></script>
 	
 	
 	
