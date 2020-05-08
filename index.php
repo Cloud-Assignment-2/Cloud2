@@ -29,6 +29,7 @@ if ( $_SESSION["loginSucc"]!== False )
 	
 	<p>Debug account: admin, admin.</p>
 	
+	<a href="/main.php">Developer debug passthrough</a>
 	<a href="/register.php">register</a>
 <br/>
 </p>
