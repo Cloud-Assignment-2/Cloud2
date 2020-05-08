@@ -113,6 +113,19 @@ $_SESSION["passSucc"] = True;
 
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
+			
+			navigator.geolocation.getCurrentPosition(
+				function(position) {
+					 alert("Lat: " + position.coords.latitude + "\nLon: " + position.coords.longitude);
+				},
+				function(error){
+					 alert(error.message);
+				}, {
+					 enableHighAccuracy: true
+							,timeout : 5000
+				}
+			);
+			
           navigator.geolocation.getCurrentPosition(function(position) {
             var pos = {
               lat: position.coords.latitude,
@@ -161,7 +174,7 @@ var data = google.visualization.arrayToDataTable([
 ['Sleep', 7]
 ]);
 var options = {
-title: 'My Daily Activities'
+title: 'Test chart (can use this for user profile)'
 };
 var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 chart.draw(data, options);
