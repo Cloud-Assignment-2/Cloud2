@@ -111,7 +111,7 @@ $_SESSION["passSucc"] = True;
 			map = new google.maps.Map(document.getElementById('map'),
 			{
 				center: {lat: -37.8, lng: 145.1},
-				zoom: 10
+				zoom: 12
 			});
 			infoWindow = new google.maps.InfoWindow;
 
@@ -162,7 +162,7 @@ $_SESSION["passSucc"] = True;
     </script>
 	
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9PBXwqzgcNzIT6AfY45hMrsmYlhB2_ro&callback=initMap">
+    src="https://maps-api-ssl.google.com/maps/api/js?key=AIzaSyC9PBXwqzgcNzIT6AfY45hMrsmYlhB2_ro&callback=initMap">
     </script>
 	
 	
