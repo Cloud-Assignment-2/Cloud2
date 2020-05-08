@@ -106,7 +106,7 @@ $_SESSION["passSucc"] = True;
 		var map, infoWindow;
 		function initMap()
 		{
-			alert("init map");
+			//alert("init map");
 			
 			map = new google.maps.Map(document.getElementById('map'),
 			{
@@ -125,7 +125,7 @@ $_SESSION["passSucc"] = True;
 					},
 					function(position)
 					{
-						alert("Lat: " + position.coords.latitude + "\nLon: " + position.coords.longitude);
+						//alert("Lat: " + position.coords.latitude + "\nLon: " + position.coords.longitude);
 						var pos = { lat: position.coords.latitude, lng: position.coords.longitude };
 
 						infoWindow.setPosition(pos);
@@ -137,10 +137,10 @@ $_SESSION["passSucc"] = True;
 					{
 						handleLocationError(true, infoWindow, map.getCenter());
 					}
-					function (error)
-					{
-						alert("error");
-					}
+					// function (error)
+					// {
+						// alert("error");
+					// }
 	  
 				);
 			}
@@ -151,14 +151,16 @@ $_SESSION["passSucc"] = True;
 			}
 		}
 
-      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-                              'Error: The Geolocation service failed.' :
-                              'Error: Your browser doesn\'t support geolocation.');
-        infoWindow.open(map);
-      }
+		function handleLocationError(browserHasGeolocation, infoWindow, pos)
+		{
+			infoWindow.setPosition(pos);
+			infoWindow.setContent(browserHasGeolocation ?
+			'Error: The Geolocation service failed.' :
+			'Error: Your browser doesn\'t support geolocation.');
+			infoWindow.open(map);
+		}
     </script>
+	
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9PBXwqzgcNzIT6AfY45hMrsmYlhB2_ro&callback=initMap">
     </script>
