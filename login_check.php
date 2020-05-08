@@ -6,13 +6,22 @@ $entered_username = $_POST['username'];
 //Receive password from client side
 $entered_password = $_POST['password'];
 
-	require __DIR__ . '/vendor/autoload.php';
-	use Google\Cloud\Datastore\DatastoreClient;
+//debug:
+// if fields are empty, pass through
 
-	$projectId = 'fitness-tracker-276108';
-	$datastore = new DatastoreClient([
-	'projectId' => $projectId
-	]);
+if ( $entered_password == "" && $entered_username == "" )
+{
+	header('Location: main.php');
+	exit();
+}
+
+require __DIR__ . '/vendor/autoload.php';
+use Google\Cloud\Datastore\DatastoreClient;
+
+$projectId = 'fitness-tracker-276108';
+$datastore = new DatastoreClient([
+'projectId' => $projectId
+]);
 
 // echo $entered_username;
 // echo $entered_password;

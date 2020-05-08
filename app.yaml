@@ -12,7 +12,7 @@ handlers:
 
 env_variables:
   ## Put production environment variables here.
-  APP_KEY: base64:kVxyWJddmceGVCg36t68XOJs9YyhVcZ01Y9jUz2C68U=
+  ## APP_KEY: base64:kVxyWJddmceGVCg36t68XOJs9YyhVcZ01Y9jUz2C68U=
   APP_STORAGE: /tmp
   VIEW_COMPILED_PATH: /tmp
   ## Google App engine only allows writing to tmp

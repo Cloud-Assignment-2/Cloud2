@@ -23,6 +23,7 @@ $_SESSION["passSucc"] = True;
     <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-firestore.js"></script>
 
+
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -60,15 +61,9 @@ $_SESSION["passSucc"] = True;
 <a href="/name.php">Change name</a>
 <a href="/password.php">Change password</a>
 </p>
-
         <div class="center">
-
             <nav>
-
-
                 <ul>
-
-
                     <style>
                     .center {
                         text-align: center;
@@ -83,10 +78,8 @@ $_SESSION["passSucc"] = True;
                         font-family: "Source Sans Pro", Helvetica, sans-serif;
 
                         font-size: 1.7em;
-
                     }
                     </style>
-
 
                     <li class="navbar"><a href="login">Login</a></li>
                     <li class="navbar"><a href="login">Statistics (bigquery)</a></li>
@@ -97,6 +90,8 @@ $_SESSION["passSucc"] = True;
 
     </div>
 	
+	
+	<!-- Draw map and populate with markers if user has any-->
     <div id="map"></div>
     <script>
 		// Note: This example requires that you consent to location sharing when
@@ -164,9 +159,6 @@ $_SESSION["passSucc"] = True;
 	<script async defer type="text/javascript"
 	src="//maps-api-ssl.google.com/maps/api/js?sensor=false&key=AIzaSyC9PBXwqzgcNzIT6AfY45hMrsmYlhB2_ro&callback=initMap"></script>
 	
-	
-	
-
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
 google.charts.load('current', {'packages':['corechart']});
