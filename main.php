@@ -120,6 +120,9 @@ $_SESSION["passSucc"] = True;
 			{
 				navigator.geolocation.getCurrentPosition
 				(
+					{
+						enableHighAccuracy: true,timeout : 5000
+					},
 					function(position)
 					{
 						alert("Lat: " + position.coords.latitude + "\nLon: " + position.coords.longitude);
@@ -133,10 +136,12 @@ $_SESSION["passSucc"] = True;
 					function()
 					{
 						handleLocationError(true, infoWindow, map.getCenter());
-					},
+					}
+					function (error)
 					{
-						enableHighAccuracy: true,timeout : 5000
-					}		  
+						alert("error");
+					}
+	  
 				);
 			}
 			else
