@@ -9,7 +9,7 @@ $_SESSION["passSucc"] = True;
 <html>
 
 <head>
-    <title>Fitness Tracker</title>
+    <title>CloudFit</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	
@@ -88,16 +88,14 @@ $_SESSION["passSucc"] = True;
 	var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 	chart.draw(data, options);
 	}
-</script>
-	
-</head>
-	
+	</script>
+
 </head>
 
 <body class="is-preload">
 
 	<center>
-	<h1>Fitness Tracker</h1>
+	<h1>CloudFit</h1>
 	</center>
 
 	<h2>Welcome, <?php echo $_SESSION["login_id"]; ?></h2>
@@ -105,11 +103,6 @@ $_SESSION["passSucc"] = True;
 	<a href="/name.php">Change name</a>
 	<a href="/password.php">Change password</a>
 	</p>
-
-
-	<h1>Fitness Tracker</h1>
-
-
 
 	<p>test</p>	
 
