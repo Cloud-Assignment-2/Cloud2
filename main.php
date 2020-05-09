@@ -67,18 +67,67 @@ $_SESSION["passSucc"] = True;
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfE56Z-lS3W0EsyQqa-M87ZR2TBZ4GKFI&callback=initMap">
     </script>
+	
+	<!-- Chart code -->
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+	google.charts.load('current', {'packages':['corechart']});
+	google.charts.setOnLoadCallback(drawChart);
+	function drawChart() {
+	var data = google.visualization.arrayToDataTable([
+	['Task', 'Hours per Day'],
+	['Work', 11],
+	['Eat', 2],
+	['Commute', 2],
+	['Watch TV', 2],
+	['Sleep', 7]
+	]);
+	var options = {
+	title: 'Test chart (can use this for user profile)'
+	};
+	var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+	chart.draw(data, options);
+	}
+</script>
+	
 </head>
 	
 </head>
 
 <body class="is-preload">
 
-<h1 id="title">Fitness Tracker</h1>
-<p>test</p>	
+	<center>
+	<h1>Fitness Tracker</h1>
+	</center>
 
-<br/>
+	<h2>Welcome, <?php echo $_SESSION["login_id"]; ?></h2>
+	<p>
+	<a href="/name.php">Change name</a>
+	<a href="/password.php">Change password</a>
+	</p>
+
+
+	<h1>Fitness Tracker</h1>
+
+
+
+	<p>test</p>	
+
+	<br/>
 
 	<div id="map" style="height:800px;"></div>
+	
+
+	<div id="piechart" style="width: 900px; height: 500px;"></div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
 
 </body>
 
