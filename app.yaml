@@ -9,6 +9,8 @@ handlers:
 
 - url: /.*
   script: index.php
+  
+  secure: always
 
 env_variables:
   ## Put production environment variables here.
