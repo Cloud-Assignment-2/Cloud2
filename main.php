@@ -17,10 +17,10 @@ function initialize()
     $db = new FirestoreClient();
     printf('Created Cloud Firestore client with default project ID.' . PHP_EOL);
 }
-initialize();
 ?>
 
 <!DOCTYPE HTML>
+
 <html>
 
 <head>
