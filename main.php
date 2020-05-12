@@ -1,8 +1,23 @@
 <?php
 session_start();
-ob_start();
 $_SESSION["nameSucc"] = True;
 $_SESSION["passSucc"] = True;
+
+use Google\Cloud\Firestore\FirestoreClient;
+
+/**
+ * Initialize Cloud Firestore with default project ID.
+ * ```
+ * initialize();
+ * ```
+ */
+function initialize()
+{
+    // Create the Cloud Firestore client
+    $db = new FirestoreClient();
+    printf('Created Cloud Firestore client with default project ID.' . PHP_EOL);
+}
+initialize();
 ?>
 
 <!DOCTYPE HTML>
@@ -99,24 +114,6 @@ $_SESSION["passSucc"] = True;
 </head>
 
 <body class="is-preload">
-
-<?php
-use Google\Cloud\Firestore\FirestoreClient;
-
-/**
- * Initialize Cloud Firestore with default project ID.
- * ```
- * initialize();
- * ```
- */
-function initialize()
-{
-    // Create the Cloud Firestore client
-    $db = new FirestoreClient();
-    printf('Created Cloud Firestore client with default project ID.' . PHP_EOL);
-}
-initialize();
-?>
 
 	<center>
 	<h1>CloudFit</h1>
