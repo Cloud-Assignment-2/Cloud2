@@ -16,52 +16,49 @@ $_SESSION["passSucc"] = True;
 	<script>
     var map, infoWindow;
 
-    function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-            center: {
-                lat: -37.806,
-                lng: 144.954
-            },
-            zoom: 17
-        });
+    function initMap()
+	{
+		map = new google.maps.Map(document.getElementById('map'),
+		{
+			center: { lat: -37.806, lng: 144.954 },zoom: 12
+		});
+		
         infoWindow = new google.maps.InfoWindow;
 
         // Try HTML5 geolocation.
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
+        if (navigator.geolocation) 
+		{
+            navigator.geolocation.getCurrentPosition(function(position)
+			{
                 console.log(position.coords.latitude);
 
-                var pos = {
+                var pos =
+				{
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 };
-
-
-                var marker = new google.maps.Marker({
+                var marker = new google.maps.Marker
+				({
                     position: pos,
                     map: map
                 });
                 map.setCenter(pos);
+			},
+			function()
+			{
+				handleLocationError(true, infoWindow, map.getCenter());
+			});
+		}
+		else
+		{
+			// Browser doesn't support Geolocation
+			handleLocationError(false, infoWindow, map.getCenter());
+		}
 
+		var markers = []
+		console.log(typeof(markers));
 
-                var markers = []
-                console.log(typeof(markers));
-
-            }, function() {
-                handleLocationError(true, infoWindow, map.getCenter());
-            });
-        } else {
-            // Browser doesn't support Geolocation
-            handleLocationError(false, infoWindow, map.getCenter());
-        }
-    }
-
-    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-            'Error: The Geolocation service failed.' :
-            'Error: Your browser doesn\'t support geolocation.');
-        infoWindow.open(map);
+		// load account data from database
     }
     </script>
     <script async defer
