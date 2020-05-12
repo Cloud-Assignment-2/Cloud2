@@ -112,7 +112,7 @@ use Google\Cloud\Firestore\FirestoreClient;
 function initialize()
 {
     // Create the Cloud Firestore client
-    //$db = new FirestoreClient();
+    $db = new FirestoreClient();
     printf('Created Cloud Firestore client with default project ID.' . PHP_EOL);
 }
 initialize();
