@@ -6,6 +6,9 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Symfony\\Polyfill\\Ctype\\' => array($vendorDir . '/symfony/polyfill-ctype'),
+    'Ramsey\\Uuid\\' => array($vendorDir . '/ramsey/uuid/src'),
+    'Ramsey\\Collection\\' => array($vendorDir . '/ramsey/collection/src'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
     'Psr\\Cache\\' => array($vendorDir . '/psr/cache/src'),
@@ -16,14 +19,17 @@ return array(
     'Grpc\\Gcp\\' => array($vendorDir . '/google/grpc-gcp/src'),
     'Grpc\\' => array($vendorDir . '/grpc/grpc/src/lib'),
     'Google\\Protobuf\\' => array($vendorDir . '/google/protobuf/src/Google/Protobuf'),
+    'Google\\Cloud\\Firestore\\' => array($vendorDir . '/google/cloud-firestore/src'),
     'Google\\Cloud\\Datastore\\' => array($vendorDir . '/google/cloud-datastore/src'),
     'Google\\Cloud\\Core\\' => array($vendorDir . '/google/cloud-core/src'),
     'Google\\Auth\\' => array($vendorDir . '/google/auth/src'),
     'Google\\ApiCore\\' => array($vendorDir . '/google/gax/src'),
     'Google\\' => array($vendorDir . '/google/common-protos/src'),
     'GPBMetadata\\Google\\Protobuf\\' => array($vendorDir . '/google/protobuf/src/GPBMetadata/Google/Protobuf'),
+    'GPBMetadata\\Google\\Firestore\\' => array($vendorDir . '/google/cloud-firestore/metadata'),
     'GPBMetadata\\Google\\Datastore\\' => array($vendorDir . '/google/cloud-datastore/metadata'),
     'GPBMetadata\\Google\\' => array($vendorDir . '/google/common-protos/metadata', $vendorDir . '/google/gax/metadata'),
     'Firebase\\JWT\\' => array($vendorDir . '/firebase/php-jwt/src'),
+    'Brick\\Math\\' => array($vendorDir . '/brick/math/src'),
     '' => array($vendorDir . '/google/grpc-gcp/src/generated'),
 );

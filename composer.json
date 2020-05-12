@@ -1,5 +1,8 @@
 {
     "require": {
-        "google/cloud-datastore": "^1.11"
+        "google/cloud-datastore": "^1.11",
+        "google/cloud-firestore": "^1.12",
+        "grpc/grpc": "^v1.27.0",
+        "google/protobuf": "^v3.3.0"
     }
 }
