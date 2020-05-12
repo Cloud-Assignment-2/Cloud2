@@ -60,6 +60,15 @@ $_SESSION["passSucc"] = True;
 
 		// load account data from database
     }
+	
+    function handleLocationError(browserHasGeolocation, infoWindow, pos)
+	{
+		infoWindow.setPosition(pos);
+		infoWindow.setContent(browserHasGeolocation ?
+		'Error: The Geolocation service failed.' :
+		'Error: Your browser doesn\'t support geolocation.');
+		infoWindow.open(map);
+    }
     </script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfE56Z-lS3W0EsyQqa-M87ZR2TBZ4GKFI&callback=initMap">
