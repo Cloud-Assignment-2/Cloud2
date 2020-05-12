@@ -101,8 +101,6 @@ $_SESSION["passSucc"] = True;
 <body class="is-preload">
 
 <?php
-
-
 use Google\Cloud\Firestore\FirestoreClient;
 
 /**
@@ -114,9 +112,7 @@ use Google\Cloud\Firestore\FirestoreClient;
 function initialize()
 {
     // Create the Cloud Firestore client
-$db = new FirestoreClient([
-        'projectId' => 'fitness-tracker-276608',
-    ]);
+    //$db = new FirestoreClient();
     printf('Created Cloud Firestore client with default project ID.' . PHP_EOL);
 }
 initialize();
