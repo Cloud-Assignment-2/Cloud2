@@ -1,28 +1,3 @@
-<?php
-session_start();
-$_SESSION["nameSucc"] = True;
-$_SESSION["passSucc"] = True;
-
-//Receive username from client side
-$entered_username = $_POST['username'];
-//Receive password from client side
-$entered_password = $_POST['password'];
-
-require __DIR__ . '/vendor/autoload.php';
-use Google\Cloud\Datastore\DatastoreClient;
-
-$projectId = 'cloudfit';
-$datastore = new DatastoreClient([
-'projectId' => $projectId
-]);
-
-
-// while ($query.hasNext)
-// {
-	// print "query<br/>";
-// }
-
-?>
 
 	<script>
 // Imports the Google Cloud client library
@@ -147,20 +122,7 @@ const datastore = new Datastore({
 	<p>test</p>	
 	
 	<p>
-	<?php
-		$query = $datastore->query()->kind('Marker')->filter('username', '=', 'admin');
-		$results = $datastore->runQuery($query);
 
-		//echo ("QUERY" + $query);
-
-		$count=0;
-		foreach ($results as $entity)
-		{
-			$count++;
-			echo $entity['username'];
-		}
-		echo $count;
-	?>
 	
 	</p>
 
