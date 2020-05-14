@@ -18,7 +18,9 @@ $datastore = new DatastoreClient([
 
 echo "DATABASE CONNECTION SUCC";
 
-$query = $datastore->query()->kind('Task')->filter('username', '=', $entered_username);
+$query = $datastore->query()->kind('Marker')->filter('username', '=', $entered_username);
+
+echo "QUERY" + $query;
 
 ?>
 
