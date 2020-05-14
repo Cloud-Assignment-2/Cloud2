@@ -4,6 +4,21 @@ ob_start();
 ?>
 
 <script>
+	// Your web app's Firebase configuration
+	var firebaseConfig =
+	{
+		apiKey: "AIzaSyAFZBF28p1IJCd8JiC1BaV8aNCSYJq6fEo",
+		authDomain: "cloudfit-277211.firebaseapp.com",
+		databaseURL: "https://cloudfit-277211.firebaseio.com",
+		projectId: "cloudfit-277211",
+		storageBucket: "cloudfit-277211.appspot.com",
+		messagingSenderId: "60375874577",
+		appId: "1:60375874577:web:77f5085d5fd62c055c45b0"
+	};
+	// Initialize Firebase
+	firebase.initializeApp(firebaseConfig);
+	var db = firebase.firestore();
+
 // db.collection("user").get().then(function(querySnapshot) {
             // querySnapshot.forEach(function(doc) {
                 // if (doc.data().available) {
