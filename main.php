@@ -74,6 +74,28 @@ session_start();
 
 		var markers = []
 		console.log(typeof(markers));
+		
+        db.collection("marker").get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc)
+			{
+                    var coordinates = {
+                        lat: doc.data().location.latitude,
+                        lng: doc.data().location.longitude
+                    };
+					
+                    var fitMarker = new google.maps.Marker
+					({
+                        position: coordinates,
+                        map: map,
+                        icon: {
+                            url: "http://maps.google.com/mapfiles/kml/pal2/icon13.png"
+                        }
+                    });
+                    markers.push(fitMarker);
+            });
+        }).catch(function(error) {
+            console.log("Error getting documents: ", error);
+        });
 
 		// load account data from database
     }
