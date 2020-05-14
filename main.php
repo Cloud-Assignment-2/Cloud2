@@ -91,7 +91,7 @@ $datastore = new DatastoreClient([
     }
     </script>
     <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpvX-Cm97HfCgxF48CatJy017f4qU7UXI&callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFZBF28p1IJCd8JiC1BaV8aNCSYJq6fEo&callback=initMap">
     </script>
 	
 	<!-- Chart code -->
