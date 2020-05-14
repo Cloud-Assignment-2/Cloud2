@@ -7,7 +7,7 @@ $entered_username = $_POST['username'];
 //Receive password from client side
 $entered_password = $_POST['password'];
 
-$_SESSION["login_id"] = $_POST['username'];
+//$_SESSION["login_id"] = $_POST['username'];
 ?>
 
 <!-- include firebase -->
@@ -37,6 +37,7 @@ $_SESSION["login_id"] = $_POST['username'];
 		if (doc.exists)
 		{
 			console.log("Password:", doc.data().password);
+			<?php $_SESSION["login_id"] = $_POST['username'];?>
 			window.location.replace("/main.php");
 			return;
 		}
