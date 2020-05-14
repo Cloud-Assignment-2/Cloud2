@@ -3,6 +3,10 @@ session_start();
 ob_start();
 ?>
 
+<!-- include firebase -->
+<script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-firestore.js"></script>
+
 <script>
 	// Your web app's Firebase configuration
 	var firebaseConfig =
