@@ -33,8 +33,8 @@ if (!is_null($entity))
 		$_SESSION["login_id"] = $entered_username;
 		$_SESSION["login_name"] = $entity['name'];
 		// password is correct, redirect to main page
-		//header('Location: main.php');
-		echo "login success";
+		header('Location: main.php');
+		//echo "login success";
 		exit();
 	}
 }
@@ -43,9 +43,9 @@ else
 	//echo "null";
 }
 $_SESSION["loginSucc"] = True;
-//header('Location: index.php');
+header('Location: index.php');
 
-echo "login fail";
+//echo "login fail";
 
 ?>
 
