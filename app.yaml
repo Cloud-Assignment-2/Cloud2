@@ -1,4 +1,3 @@
-runtime: php55
 runtime: nodejs10
 api_version: 1
 threadsafe: true
