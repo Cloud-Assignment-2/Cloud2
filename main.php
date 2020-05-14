@@ -135,11 +135,12 @@ $datastore = new DatastoreClient([
 	<p>
 	<?php
 		$query = $datastore->query()->kind('Marker')->filter('username', '=', 'admin');
+		$results = $datastore->runQuery($query);
 
 		//echo ("QUERY" + $query);
 
 		$count=0;
-		foreach ($query as $entity)
+		foreach ($results as $entity)
 		{
 			$count++;
 		}
