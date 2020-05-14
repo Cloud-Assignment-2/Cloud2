@@ -43,7 +43,7 @@ $entered_password = $_POST['password'];
 // Create a query against the collection.
 //var query = citiesRef.where("user", "==", '<?php echo $username; ?>');
 
-var docRef = db.collection("user").doc("<?php echo $entered_username; ?>");
+var docRef = db.collection("user").doc('<?php echo $entered_username; ?>');
 
 docRef.get().then(function(doc) {
     if (doc.exists) {
