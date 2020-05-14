@@ -16,16 +16,7 @@ $datastore = new DatastoreClient([
 'projectId' => $projectId
 ]);
 
-$query = $datastore->query()->kind('Marker')->filter('username', '=', 'admin');
 
-//echo ("QUERY" + $query);
-
-$count=0;
-foreach ($query as $entity)
-{
-    $count++;
-}
-echo $count;
 // while ($query.hasNext)
 // {
 	// print "query<br/>";
@@ -140,6 +131,21 @@ echo $count;
 	</p>
 
 	<p>test</p>	
+	
+	<p>
+	<?php
+		$query = $datastore->query()->kind('Marker')->filter('username', '=', 'admin');
+
+		//echo ("QUERY" + $query);
+
+		$count=0;
+		foreach ($query as $entity)
+		{
+			$count++;
+		}
+		echo $count;
+	?>
+	</p>
 
 	<br/>
 
