@@ -20,6 +20,10 @@ $query = $datastore->query()->kind('Marker')->filter('username', '=', $entered_u
 
 echo ("QUERY" + $query);
 
+foreach ($results as $entity)
+{
+	print ($entity['username']);
+}
 // while ($query.hasNext)
 // {
 	// print "query<br/>";
