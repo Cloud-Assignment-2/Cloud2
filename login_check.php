@@ -28,38 +28,22 @@ $entered_password = $_POST['password'];
 	firebase.initializeApp(firebaseConfig);
 	var db = firebase.firestore();
 
-// db.collection("user").get().then(function(querySnapshot) {
-            // querySnapshot.forEach(function(doc) {
-                // if (doc.data().available) {
-                    // var coordinates = {
-                        // lat: doc.data().location.latitude,
-                        // lng: doc.data().location.longitude
-                    // };
-					
-					
-// Create a reference to the cities collection
-//var citiesRef = db.collection("user");
+	var docRef = db.collection("user").doc('<?php echo $entered_username; ?>');
 
-// Create a query against the collection.
-//var query = citiesRef.where("user", "==", '<?php echo $username; ?>');
-
-var docRef = db.collection("user").doc('<?php echo $entered_username; ?>');
-
-docRef.get().then(function(doc)
-{
-    if (doc.exists)
+	docRef.get().then(function(doc)
 	{
-        console.log("Password:", doc.data().password);
-		window.location.replace("/main.php");
-    }
-	else
+		if (doc.exists)
+		{
+			console.log("Password:", doc.data().password);
+			window.location.replace("/main.php");
+		}
+		else // document not found
+		{
+			console.log("User not found");
+		}
+	}).catch(function(error) // error with database
 	{
-        // doc.data() will be undefined in this case
-        console.log("User not found");
-    }
-}).catch(function(error)
-{
-    console.log("Error getting document:", error);
-});
-window.location.replace("/index.php");
+		console.log("Error getting document:", error);
+	});
+	window.location.replace("/index.php");
 </script>
