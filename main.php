@@ -143,6 +143,7 @@ $datastore = new DatastoreClient([
 		foreach ($results as $entity)
 		{
 			$count++;
+			echo $entity['username'];
 		}
 		echo $count;
 	?>
