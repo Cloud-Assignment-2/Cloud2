@@ -16,11 +16,9 @@ $datastore = new DatastoreClient([
 'projectId' => $projectId
 ]);
 
-echo "DATABASE CONNECTION SUCC";
-
 $query = $datastore->query()->kind('Marker')->filter('username', '=', $entered_username);
 
-echo "QUERY" + $query;
+echo ("QUERY" + $query);
 
 ?>
 
