@@ -45,15 +45,21 @@ $entered_password = $_POST['password'];
 
 var docRef = db.collection("user").doc('<?php echo $entered_username; ?>');
 
-docRef.get().then(function(doc) {
-    if (doc.exists) {
+docRef.get().then(function(doc)
+{
+    if (doc.exists)
+	{
         console.log("Password:", doc.data().password);
-    } else {
+		window.location.replace("/main.php");
+    }
+	else
+	{
         // doc.data() will be undefined in this case
         console.log("User not found");
-
     }
-}).catch(function(error) {
+}).catch(function(error)
+{
     console.log("Error getting document:", error);
-});		
+});
+window.location.replace("/index.php");
 </script>
