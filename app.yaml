@@ -5,12 +5,11 @@ runtime: nodejs10
 handlers:
 
 - url: /(.+\.php)$
-  ## script: \1
+  #script: \1
   script: auto
 
 - url: /.*
-  ## script: index.php
-  script: auto
+  script: index.php
   
   secure: always
 
