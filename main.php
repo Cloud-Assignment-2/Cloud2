@@ -18,27 +18,7 @@ $datastore = new DatastoreClient([
 
 echo "DATABASE CONNECTION SUCC";
 
-// $key = $datastore->key('user', $entered_username);
-// $entity = $datastore->lookup($key);
-// if (!is_null($entity))
-// {
-	// $database_pwd = $entity['password'];
-	
-	// //echo $database_pwd;
-	// //echo $entered_password;
-	// if (strcmp($database_pwd,$entered_password) === 0)
-	// {
-		// $_SESSION["loginSucc"] = False;
-			// // save name and key for later
-		// $_SESSION["login_id"] = $entered_username;
-		// $_SESSION["login_name"] = $entity['name'];
-		// // password is correct, redirect to main page
-		// header('Location: main.php');
-		// exit();
-	// }
-// }
-// $_SESSION["loginSucc"] = True;
-// header('Location: login.php');
+$query = $datastore->query()->kind('Task')->filter('username', '=', $entered_username);
 
 ?>
 
