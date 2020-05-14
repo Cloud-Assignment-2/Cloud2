@@ -1,6 +1,6 @@
 runtime: nodejs10
 api_version: 1
-## threadsafe: true
+threadsafe: true
 
 handlers:
 
