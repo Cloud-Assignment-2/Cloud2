@@ -6,9 +6,6 @@ $entered_username = $_POST['username'];
 //Receive password from client side
 $entered_password = $_POST['password'];
 
-//debug:
-// if fields are empty, pass through
-
 if ( $entered_password == "" && $entered_username == "" )
 {
 	header('Location: main.php');
@@ -23,17 +20,12 @@ $datastore = new DatastoreClient([
 'projectId' => $projectId
 ]);
 
-// echo $entered_username;
-// echo $entered_password;
-
-$key = $datastore->key('user', $entered_username);
+$key = $datastore->key('User', $entered_username);
 $entity = $datastore->lookup($key);
 if (!is_null($entity))
 {
 	$database_pwd = $entity['password'];
-	
-	//echo $database_pwd;
-	//echo $entered_password;
+
 	if (strcmp($database_pwd,$entered_password) === 0)
 	{
 		$_SESSION["loginSucc"] = False;
@@ -41,7 +33,8 @@ if (!is_null($entity))
 		$_SESSION["login_id"] = $entered_username;
 		$_SESSION["login_name"] = $entity['name'];
 		// password is correct, redirect to main page
-		header('Location: main.php');
+		//header('Location: main.php');
+		echo "login success";
 		exit();
 	}
 }
@@ -50,9 +43,9 @@ else
 	//echo "null";
 }
 $_SESSION["loginSucc"] = True;
-header('Location: index.php');
+//header('Location: index.php');
 
-//echo "login fail";
+echo "login fail";
 
 ?>
 
