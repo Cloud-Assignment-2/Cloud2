@@ -36,6 +36,7 @@ $entered_password = $_POST['password'];
 		{
 			console.log("Password:", doc.data().password);
 			window.location.replace("/main.php");
+			return;
 		}
 		else // document not found
 		{
