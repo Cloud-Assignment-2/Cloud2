@@ -51,7 +51,7 @@ docRef.get().then(function(doc) {
     } else {
         // doc.data() will be undefined in this case
         console.log("User not found");
-		<?php header('Location: index.php');?>
+		//<?php header('Location: index.php');?>
     }
 }).catch(function(error) {
     console.log("Error getting document:", error);
