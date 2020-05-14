@@ -1,3 +1,7 @@
+<!--
+	Currently only username is checked, since I think we'll replace it with third-party login service
+-->
+
 <?php
 session_start();
 ob_start();
