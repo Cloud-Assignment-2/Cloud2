@@ -71,7 +71,7 @@ $_SESSION["passSucc"] = True;
     }
     </script>
     <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfE56Z-lS3W0EsyQqa-M87ZR2TBZ4GKFI&callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpvX-Cm97HfCgxF48CatJy017f4qU7UXI&callback=initMap">
     </script>
 	
 	<!-- Chart code -->
