@@ -18,7 +18,12 @@ $datastore = new DatastoreClient([
 
 $query = $datastore->query()->kind('Marker')->filter('username', '=', $entered_username);
 
-echo ("QUERY" + $query);
+//echo ("QUERY" + $query);
+
+while ($query.hasNext)
+{
+	print "query<br/>";
+}
 
 ?>
 
