@@ -18,9 +18,9 @@ $datastore = new DatastoreClient([
 
 $query = $datastore->query()->kind('Marker')->filter('username', '=', $entered_username);
 
-echo ("QUERY" + $query);
+//echo ("QUERY" + $query);
 
-foreach ($results as $entity)
+foreach ($query as $entity)
 {
 	print ($entity['username']);
 }
