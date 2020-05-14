@@ -18,7 +18,7 @@ if ( $entered_password == "" && $entered_username == "" )
 require __DIR__ . '/vendor/autoload.php';
 use Google\Cloud\Datastore\DatastoreClient;
 
-$projectId = 'fitness-tracker-276108';
+$projectId = 'cloudfit';
 $datastore = new DatastoreClient([
 'projectId' => $projectId
 ]);
