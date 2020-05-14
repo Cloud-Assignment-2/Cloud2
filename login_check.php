@@ -42,7 +42,7 @@ $entered_password = $_POST['password'];
 		{
 			console.log("Password:", doc.data().password);
 			<?php $_SESSION["login_id"] = $_POST['username'];?>
-			window.location.replace("/main.php");
+			window.location.replace("https://cloudfit.info/main.php");
 			return;
 		}
 		else // document not found
@@ -53,5 +53,5 @@ $entered_password = $_POST['password'];
 	{
 		console.log("Error getting document:", error);
 	});
-	window.location.replace("/index.php");
+	window.location.replace("https://cloudfit.info");
 </script>

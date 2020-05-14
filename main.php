@@ -146,6 +146,7 @@ ob_start();
 
 	<h2>Welcome, <?php echo $_SESSION["login_id"]; ?></h2>
 	<p>
+	<a href="/profile.php">User profile</a>
 	<a href="/name.php">Change name</a>
 	<a href="/password.php">Change password</a>
 	</p>
