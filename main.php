@@ -11,7 +11,25 @@ session_start();
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	
-	<script>
+<!-- include firebase -->
+<script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
+
+<script>
+	// Your web app's Firebase configuration
+	var firebaseConfig =
+	{
+		apiKey: "AIzaSyAFZBF28p1IJCd8JiC1BaV8aNCSYJq6fEo",
+		authDomain: "cloudfit-277211.firebaseapp.com",
+		databaseURL: "https://cloudfit-277211.firebaseio.com",
+		projectId: "cloudfit-277211",
+		storageBucket: "cloudfit-277211.appspot.com",
+		messagingSenderId: "60375874577",
+		appId: "1:60375874577:web:77f5085d5fd62c055c45b0"
+	};
+	// Initialize Firebase
+	firebase.initializeApp(firebaseConfig);
+	var db = firebase.firestore();
+	
     var map, infoWindow;
 
     function initMap()
