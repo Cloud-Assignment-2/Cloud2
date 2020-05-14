@@ -1,6 +1,11 @@
 <?php
 session_start();
 ob_start();
+
+//Receive username from client side
+$entered_username = $_POST['username'];
+//Receive password from client side
+$entered_password = $_POST['password'];
 ?>
 
 <!-- include firebase -->
@@ -38,14 +43,15 @@ ob_start();
 // Create a query against the collection.
 //var query = citiesRef.where("user", "==", '<?php echo $username; ?>');
 
-var docRef = db.collection("user").doc("admin");
+var docRef = db.collection("user").doc("<?php echo $entered_username; ?>");
 
 docRef.get().then(function(doc) {
     if (doc.exists) {
-        console.log("Document data:", doc.data());
+        console.log("Password:", doc.data().password);
     } else {
         // doc.data() will be undefined in this case
-        console.log("No such document!");
+        console.log("User not found");
+		<?php header('Location: index.php');?>
     }
 }).catch(function(error) {
     console.log("Error getting document:", error);
