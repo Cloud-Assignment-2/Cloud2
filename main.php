@@ -199,6 +199,31 @@ ob_start();
 		}
 	}
 	
+	// add a random new marker for the user to navigate to
+	function addNewMarker()
+	{
+		console.log("adding new marker");
+		
+		// Generate random variance from 0.001 to 0.002.
+		var randomLatVariance = (Math.random() * 0.001) + 0.001;
+		var randomLngVariange = (Math.random() * 0.001) + 0.001;
+		
+		// 50% chance of making the coords negative
+		if (Math.random() >= 0.5) // flip lat
+		{
+			randomLatVariance = -randomLatVariance;
+		}
+		if (Math.random() >= 0.5) // flip long
+		{
+			randomLngVariance = -randomLatVariance;
+		}
+		
+		console.log("random variance is: "+randomLatVariance+", "+randomLngVariance);
+		//var randomLat = (Math.random() * 0.044484)-37.831706;
+		//var randomLong = (Math.random() * 0.041199)+144.923676;
+	}
+	
+	// Main interval function to keep track of application state
 	// interval shouldn't be too often to allow time for database updates and whatnot. 30 seconds should be plenty for walking/running.
 	var interval = setInterval(updateMarker, 30000);
 	
