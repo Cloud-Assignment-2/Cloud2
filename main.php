@@ -173,21 +173,16 @@ ob_start();
 			
             navigator.geolocation.getCurrentPosition(function(position)
 			{
-                // console.log(position.coords.latitude);
 				userPos.lat = position.coords.latitude;
 				userPos.lng = position.coords.longitude;
-				
-				
 				console.log("User pos updated to: "+userPos.lat+", "+userPos.lng);
-                // var pos =
-				// {
-                    // lat: position.coords.latitude,
-                    // lng: position.coords.longitude
-                // };
-				//marker.setPosition(pos);
+
+				// Update user position
+				// For now add a new marker. In future move the user marker.
+				// with marker.setPosition(pos);
                 marker = new google.maps.Marker
 				({
-                    position: pos,
+                    position: userPos,
                     map: map
                 });
                 map.setCenter(pos);
