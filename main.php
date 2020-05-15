@@ -211,6 +211,13 @@ ob_start();
 		}
 		
 		console.log("random variance is: "+randomLatVariance+", "+randomLngVariance);
+		
+		// make sure user has valid coordinates
+		if ( userPos.lat != 0 && userPos.lng != 0)
+		{
+			console.log("set relative to user here");
+		}
+		
 		//var randomLat = (Math.random() * 0.044484)-37.831706;
 		//var randomLong = (Math.random() * 0.041199)+144.923676;
 	}
