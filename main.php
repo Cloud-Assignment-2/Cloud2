@@ -120,7 +120,7 @@ ob_start();
 		
 		console.log("added: "+markers.length+" markers.");
 		
-		if ( nMarkers < 3 )
+		if ( markers.length < 3 )
 		{
 			console.log("Need to add more markers.");
 		}
