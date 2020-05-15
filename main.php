@@ -94,8 +94,6 @@ ob_start();
 
 		var markers = []
 		
-		var nMarkers = 0;
-		
         db.collection("marker").get().then(function(querySnapshot) {
             querySnapshot.forEach(function(doc)
 			{
@@ -112,13 +110,13 @@ ob_start();
                         icon: { url: "/images/icon13.png" }
                     });
                     markers.push(fitMarker);
-					nMarkers=1;
+					
             });
         }).catch(function(error) {
             console.log("Error getting documents: ", error);
         });
 		
-		console.log("added: "+nMarkers+" markers.");
+		console.log("added: "+marker.length+" markers.");
 		
 		if ( nMarkers < 3 )
 		{
