@@ -99,7 +99,7 @@ ob_start();
 					({
                         position: coordinates,
                         map: map,
-                        icon: { url: "http://maps.google.com/mapfiles/kml/pal2/icon13.png" }
+                        icon: { url: "/fitmarker.png" }
                     });
                     userMarkers.push(fitMarker);
 					
