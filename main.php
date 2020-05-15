@@ -32,17 +32,10 @@ ob_start();
 	firebase.initializeApp(firebaseConfig);
 	var db = firebase.firestore();
 	
-	// var pos =
-	// {
-		// lat: 0,
-		// lng: 0
-	// }
-	
     var map, infoWindow;
 	var marker; // player marker
 	var watchId; // map updater
 	var userMarkers = [];
-	var pointMarker = new Array();//store marker in array
 
 	var userPos =
 	{
@@ -108,7 +101,7 @@ ob_start();
                         map: map,
                         icon: { url: "http://maps.google.com/mapfiles/kml/pal2/icon13.png" }
                     });
-                    //userMarkers.push(fitMarker);
+                    userMarkers.push(fitMarker);
 					
             });
         }).catch(function(error)
@@ -157,7 +150,7 @@ ob_start();
 		//alert("UPDATE MRKR");
 		console.log("update marker");
 		
-		console.log("added: "+userMarkers.length+" markers.");
+		console.log("current markers: "+userMarkers.length);
 		
 		if ( userMarkers.length < 3 )
 		{
