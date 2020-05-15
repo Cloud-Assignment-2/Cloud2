@@ -115,6 +115,11 @@ ob_start();
         });
 		
 		console.log("added: "+nMarkers+" markers.");
+		
+		if ( nMarkers < 3 )
+		{
+			console.log("Need to add more markers.");
+		}
 
 		// load account data from database
     }
