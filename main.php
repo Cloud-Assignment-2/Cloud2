@@ -127,6 +127,7 @@ ob_start();
 	// move map and update marker on user movement
 	function centerMap(location)
 	{
+		alert("map update");
 		var pos =
 		{
 			lat: location.coords.latitude,
