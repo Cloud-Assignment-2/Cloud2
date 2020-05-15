@@ -94,7 +94,7 @@ ob_start();
 
 		var markers = []
 		
-		var nMarkers = 0;
+		int nMarkers = 0;
 		
         db.collection("marker").get().then(function(querySnapshot) {
             querySnapshot.forEach(function(doc)
@@ -198,6 +198,7 @@ ob_start();
 		}
 	}
 	
+	// interval shouldn't be too often to allow time for database updates and whatnot. 30 seconds should be plenty for walking/running.
 	var interval = setInterval(updateMarker, 30000);
 	
     </script>
