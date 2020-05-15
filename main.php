@@ -40,6 +40,7 @@ ob_start();
 	
     var map, infoWindow;
 	var marker; // player marker
+	var watchId; // map updater
 
     function initMap()
 	{
@@ -55,7 +56,7 @@ ob_start();
         if (navigator.geolocation) 
 		{
 			// watch user position and call centermap on update.
-			var watchId = navigator.geolocation.watchPosition(centerMap);
+			watchId = navigator.geolocation.watchPosition(centerMap);
 			
             navigator.geolocation.getCurrentPosition(function(position)
 			{
