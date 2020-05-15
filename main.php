@@ -42,6 +42,12 @@ ob_start();
 	var marker; // player marker
 	var watchId; // map updater
 
+	var userPos =
+	{
+		lat:0.0,
+		lng:0.0
+	};
+
     function initMap()
 	{
 		map = new google.maps.Map(document.getElementById('map'),
@@ -87,7 +93,6 @@ ob_start();
 		}
 
 		var markers = []
-		console.log(typeof(markers));
 		
 		var nMarkers = 0;
 		
@@ -163,12 +168,16 @@ ob_start();
             navigator.geolocation.getCurrentPosition(function(position)
 			{
                 // console.log(position.coords.latitude);
-
-                var pos =
-				{
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                };
+				userPos.lat = position.coords.latitude;
+				userPos.lng = position.coords.longitude;
+				
+				
+				console.log("User pos updated to: "+userPos.lat+", "+userPos.lng);
+                // var pos =
+				// {
+                    // lat: position.coords.latitude,
+                    // lng: position.coords.longitude
+                // };
 				//marker.setPosition(pos);
                 marker = new google.maps.Marker
 				({
