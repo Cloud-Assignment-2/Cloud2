@@ -121,15 +121,7 @@ ob_start();
 		'Error: Your browser doesn\'t support geolocation.');
 		infoWindow.open(map);
     }
-	
-	$(window).load(function()
-	{
-		myOptions = { zoom: 20, mapTypeId: google.maps.MapTypeId.ROADMAP };
-		map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-		var watchId = navigator.geolocation.watchPosition(centerMap); 
-	});
 
-	
 	// use marker.setPosition(myLatlng) to update a marker
 	// move map and update marker on user movement
 	function centerMap(location)
@@ -141,8 +133,6 @@ ob_start();
 		};
 		
 		marker.setPosition(pos);
-
-		
 		map.setCenter(pos);
 		navigator.geolocation.clearWatch(watchId);
 	}
