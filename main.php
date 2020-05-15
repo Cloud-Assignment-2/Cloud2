@@ -97,6 +97,7 @@ ob_start();
         db.collection("marker").get().then(function(querySnapshot) {
             querySnapshot.forEach(function(doc)
 			{
+				console.log("entry loop");
                     var coordinates =
 					{
                         lat: doc.data().location.latitude,
