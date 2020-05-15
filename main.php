@@ -56,7 +56,7 @@ ob_start();
         if (navigator.geolocation) 
 		{
 			// watch user position and call centermap on update.
-			watchId = navigator.geolocation.watchPosition(centerMap);
+			//watchId = navigator.geolocation.watchPosition(centerMap);
 			
             navigator.geolocation.getCurrentPosition(function(position)
 			{
@@ -125,19 +125,59 @@ ob_start();
 
 	// use marker.setPosition(myLatlng) to update a marker
 	// move map and update marker on user movement
-	function centerMap(location)
-	{
-		alert("map update");
-		var pos =
-		{
-			lat: location.coords.latitude,
-			lng: location.coords.longitude
-		};
+	// function centerMap(location)
+	// {
+		// //alert("map update");
+		// var pos =
+		// {
+			// lat: location.coords.latitude,
+			// lng: location.coords.longitude
+		// };
 		
-		marker.setPosition(pos);
-		map.setCenter(pos);
-		navigator.geolocation.clearWatch(watchId);
+		// marker.setPosition(pos);
+		// map.setCenter(pos);
+		// navigator.geolocation.clearWatch(watchId);
+	// }
+	
+	function updateMarker()
+	{
+		alert("UPDATE MRKR");
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) 
+		{
+			// watch user position and call centermap on update.
+			watchId = navigator.geolocation.watchPosition(centerMap);
+			
+            navigator.geolocation.getCurrentPosition(function(position)
+			{
+                // console.log(position.coords.latitude);
+
+                var pos =
+				{
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+				//marker.setPosition(pos);
+                marker = new google.maps.Marker
+				({
+                    position: pos,
+                    map: map
+                });
+                map.setCenter(pos);
+			},
+			function()
+			{
+				handleLocationError(true, infoWindow, map.getCenter());
+			});
+		}
+		else
+		{
+			// Browser doesn't support Geolocation
+			handleLocationError(false, infoWindow, map.getCenter());
+		}
 	}
+	
+	var interval = setInterval(updateMarker, 10000);
 	
     </script>
     <script async defer
