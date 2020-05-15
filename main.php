@@ -89,6 +89,8 @@ ob_start();
 		var markers = []
 		console.log(typeof(markers));
 		
+		var nMarkers = 0;
+		
         db.collection("marker").get().then(function(querySnapshot) {
             querySnapshot.forEach(function(doc)
 			{
@@ -106,10 +108,13 @@ ob_start();
                         }
                     });
                     markers.push(fitMarker);
+					++nMarkers;
             });
         }).catch(function(error) {
             console.log("Error getting documents: ", error);
         });
+		
+		console.log("added: "+nMarkers+" markers.");
 
 		// load account data from database
     }
