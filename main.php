@@ -41,6 +41,7 @@ ob_start();
     var map, infoWindow;
 	var marker; // player marker
 	var watchId; // map updater
+	var userMarkers = [];
 
 	var userPos =
 	{
@@ -91,8 +92,6 @@ ob_start();
 			// Browser doesn't support Geolocation
 			handleLocationError(false, infoWindow, map.getCenter());
 		}
-
-		var markers = [];
 		
         db.collection("marker").get().then(function(querySnapshot) {
             querySnapshot.forEach(function(doc)
@@ -112,19 +111,19 @@ ob_start();
                         map: map,
                         icon: { url: "/images/icon13.png" }
                     });
-                    markers.push(fitMarker);
+                    userMarkers.push(fitMarker);
 					
             });
         }).catch(function(error) {
             console.log("Error getting documents: ", error);
         });
 		
-		console.log("added: "+markers.length+" markers.");
+		// console.log("added: "+markers.length+" markers.");
 		
-		if ( markers.length < 3 )
-		{
-			console.log("Need to add more markers.");
-		}
+		// if ( markers.length < 3 )
+		// {
+			// console.log("Need to add more markers.");
+		// }
 
 		// load account data from database
     }
@@ -159,6 +158,13 @@ ob_start();
 	{
 		//alert("UPDATE MRKR");
 		console.log("update marker");
+		
+		console.log("added: "+userMarkers.length+" markers.");
+		
+		if ( userMarkers.length < 3 )
+		{
+			console.log("Need to add more markers.");
+		}
         // Try HTML5 geolocation.
         if (navigator.geolocation) 
 		{
