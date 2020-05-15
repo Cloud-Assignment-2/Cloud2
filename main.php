@@ -94,12 +94,13 @@ ob_start();
 
 		var markers = []
 		
-		int nMarkers = 0;
+		var nMarkers = 0;
 		
         db.collection("marker").get().then(function(querySnapshot) {
             querySnapshot.forEach(function(doc)
 			{
-                    var coordinates = {
+                    var coordinates =
+					{
                         lat: doc.data().location.latitude,
                         lng: doc.data().location.longitude
                     };
@@ -108,12 +109,10 @@ ob_start();
 					({
                         position: coordinates,
                         map: map,
-                        icon: {
-                            url: "http://maps.google.com/mapfiles/kml/pal2/icon13.png"
-                        }
+                        icon: { url: "/images/icon13.png" }
                     });
                     markers.push(fitMarker);
-					nMarkers=nMarkers+1;
+					nMarkers=1;
             });
         }).catch(function(error) {
             console.log("Error getting documents: ", error);
