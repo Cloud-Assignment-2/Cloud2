@@ -42,6 +42,7 @@ ob_start();
 	var marker; // player marker
 	var watchId; // map updater
 	var userMarkers = [];
+	var pointMarker = new Array();//store marker in array
 
 	var userPos =
 	{
@@ -93,6 +94,7 @@ ob_start();
 			handleLocationError(false, infoWindow, map.getCenter());
 		}
 		
+		// pull existing markers from db.
         db.collection("marker").get().then(function(querySnapshot) {
             querySnapshot.forEach(function(doc)
 			{
@@ -111,7 +113,7 @@ ob_start();
                         map: map,
                         icon: { url: "/images/icon13.png" }
                     });
-                    userMarkers.push(fitMarker);
+                    //userMarkers.push(fitMarker);
 					
             });
         }).catch(function(error) {
@@ -164,6 +166,7 @@ ob_start();
 		if ( userMarkers.length < 3 )
 		{
 			console.log("Need to add more markers.");
+			addNewMarker();
 		}
         // Try HTML5 geolocation.
         if (navigator.geolocation) 
@@ -185,7 +188,7 @@ ob_start();
                     position: userPos,
                     map: map
                 });
-                map.setCenter(pos);
+                map.setCenter(userPos);
 			},
 			function()
 			{
@@ -225,7 +228,7 @@ ob_start();
 	
 	// Main interval function to keep track of application state
 	// interval shouldn't be too often to allow time for database updates and whatnot. 30 seconds should be plenty for walking/running.
-	var interval = setInterval(updateMarker, 30000);
+	var interval = setInterval(updateMarker, 20000);
 	
     </script>
     <script async defer
