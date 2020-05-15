@@ -139,6 +139,7 @@ ob_start();
 		// navigator.geolocation.clearWatch(watchId);
 	// }
 	
+	//periodically update map to update user position and check nearby markers.
 	function updateMarker()
 	{
 		//alert("UPDATE MRKR");
@@ -178,7 +179,7 @@ ob_start();
 		}
 	}
 	
-	var interval = setInterval(updateMarker, 10000);
+	var interval = setInterval(updateMarker, 30000);
 	
     </script>
     <script async defer
