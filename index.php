@@ -28,10 +28,10 @@ if ( $_SESSION["loginSucc"]!== False )
 	<button type="submit">Login</button>
 	</form>
 	
-	<p>Debug account: admin, admin.</p>
+	<p>Testing account: admin.</p>
 	
-	<a href="/main.php">Developer debug passthrough</a>
-	<a href="/register.php">register</a>
+	<!--<a href="/main.php">Testing account</a>-->
+	<!--<a href="/register.php">register</a>-->
 <br/>
 </p>
 </body>

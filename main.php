@@ -33,6 +33,7 @@ ob_start();
 	var db = firebase.firestore();
 	
     var map, infoWindow;
+	var marker; // player marker
 
     function initMap()
 	{
@@ -42,36 +43,43 @@ ob_start();
 		});
 		
         infoWindow = new google.maps.InfoWindow;
+		
+
+
 
         // Try HTML5 geolocation.
         if (navigator.geolocation) 
 		{
-            navigator.geolocation.getCurrentPosition(function(position)
-			{
-                console.log(position.coords.latitude);
+			// watch user position and call centermap on update.
+			var watchId = navigator.geolocation.watchPosition(centerMap);
+			
+            // navigator.geolocation.getCurrentPosition(function(position)
+			
+			// {
+                // // console.log(position.coords.latitude);
 
-                var pos =
-				{
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                };
-                var marker = new google.maps.Marker
-				({
-                    position: pos,
-                    map: map
-                });
-                map.setCenter(pos);
-			},
-			function()
-			{
-				handleLocationError(true, infoWindow, map.getCenter());
-			});
-		}
-		else
-		{
-			// Browser doesn't support Geolocation
-			handleLocationError(false, infoWindow, map.getCenter());
-		}
+                // // var pos =
+				// // {
+                    // // lat: position.coords.latitude,
+                    // // lng: position.coords.longitude
+                // // };
+                // // var marker = new google.maps.Marker
+				// // ({
+                    // // position: pos,
+                    // // map: map
+                // // });
+                // // map.setCenter(pos);
+			// // },
+			// // function()
+			// // {
+				// // handleLocationError(true, infoWindow, map.getCenter());
+			// // });
+		// }
+		// else
+		// {
+			// // Browser doesn't support Geolocation
+			// handleLocationError(false, infoWindow, map.getCenter());
+		// }
 
 		var markers = []
 		console.log(typeof(markers));
@@ -109,6 +117,34 @@ ob_start();
 		'Error: Your browser doesn\'t support geolocation.');
 		infoWindow.open(map);
     }
+	
+	$(window).load(function()
+	{
+		myOptions = { zoom: 20, mapTypeId: google.maps.MapTypeId.ROADMAP };
+		map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+		var watchId = navigator.geolocation.watchPosition(centerMap); 
+	});
+
+
+	// move map and update marker on user movement
+	function centerMap(location)
+	{
+		var pos =
+		{
+			lat: location.coords.latitude,
+			lng: location.coords.longitude
+		};
+		
+		var marker = new google.maps.Marker
+		({
+			position: pos,
+			map: map
+		});
+		
+		map.setCenter(pos);
+		navigator.geolocation.clearWatch(watchId);
+	}
+	
     </script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFZBF28p1IJCd8JiC1BaV8aNCSYJq6fEo&callback=initMap">
@@ -129,7 +165,7 @@ ob_start();
 	['Sleep', 7]
 	]);
 	var options = {
-	title: 'Test chart (can use this for user profile)'
+	title: 'Example chart, to be used for user stats'
 	};
 	var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 	chart.draw(data, options);
@@ -147,8 +183,8 @@ ob_start();
 	<h2>Welcome, <?php echo $_SESSION["login_id"]; ?></h2>
 	<p>
 	<a href="/profile.php">User profile</a>
-	<a href="/name.php">Change name</a>
-	<a href="/password.php">Change password</a>
+	<!--<a href="/name.php">Change name</a>-->
+	<!--<a href="/password.php">Change password</a>-->
 	</p>
 
 	<p>test</p>	
