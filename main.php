@@ -118,7 +118,7 @@ ob_start();
             console.log("Error getting documents: ", error);
         });
 		
-		console.log("added: "+marker.length+" markers.");
+		console.log("added: "+markers.length+" markers.");
 		
 		if ( nMarkers < 3 )
 		{
