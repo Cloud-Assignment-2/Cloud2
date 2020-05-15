@@ -205,7 +205,7 @@ ob_start();
 		
 		// Generate random variance from 0.001 to 0.002.
 		var randomLatVariance = (Math.random() * 0.001) + 0.001;
-		var randomLngVariange = (Math.random() * 0.001) + 0.001;
+		var randomLngVariance = (Math.random() * 0.001) + 0.001;
 		
 		// 50% chance of making the coords negative
 		if (Math.random() >= 0.5) // flip lat
