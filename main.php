@@ -147,7 +147,7 @@ ob_start();
         if (navigator.geolocation) 
 		{
 			// watch user position and call centermap on update.
-			watchId = navigator.geolocation.watchPosition(centerMap);
+			//watchId = navigator.geolocation.watchPosition(centerMap);
 			
             navigator.geolocation.getCurrentPosition(function(position)
 			{
