@@ -108,7 +108,7 @@ ob_start();
                         }
                     });
                     markers.push(fitMarker);
-					++nMarkers;
+					nMarkers=nMarkers+1;
             });
         }).catch(function(error) {
             console.log("Error getting documents: ", error);
