@@ -141,7 +141,8 @@ ob_start();
 	
 	function updateMarker()
 	{
-		alert("UPDATE MRKR");
+		//alert("UPDATE MRKR");
+		console.log("update marker");
         // Try HTML5 geolocation.
         if (navigator.geolocation) 
 		{
