@@ -32,6 +32,12 @@ ob_start();
 	firebase.initializeApp(firebaseConfig);
 	var db = firebase.firestore();
 	
+	// var pos =
+	// {
+		// lat: 0,
+		// lng: 0
+	// }
+	
     var map, infoWindow;
 	var marker; // player marker
 
@@ -43,9 +49,7 @@ ob_start();
 		});
 		
         infoWindow = new google.maps.InfoWindow;
-		
-
-
+	
 
         // Try HTML5 geolocation.
         if (navigator.geolocation) 
@@ -53,33 +57,33 @@ ob_start();
 			// watch user position and call centermap on update.
 			var watchId = navigator.geolocation.watchPosition(centerMap);
 			
-            // navigator.geolocation.getCurrentPosition(function(position)
-			
-			// {
-                // // console.log(position.coords.latitude);
+            navigator.geolocation.getCurrentPosition(function(position)
+			{
+                // console.log(position.coords.latitude);
 
-                // // var pos =
-				// // {
-                    // // lat: position.coords.latitude,
-                    // // lng: position.coords.longitude
-                // // };
-                // // var marker = new google.maps.Marker
-				// // ({
-                    // // position: pos,
-                    // // map: map
-                // // });
-                // // map.setCenter(pos);
-			// // },
-			// // function()
-			// // {
-				// // handleLocationError(true, infoWindow, map.getCenter());
-			// // });
-		// }
-		// else
-		// {
-			// // Browser doesn't support Geolocation
-			// handleLocationError(false, infoWindow, map.getCenter());
-		// }
+                var pos =
+				{
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+				//marker.setPosition(pos);
+                marker = new google.maps.Marker
+				({
+                    position: pos,
+                    map: map
+                });
+                map.setCenter(pos);
+			},
+			function()
+			{
+				handleLocationError(true, infoWindow, map.getCenter());
+			});
+		}
+		else
+		{
+			// Browser doesn't support Geolocation
+			handleLocationError(false, infoWindow, map.getCenter());
+		}
 
 		var markers = []
 		console.log(typeof(markers));
@@ -125,7 +129,8 @@ ob_start();
 		var watchId = navigator.geolocation.watchPosition(centerMap); 
 	});
 
-
+	
+	// use marker.setPosition(myLatlng) to update a marker
 	// move map and update marker on user movement
 	function centerMap(location)
 	{
@@ -135,11 +140,8 @@ ob_start();
 			lng: location.coords.longitude
 		};
 		
-		var marker = new google.maps.Marker
-		({
-			position: pos,
-			map: map
-		});
+		marker.setPosition(pos);
+
 		
 		map.setCenter(pos);
 		navigator.geolocation.clearWatch(watchId);
