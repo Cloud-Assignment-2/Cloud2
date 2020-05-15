@@ -215,7 +215,7 @@ ob_start();
 		}
 		if (Math.random() >= 0.5) // flip long
 		{
-			randomLngVariance = -randomLatVariance;
+			randomLngVariance = -randomLngVariance;
 		}
 		
 		console.log("random variance is: "+randomLatVariance+", "+randomLngVariance);
