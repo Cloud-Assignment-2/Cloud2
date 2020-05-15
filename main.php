@@ -211,13 +211,33 @@ ob_start();
 		}
 		
 		console.log("random variance is: "+randomLatVariance+", "+randomLngVariance);
+		console.log("user pos: "+userPos.lat);
 		
 		// make sure user has valid coordinates
 		if ( userPos.lat != 0 && userPos.lng != 0)
 		{
-			console.log("set relative to user here");
+			//console.log("set relative to user here");
+			
+			var coordinates =
+			{
+				lat: userPos.lat+randomLatVariance,
+				lng: userPos.lng+randomLngVariance
+			};
+
+			var fitMarker = new google.maps.Marker
+			({
+				position: coordinates,
+				map: map,
+				icon: { url: "/fitmarker.png" }
+			});
+			userMarkers.push(fitMarker);
+			
+			console.log("additional marker added");
 		}
-		
+		else
+		{
+			console.log("user coords not valid");
+		}
 		//var randomLat = (Math.random() * 0.044484)-37.831706;
 		//var randomLong = (Math.random() * 0.041199)+144.923676;
 	}
