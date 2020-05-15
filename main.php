@@ -92,7 +92,7 @@ ob_start();
 			handleLocationError(false, infoWindow, map.getCenter());
 		}
 
-		var markers = []
+		var markers = [];
 		
         db.collection("marker").get().then(function(querySnapshot) {
             querySnapshot.forEach(function(doc)
@@ -102,6 +102,8 @@ ob_start();
                         lat: doc.data().location.latitude,
                         lng: doc.data().location.longitude
                     };
+					
+					//calculate distance and push if okay, delete if not okay.
 					
                     var fitMarker = new google.maps.Marker
 					({
