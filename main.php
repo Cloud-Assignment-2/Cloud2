@@ -54,18 +54,14 @@ ob_start();
 	{
 		map = new google.maps.Map(document.getElementById('map'),
 		{
-			center: { lat: -37.806, lng: 144.954 },zoom: 12
+			center: { lat: -37.806, lng: 144.954 },zoom: 14
 		});
 		
         infoWindow = new google.maps.InfoWindow;
-	
-
+		
         // Try HTML5 geolocation.
         if (navigator.geolocation) 
 		{
-			// watch user position and call centermap on update.
-			//watchId = navigator.geolocation.watchPosition(centerMap);
-			
             navigator.geolocation.getCurrentPosition(function(position)
 			{
                 // console.log(position.coords.latitude);
@@ -95,7 +91,8 @@ ob_start();
 		}
 		
 		// pull existing markers from db.
-        db.collection("marker").get().then(function(querySnapshot) {
+        db.collection("marker").get().then(function(querySnapshot)
+		{
             querySnapshot.forEach(function(doc)
 			{
 				console.log("entry loop");
@@ -104,19 +101,18 @@ ob_start();
                         lat: doc.data().location.latitude,
                         lng: doc.data().location.longitude
                     };
-					
-					//calculate distance and push if okay, delete if not okay.
-					
+
                     var fitMarker = new google.maps.Marker
 					({
                         position: coordinates,
                         map: map,
-                        icon: { url: "/images/icon13.png" }
+                        icon: { url: "http://maps.google.com/mapfiles/kml/pal2/icon13.png" }
                     });
                     //userMarkers.push(fitMarker);
 					
             });
-        }).catch(function(error) {
+        }).catch(function(error)
+		{
             console.log("Error getting documents: ", error);
         });
 		
