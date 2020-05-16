@@ -273,11 +273,11 @@ ob_start();
 	var interval = setInterval(updateLoop, 15000);
 	
 	// Get distance between two geopoints
-	function distFrom (float lat1, float lng1, float lat2, float lng2 ) 
+	function distFrom (var lat1, var lng1, var lat2, var lng2 ) 
 	{
-		// double earthRadius = 3958.75;
-		// double dLat = Math.toRadians(lat2-lat1);
-		// double dLng = Math.toRadians(lng2-lng1);
+		var earthRadius = 3958.75;
+		//var dLat = Math.toRadians(lat2-lat1);
+		//var dLng = Math.toRadians(lng2-lng1);
 		// double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
 		// Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
 		// Math.sin(dLng/2) * Math.sin(dLng/2);
