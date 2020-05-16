@@ -36,6 +36,7 @@ ob_start();
 	var marker; // player marker
 	var watchId; // map updater
 	var userMarkers = [];
+	var markerID = [];
 
 	var userPos =
 	{
@@ -136,6 +137,7 @@ ob_start();
                         icon: { url: "/fitmarker.png" }
                     });
                     userMarkers.push(fitMarker);
+					markerID.push(doc.id);
 					
             });
         }).catch(function(error)
@@ -236,6 +238,11 @@ ob_start();
 		}
 	}
 	
+	// remove all markers and then pull them from db again.
+	function updateMarkers()
+	{
+	}
+	
 	//check if any markers are too far away and should be deleted
 	function removeDistantMarkers()
 	{
@@ -260,7 +267,7 @@ ob_start();
 					if (distanceFromUser > 200)
 					{
 						removeID = doc.id;
-						console.log("Removing distant marker: "+entryId);
+						console.log("Removing distant marker: "+removeID);
 					}
 					
             });
@@ -272,6 +279,7 @@ ob_start();
 		if (removeID != "none")
 		{
 			console.log("Remove id: "+removeID);
+			//updateMarkers();
 		}
 	}
 	
