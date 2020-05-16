@@ -242,6 +242,7 @@ ob_start();
 		console.log("Function: Remove distant markers.");
 		//getDistance
 		// pull existing markers from db.
+		var removeID = "none";
         db.collection("marker").get().then(function(querySnapshot)
 		{
             querySnapshot.forEach(function(doc)
@@ -258,9 +259,8 @@ ob_start();
 					
 					if (distanceFromUser > 200)
 					{
-						console.log("Remove marker (too far)");
-						var entryId = doc.id;
-						console.log("ID: "+entryId);
+						removeID = doc.id;
+						console.log("Removing distant marker: "+entryId);
 					}
 					
             });
@@ -268,6 +268,11 @@ ob_start();
 		{
             console.log("Error getting documents: ", error);
         });
+		
+		if (removeID != "none")
+		{
+			console.log("Remove id: "+removeID);
+		}
 	}
 	
 	// add a random new marker for the user to navigate to
