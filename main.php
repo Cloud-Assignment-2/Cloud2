@@ -327,6 +327,7 @@ ob_start();
 				console.log("Document successfully deleted!");
 				console.log("Remove marker.");
 				removeID="none";
+				updateMarkers();
 				
 			}).catch(function(error) {
 				console.error("Error removing document: ", error);
