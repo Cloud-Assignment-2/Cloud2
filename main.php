@@ -36,6 +36,9 @@ ob_start();
 	var marker; // player marker
 	var watchId; // map updater
 	var userMarkers = [];
+	var markerID = [];
+	
+	var removeID = "none";
 
 	var userPos =
 	{
@@ -49,6 +52,40 @@ ob_start();
 		{
 			center: { lat: -37.806, lng: 144.954 },zoom: 14
 		});
+		
+		// get user location
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) 
+		{
+			// watch user position and call centermap on update.
+			//watchId = navigator.geolocation.watchPosition(centerMap);
+			
+            navigator.geolocation.getCurrentPosition(function(position)
+			{
+				userPos.lat = position.coords.latitude;
+				userPos.lng = position.coords.longitude;
+				console.log("User pos updated to: "+userPos.lat+", "+userPos.lng);
+
+				// Update user position
+				// For now add a new marker. In future move the user marker.
+				// with marker.setPosition(pos);
+                marker = new google.maps.Marker
+				({
+                    position: userPos,
+                    map: map
+                });
+                map.setCenter(userPos);
+			},
+			function()
+			{
+				handleLocationError(true, infoWindow, map.getCenter());
+			});
+		}
+		else
+		{
+			// Browser doesn't support Geolocation
+			handleLocationError(false, infoWindow, map.getCenter());
+		}
 		
         infoWindow = new google.maps.InfoWindow;
 		
@@ -102,6 +139,7 @@ ob_start();
                         icon: { url: "/fitmarker.png" }
                     });
                     userMarkers.push(fitMarker);
+					markerID.push(doc.id);
 					
             });
         }).catch(function(error)
@@ -145,18 +183,9 @@ ob_start();
 	// }
 	
 	//periodically update map to update user position and check nearby markers.
-	function updateMarker()
+	function updateLoop()
 	{
-		//alert("UPDATE MRKR");
-		console.log("update marker");
-		
-		console.log("current markers: "+userMarkers.length);
-		
-		if ( userMarkers.length < 3 )
-		{
-			console.log("Need to add more markers.");
-			addNewMarker();
-		}
+		// step 1: update user location
         // Try HTML5 geolocation.
         if (navigator.geolocation) 
 		{
@@ -189,6 +218,127 @@ ob_start();
 			// Browser doesn't support Geolocation
 			handleLocationError(false, infoWindow, map.getCenter());
 		}
+		
+		if (userPos.lat==0.0 || userPos.lng==0.0)
+		{
+			console.log("Not initialized yet, returning update");
+			return;
+		}
+		// step 1: Remove distant markers
+		removeDistantMarkers();
+		
+		// step 2: Credit close markers
+		creditCloseMarkers();
+		
+		//alert("UPDATE MRKR");
+		console.log("update marker");
+		
+		console.log("current markers: "+userMarkers.length);
+		
+		<!-- always maintain 3 markers -->
+		if ( userMarkers.length < 3 )
+		{
+			console.log("Need to add more markers.");
+			addNewMarker();
+		}
+	}
+	
+	// remove all markers and then pull them from db again.
+	function updateMarkers()
+	{
+		var arrayLength = userMarkers.length;
+		for (var i = 0; i < arrayLength; i++)
+		{
+			userMarkers[i].setMap(null);
+			//console.log(myStringArray[i]);
+			//Do something
+		}
+		
+		userMarkers = [];
+		markerID = [];
+		
+		// pull existing markers from db.
+        db.collection("marker").get().then(function(querySnapshot)
+		{
+            querySnapshot.forEach(function(doc)
+			{
+				console.log("entry loop");
+                    var coordinates =
+					{
+                        lat: doc.data().location.latitude,
+                        lng: doc.data().location.longitude
+                    };
+
+                    var fitMarker = new google.maps.Marker
+					({
+                        position: coordinates,
+                        map: map,
+                        icon: { url: "/fitmarker.png" }
+                    });
+                    userMarkers.push(fitMarker);
+					markerID.push(doc.id);
+					
+            });
+        }).catch(function(error)
+		{
+            console.log("Error getting documents: ", error);
+        });
+	}
+	
+	//check if any markers are too far away and should be deleted
+	function removeDistantMarkers()
+	{
+		console.log("Function: Remove distant markers.");
+		//getDistance
+		// pull existing markers from db.
+        db.collection("marker").get().then(function(querySnapshot)
+		{
+            querySnapshot.forEach(function(doc)
+			{
+				console.log("entry loop");
+                    var coordinates =
+					{
+                        lat: doc.data().location.latitude,
+                        lng: doc.data().location.longitude
+                    };
+
+                    var distanceFromUser = getDistance(userPos.lat, userPos.lng, coordinates.lat, coordinates.lng);
+					console.log("Marker dist: "+distanceFromUser);
+					
+					if (distanceFromUser > 200)
+					{
+						removeID = doc.id;
+						console.log("Removing distant marker: "+removeID);
+					}
+					
+            });
+        }).catch(function(error)
+		{
+            console.log("Error getting documents: ", error);
+        });
+		
+		console.log("Final id: "+removeID);
+		if (removeID.localeCompare("none")!=0)
+		{
+			console.log("Remove id: "+removeID);
+
+			db.collection("marker").doc(removeID).delete().then(function()
+			{
+				console.log("Document successfully deleted!");
+				console.log("Remove marker.");
+				removeID="none";
+				updateMarkers();
+				
+			}).catch(function(error) {
+				console.error("Error removing document: ", error);
+			});
+
+		}
+	}
+	
+	function creditCloseMarkers()
+	{
+		console.log("Function: Credit close markers.");
 	}
 	
 	// add a random new marker for the user to navigate to
@@ -233,19 +383,48 @@ ob_start();
 			userMarkers.push(fitMarker);
 			
 			console.log("additional marker added");
+			
+			// add to db.
+			db.collection("marker").add
+			({
+				location: new firebase.firestore.GeoPoint(coordinates.lat, coordinates.lng),
+				user: '<?php echo $_SESSION["login_id"]; ?>'
+			});
+			
+			console.log("marker added to db");
 		}
 		else
 		{
 			console.log("user coords not valid");
 		}
-		//var randomLat = (Math.random() * 0.044484)-37.831706;
-		//var randomLong = (Math.random() * 0.041199)+144.923676;
 	}
 	
 	// Main interval function to keep track of application state
 	// interval shouldn't be too often to allow time for database updates and whatnot. 30 seconds should be plenty for walking/running.
-	var interval = setInterval(updateMarker, 20000);
+	var interval = setInterval(updateLoop, 10000);
 	
+	// Get distance between two geopoints
+	function getDistance (lat1, lng1, lat2, lng2 ) 
+	{
+		var earthRadius = 3958.75;
+		var dLat = toRadians(lat2-lat1);
+		var dLng = toRadians(lng2-lng1);
+		var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+		Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
+		Math.sin(dLng/2) * Math.sin(dLng/2);
+		var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+		var dist = earthRadius * c;
+
+		var meterConversion = 1609.0;
+
+		return dist * meterConversion;
+	}
+	function toRadians(degrees)
+	{
+	  var pi = Math.PI;
+	  return degrees * (pi/180);
+	}
+		
     </script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFZBF28p1IJCd8JiC1BaV8aNCSYJq6fEo&callback=initMap">
