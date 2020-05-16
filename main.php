@@ -147,6 +147,14 @@ ob_start();
 	//periodically update map to update user position and check nearby markers.
 	function updateLoop()
 	{
+		if (userPos.lat==0 || userPos.lng==0)
+		{
+			console.log("Not initialized yet, returning update");
+			return;
+		}
+		// step 1: Remove distant markers
+		removeDistantMarkers();
+		
 		//alert("UPDATE MRKR");
 		console.log("update marker");
 		
@@ -190,6 +198,12 @@ ob_start();
 			// Browser doesn't support Geolocation
 			handleLocationError(false, infoWindow, map.getCenter());
 		}
+	}
+	
+	//check if any markers are too far away and should be deleted
+	function removeDistantMarkers()
+	{
+		console.log("Function: Remove distant markers.");
 	}
 	
 	// add a random new marker for the user to navigate to
@@ -255,6 +269,23 @@ ob_start();
 	// Main interval function to keep track of application state
 	// interval shouldn't be too often to allow time for database updates and whatnot. 30 seconds should be plenty for walking/running.
 	var interval = setInterval(updateLoop, 15000);
+	
+	// Get distance between two geopoints
+	public static float distFrom (float lat1, float lng1, float lat2, float lng2 ) 
+	{
+		double earthRadius = 3958.75;
+		double dLat = Math.toRadians(lat2-lat1);
+		double dLng = Math.toRadians(lng2-lng1);
+		double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+		Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+		Math.sin(dLng/2) * Math.sin(dLng/2);
+		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+		double dist = earthRadius * c;
+
+		int meterConversion = 1609;
+
+		return new Float(dist * meterConversion).floatValue();
+	}
 	
     </script>
     <script async defer
