@@ -206,6 +206,27 @@ ob_start();
 	function removeDistantMarkers()
 	{
 		console.log("Function: Remove distant markers.");
+		//getDistance
+		// pull existing markers from db.
+        db.collection("marker").get().then(function(querySnapshot)
+		{
+            querySnapshot.forEach(function(doc)
+			{
+				console.log("entry loop");
+                    var coordinates =
+					{
+                        lat: doc.data().location.latitude,
+                        lng: doc.data().location.longitude
+                    };
+
+                    var distanceFromUser = getDistance(userPos.lat, userPos.lng, coordinates.lat, coordinates.lng);
+					console.log("Marker dist: "+distanceFromUser);
+					
+            });
+        }).catch(function(error)
+		{
+            console.log("Error getting documents: ", error);
+        });
 	}
 	
 	// add a random new marker for the user to navigate to
@@ -264,8 +285,6 @@ ob_start();
 		{
 			console.log("user coords not valid");
 		}
-		//var randomLat = (Math.random() * 0.044484)-37.831706;
-		//var randomLong = (Math.random() * 0.041199)+144.923676;
 	}
 	
 	// Main interval function to keep track of application state
@@ -273,7 +292,7 @@ ob_start();
 	var interval = setInterval(updateLoop, 15000);
 	
 	// Get distance between two geopoints
-	function distFrom (lat1, lng1, lat2, lng2 ) 
+	function getDistance (lat1, lng1, lat2, lng2 ) 
 	{
 		var earthRadius = 3958.75;
 		var dLat = Math.toRadians(lat2-lat1);
