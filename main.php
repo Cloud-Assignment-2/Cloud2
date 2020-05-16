@@ -222,6 +222,11 @@ ob_start();
                     var distanceFromUser = getDistance(userPos.lat, userPos.lng, coordinates.lat, coordinates.lng);
 					console.log("Marker dist: "+distanceFromUser);
 					
+					if (distanceFromUser > 500)
+					{
+						console.log("Remove marker (too far)");
+					}
+					
             });
         }).catch(function(error)
 		{
