@@ -225,6 +225,9 @@ ob_start();
 		// step 1: Remove distant markers
 		removeDistantMarkers();
 		
+		// step 2: Credit close markers
+		creditCloseMarkers();
+		
 		//alert("UPDATE MRKR");
 		console.log("update marker");
 		
@@ -276,6 +279,7 @@ ob_start();
             console.log("Error getting documents: ", error);
         });
 		
+		console.log("Final id: "+removeID);
 		if (removeID.localeCompare("none")!=0)
 		{
 			console.log("Remove id: "+removeID);
