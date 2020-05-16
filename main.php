@@ -38,7 +38,8 @@ ob_start();
 	var userMarkers = [];
 	var markerID = [];
 	
-	var removeID = "none";
+	var removeDistantID = "none"; // distant marker flagged to remove
+	var removeCloseID = "none"; // close marker flagged to remove
 
 	var userPos =
 	{
@@ -225,10 +226,15 @@ ob_start();
 			return;
 		}
 		// step 1: Remove distant markers
-		removeDistantMarkers();
-		
-		// step 2: Credit close markers
-		creditCloseMarkers();
+		// or credit close markers. Avoid doing both at once
+		// to avoid any sync issues.
+		if (removeDistantMarkers())
+		{
+		}
+		else
+		{
+			creditCloseMarkers();
+		}
 		
 		//alert("UPDATE MRKR");
 		console.log("update marker");
@@ -307,8 +313,8 @@ ob_start();
 					
 					if (distanceFromUser > 200)
 					{
-						removeID = doc.id;
-						console.log("Removing distant marker: "+removeID);
+						removeDistantID = doc.id;
+						console.log("Removing distant marker: "+removeDistantID);
 					}
 					
             });
@@ -317,28 +323,77 @@ ob_start();
             console.log("Error getting documents: ", error);
         });
 		
-		console.log("Final id: "+removeID);
-		if (removeID.localeCompare("none")!=0)
+		console.log("Final id: "+removeDistantID);
+		if (removeDistantID.localeCompare("none")!=0)
 		{
-			console.log("Remove id: "+removeID);
+			console.log("Remove id: "+removeDistantID);
 
-			db.collection("marker").doc(removeID).delete().then(function()
+			db.collection("marker").doc(removeDistantID).delete().then(function()
 			{
 				console.log("Document successfully deleted!");
-				console.log("Remove marker.");
-				removeID="none";
+				console.log("Remove distant marker.");
+				removeDistantID="none";
 				updateMarkers();
+				return true;
 				
 			}).catch(function(error) {
 				console.error("Error removing document: ", error);
 			});
 
 		}
+		return false;
 	}
 	
 	function creditCloseMarkers()
 	{
 		console.log("Function: Credit close markers.");
+		//getDistance
+		// pull existing markers from db.
+        db.collection("marker").get().then(function(querySnapshot)
+		{
+            querySnapshot.forEach(function(doc)
+			{
+				console.log("entry loop");
+                    var coordinates =
+					{
+                        lat: doc.data().location.latitude,
+                        lng: doc.data().location.longitude
+                    };
+
+                    var distanceFromUser = getDistance(userPos.lat, userPos.lng, coordinates.lat, coordinates.lng);
+					console.log("Marker dist: "+distanceFromUser);
+					
+					if (distanceFromUser < 10)
+					{
+						removeCloseID = doc.id;
+						console.log("Removing close marker: "+removeCloseID);
+					}
+					
+            });
+        }).catch(function(error)
+		{
+            console.log("Error getting documents: ", error);
+        });
+		
+		console.log("Final id: "+removeCloseID);
+		if (removeCloseID.localeCompare("none")!=0)
+		{
+			console.log("Remove id: "+removeCloseID);
+
+			db.collection("marker").doc(removeCloseID).delete().then(function()
+			{
+				console.log("Document successfully deleted!");
+				console.log("Remove close marker.");
+				removeCloseID="none";
+				updateMarkers();
+				return true;
+				
+			}).catch(function(error) {
+				console.error("Error removing document: ", error);
+			});
+
+		}
+		return false;
 	}
 	
 	// add a random new marker for the user to navigate to
