@@ -295,10 +295,10 @@ ob_start();
 	function getDistance (lat1, lng1, lat2, lng2 ) 
 	{
 		var earthRadius = 3958.75;
-		var dLat = Math.toRadians(lat2-lat1);
-		var dLng = Math.toRadians(lng2-lng1);
+		var dLat = toRadians(lat2-lat1);
+		var dLng = toRadians(lng2-lng1);
 		var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-		Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+		Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
 		Math.sin(dLng/2) * Math.sin(dLng/2);
 		var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 		var dist = earthRadius * c;
@@ -307,7 +307,12 @@ ob_start();
 
 		return dist * meterConversion;
 	}
-	
+	function toRadians(degrees)
+	{
+	  var pi = Math.PI;
+	  return degrees * (pi/180);
+	}
+		
     </script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFZBF28p1IJCd8JiC1BaV8aNCSYJq6fEo&callback=initMap">
