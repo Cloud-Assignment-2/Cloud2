@@ -145,13 +145,14 @@ ob_start();
 	// }
 	
 	//periodically update map to update user position and check nearby markers.
-	function updateMarker()
+	function updateLoop()
 	{
 		//alert("UPDATE MRKR");
 		console.log("update marker");
 		
 		console.log("current markers: "+userMarkers.length);
 		
+		<!-- always maintain 3 markers -->
 		if ( userMarkers.length < 3 )
 		{
 			console.log("Need to add more markers.");
@@ -233,6 +234,15 @@ ob_start();
 			userMarkers.push(fitMarker);
 			
 			console.log("additional marker added");
+			
+			// add to db.
+			db.collection("marker").add
+			({
+				location: new firebase.firestore.GeoPoint(coordinates.lat, coordinates.lng),
+				user: <?php echo $_SESSION["login_id"]; ?>
+			});
+			
+			console.log("marker added to db");
 		}
 		else
 		{
@@ -244,7 +254,7 @@ ob_start();
 	
 	// Main interval function to keep track of application state
 	// interval shouldn't be too often to allow time for database updates and whatnot. 30 seconds should be plenty for walking/running.
-	var interval = setInterval(updateMarker, 20000);
+	var interval = setInterval(updateLoop, 15000);
 	
     </script>
     <script async defer
