@@ -322,13 +322,10 @@ ob_start();
 		{
 			console.log("Remove id: "+removeID);
 
-			db.collection("marker").doc("DC").delete().then(function() {
+			db.collection("marker").doc(removeID).delete().then(function()
+			{
 				console.log("Document successfully deleted!");
-				
 				console.log("Remove marker.");
-				
-				
-				
 				removeID="none";
 				
 			}).catch(function(error) {
