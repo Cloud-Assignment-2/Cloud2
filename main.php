@@ -147,7 +147,7 @@ ob_start();
 	//periodically update map to update user position and check nearby markers.
 	function updateLoop()
 	{
-		if (userPos.lat==0 || userPos.lng==0)
+		if (userPos.lat==0.0 || userPos.lng==0.0)
 		{
 			console.log("Not initialized yet, returning update");
 			return;
@@ -271,8 +271,8 @@ ob_start();
 	var interval = setInterval(updateLoop, 15000);
 	
 	// Get distance between two geopoints
-	// public static float distFrom (float lat1, float lng1, float lat2, float lng2 ) 
-	// {
+	public static float distFrom (float lat1, float lng1, float lat2, float lng2 ) 
+	{
 		// double earthRadius = 3958.75;
 		// double dLat = Math.toRadians(lat2-lat1);
 		// double dLng = Math.toRadians(lng2-lng1);
@@ -285,7 +285,8 @@ ob_start();
 		// int meterConversion = 1609;
 
 		// return new Float(dist * meterConversion).floatValue();
-	// }
+		return 0.0;
+	}
 	
     </script>
     <script async defer
