@@ -50,6 +50,40 @@ ob_start();
 			center: { lat: -37.806, lng: 144.954 },zoom: 14
 		});
 		
+		// get user location
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) 
+		{
+			// watch user position and call centermap on update.
+			//watchId = navigator.geolocation.watchPosition(centerMap);
+			
+            navigator.geolocation.getCurrentPosition(function(position)
+			{
+				userPos.lat = position.coords.latitude;
+				userPos.lng = position.coords.longitude;
+				console.log("User pos updated to: "+userPos.lat+", "+userPos.lng);
+
+				// Update user position
+				// For now add a new marker. In future move the user marker.
+				// with marker.setPosition(pos);
+                marker = new google.maps.Marker
+				({
+                    position: userPos,
+                    map: map
+                });
+                map.setCenter(userPos);
+			},
+			function()
+			{
+				handleLocationError(true, infoWindow, map.getCenter());
+			});
+		}
+		else
+		{
+			// Browser doesn't support Geolocation
+			handleLocationError(false, infoWindow, map.getCenter());
+		}
+		
         infoWindow = new google.maps.InfoWindow;
 		
         // Try HTML5 geolocation.
@@ -225,7 +259,7 @@ ob_start();
 					if (distanceFromUser > 200)
 					{
 						console.log("Remove marker (too far)");
-						var entryIId = doc.data().id;
+						var entryId = doc.data().id;
 						console.log("ID: "+entryId);
 					}
 					
@@ -296,7 +330,7 @@ ob_start();
 	
 	// Main interval function to keep track of application state
 	// interval shouldn't be too often to allow time for database updates and whatnot. 30 seconds should be plenty for walking/running.
-	var interval = setInterval(updateLoop, 15000);
+	var interval = setInterval(updateLoop, 10000);
 	
 	// Get distance between two geopoints
 	function getDistance (lat1, lng1, lat2, lng2 ) 
