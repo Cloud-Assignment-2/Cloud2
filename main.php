@@ -147,25 +147,7 @@ ob_start();
 	//periodically update map to update user position and check nearby markers.
 	function updateLoop()
 	{
-		if (userPos.lat==0.0 || userPos.lng==0.0)
-		{
-			console.log("Not initialized yet, returning update");
-			return;
-		}
-		// step 1: Remove distant markers
-		removeDistantMarkers();
-		
-		//alert("UPDATE MRKR");
-		console.log("update marker");
-		
-		console.log("current markers: "+userMarkers.length);
-		
-		<!-- always maintain 3 markers -->
-		if ( userMarkers.length < 3 )
-		{
-			console.log("Need to add more markers.");
-			addNewMarker();
-		}
+		// step 1: update user location
         // Try HTML5 geolocation.
         if (navigator.geolocation) 
 		{
@@ -197,6 +179,26 @@ ob_start();
 		{
 			// Browser doesn't support Geolocation
 			handleLocationError(false, infoWindow, map.getCenter());
+		}
+		
+		if (userPos.lat==0.0 || userPos.lng==0.0)
+		{
+			console.log("Not initialized yet, returning update");
+			return;
+		}
+		// step 1: Remove distant markers
+		removeDistantMarkers();
+		
+		//alert("UPDATE MRKR");
+		console.log("update marker");
+		
+		console.log("current markers: "+userMarkers.length);
+		
+		<!-- always maintain 3 markers -->
+		if ( userMarkers.length < 3 )
+		{
+			console.log("Need to add more markers.");
+			addNewMarker();
 		}
 	}
 	
