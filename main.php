@@ -239,7 +239,7 @@ ob_start();
 			db.collection("marker").add
 			({
 				location: new firebase.firestore.GeoPoint(coordinates.lat, coordinates.lng),
-				user: <?php echo $_SESSION["login_id"]; ?>
+				user: '<?php echo $_SESSION["login_id"]; ?>'
 			});
 			
 			console.log("marker added to db");
