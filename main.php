@@ -246,6 +246,43 @@ ob_start();
 	// remove all markers and then pull them from db again.
 	function updateMarkers()
 	{
+		var arrayLength = userMarkers.length;
+		for (var i = 0; i < arrayLength; i++)
+		{
+			userMarkers[i].setMap(null);
+			//console.log(myStringArray[i]);
+			//Do something
+		}
+		
+		userMarkers = [];
+		markerID = [];
+		
+		// pull existing markers from db.
+        db.collection("marker").get().then(function(querySnapshot)
+		{
+            querySnapshot.forEach(function(doc)
+			{
+				console.log("entry loop");
+                    var coordinates =
+					{
+                        lat: doc.data().location.latitude,
+                        lng: doc.data().location.longitude
+                    };
+
+                    var fitMarker = new google.maps.Marker
+					({
+                        position: coordinates,
+                        map: map,
+                        icon: { url: "/fitmarker.png" }
+                    });
+                    userMarkers.push(fitMarker);
+					markerID.push(doc.id);
+					
+            });
+        }).catch(function(error)
+		{
+            console.log("Error getting documents: ", error);
+        });
 	}
 	
 	//check if any markers are too far away and should be deleted
@@ -284,7 +321,20 @@ ob_start();
 		if (removeID.localeCompare("none")!=0)
 		{
 			console.log("Remove id: "+removeID);
-			//updateMarkers();
+
+			db.collection("marker").doc("DC").delete().then(function() {
+				console.log("Document successfully deleted!");
+				
+				console.log("Remove marker.");
+				
+				
+				
+				removeID="none";
+				
+			}).catch(function(error) {
+				console.error("Error removing document: ", error);
+			});
+
 		}
 	}
 	
