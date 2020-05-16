@@ -259,7 +259,7 @@ ob_start();
 					if (distanceFromUser > 200)
 					{
 						console.log("Remove marker (too far)");
-						var entryId = doc.data().marker;
+						var entryId = doc.id;
 						console.log("ID: "+entryId);
 					}
 					
