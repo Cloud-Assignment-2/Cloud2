@@ -276,11 +276,16 @@ ob_start();
             console.log("Error getting documents: ", error);
         });
 		
-		if (removeID != "none")
+		if (removeID.localeCompare("none")!=0)
 		{
 			console.log("Remove id: "+removeID);
 			//updateMarkers();
 		}
+	}
+	
+	function creditCloseMarkers()
+	{
+		console.log("Function: Credit close markers.");
 	}
 	
 	// add a random new marker for the user to navigate to
