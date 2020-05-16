@@ -37,6 +37,8 @@ ob_start();
 	var watchId; // map updater
 	var userMarkers = [];
 	var markerID = [];
+	
+	var removeID = "none";
 
 	var userPos =
 	{
@@ -252,7 +254,6 @@ ob_start();
 		console.log("Function: Remove distant markers.");
 		//getDistance
 		// pull existing markers from db.
-		var removeID = "none";
         db.collection("marker").get().then(function(querySnapshot)
 		{
             querySnapshot.forEach(function(doc)
