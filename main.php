@@ -391,7 +391,7 @@ ob_start();
 				var dbTimestamp = firebase.firestore.Timestamp.fromDate(new Date());
 				
 				// Add a new document in collection "cities"
-				db.collection("cities").add
+				db.collection("points").add
 				({
 					username: "admin",
 					timestamp: dbTimestamp
