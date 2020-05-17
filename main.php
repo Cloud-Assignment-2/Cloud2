@@ -379,23 +379,15 @@ ob_start();
 		if (removeCloseID.localeCompare("none")!=0)
 		{
 			console.log("Remove id: "+removeCloseID);
-			
+
 			db.collection("marker").doc(removeCloseID).delete().then(function()
 			{
 				console.log("Document successfully deleted!");
-			}).catch(function(error)
-			{
-				console.error("Error removing document: ", error);
-			});
-
-			// db.collection("marker").doc(removeCloseID).delete().then(function()
-			// {
-				// console.log("Document successfully deleted!");
-				// console.log("Remove close marker.");
-				// removeCloseID="none";
-				// updateMarkers();
+				console.log("Remove close marker.");
+				removeCloseID="none";
+				updateMarkers();
 				
-				// //credit the player with a point
+				//credit the player with a point
 				// var dbTimestamp = firebase.firestore.Timestamp.fromDate(new Date());
 				
 				// // Add a new document in collection "cities"
@@ -411,11 +403,11 @@ ob_start();
 				// });
 								
 				
-				// return true;
+				return true;
 				
-			// }).catch(function(error) {
-				// console.error("Error removing document: ", error);
-			// });
+			}).catch(function(error) {
+				console.error("Error removing document: ", error);
+			});
 
 		}
 		return false;
