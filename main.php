@@ -379,6 +379,14 @@ ob_start();
 		if (removeCloseID.localeCompare("none")!=0)
 		{
 			console.log("Remove id: "+removeCloseID);
+			
+			db.collection("marker").doc(removeCloseID).delete().then(function()
+			{
+				console.log("Document successfully deleted!");
+			}).catch(function(error)
+			{
+				console.error("Error removing document: ", error);
+			});
 
 			// db.collection("marker").doc(removeCloseID).delete().then(function()
 			// {
