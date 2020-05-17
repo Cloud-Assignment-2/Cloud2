@@ -311,7 +311,7 @@ ob_start();
                     var distanceFromUser = getDistance(userPos.lat, userPos.lng, coordinates.lat, coordinates.lng);
 					console.log("Marker dist: "+distanceFromUser);
 					
-					if (distanceFromUser > 200)
+					if (distanceFromUser > 500)
 					{
 						removeDistantID = doc.id;
 						console.log("Removing distant marker: "+removeDistantID);
@@ -363,7 +363,7 @@ ob_start();
                     var distanceFromUser = getDistance(userPos.lat, userPos.lng, coordinates.lat, coordinates.lng);
 					console.log("Marker dist: "+distanceFromUser);
 					
-					if (distanceFromUser < 10)
+					if (distanceFromUser < 20)
 					{
 						removeCloseID = doc.id;
 						console.log("Removing close marker: "+removeCloseID);
@@ -380,17 +380,34 @@ ob_start();
 		{
 			console.log("Remove id: "+removeCloseID);
 
-			db.collection("marker").doc(removeCloseID).delete().then(function()
-			{
-				console.log("Document successfully deleted!");
-				console.log("Remove close marker.");
-				removeCloseID="none";
-				updateMarkers();
-				return true;
+			// db.collection("marker").doc(removeCloseID).delete().then(function()
+			// {
+				// console.log("Document successfully deleted!");
+				// console.log("Remove close marker.");
+				// removeCloseID="none";
+				// updateMarkers();
 				
-			}).catch(function(error) {
-				console.error("Error removing document: ", error);
-			});
+				// //credit the player with a point
+				// var dbTimestamp = firebase.firestore.Timestamp.fromDate(new Date());
+				
+				// // Add a new document in collection "cities"
+				// db.collection("points").doc("test").set({
+					// username: "admin",
+					// timestamp: dbTimestamp
+				// })
+				// .then(function() {
+					// console.log("Document successfully written!");
+				// })
+				// .catch(function(error) {
+					// console.error("Error writing document: ", error);
+				// });
+								
+				
+				// return true;
+				
+			// }).catch(function(error) {
+				// console.error("Error removing document: ", error);
+			// });
 
 		}
 		return false;
