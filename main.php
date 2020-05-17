@@ -390,21 +390,13 @@ ob_start();
 				//credit the player with a point
 				var dbTimestamp = firebase.firestore.Timestamp.fromDate(new Date());
 				
-				// // Add a new document in collection "cities"
-				db.collection("points").doc("test").set({
+				// Add a new document in collection "cities"
+				db.collection("cities").add
+				({
 					username: "admin",
 					timestamp: dbTimestamp
 				})
-				.then(function()
-				{
-					console.log("Document successfully written!");
-				})
-				.catch(function(error)
-				{
-					console.error("Error writing document: ", error);
-				});
-								
-				
+
 				return true;
 				
 			}).catch(function(error) {
