@@ -363,7 +363,7 @@ ob_start();
                     var distanceFromUser = getDistance(userPos.lat, userPos.lng, coordinates.lat, coordinates.lng);
 					console.log("Marker dist: "+distanceFromUser);
 					
-					if (distanceFromUser < 20)
+					if (distanceFromUser < 50)
 					{
 						removeCloseID = doc.id;
 						console.log("Removing close marker: "+removeCloseID);
