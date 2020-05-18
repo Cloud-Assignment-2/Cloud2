@@ -65,10 +65,9 @@ ob_start();
             navigator.geolocation.getCurrentPosition(function(position)
 			{
                 // console.log(position.coords.latitude);
-				
 				userPos.lat = position.coords.latitude;
 				userPos.lng = position.coords.longitude;
-				console.log("User pos updated to: "+userPos.lat+", "+userPos.lng);
+				//console.log("User pos updated to: "+userPos.lat+", "+userPos.lng);
 
 				// Update user position
 				// For now add a new marker. In future move the user marker.
@@ -79,19 +78,6 @@ ob_start();
                     map: map
                 });
                 map.setCenter(userPos);
-
-                // var pos =
-				// {
-                    // lat: position.coords.latitude,
-                    // lng: position.coords.longitude
-                // };
-				// //marker.setPosition(pos);
-                // marker = new google.maps.Marker
-				// ({
-                    // position: pos,
-                    // map: map
-                // });
-                // map.setCenter(pos);
 			},
 			function()
 			{
@@ -109,21 +95,21 @@ ob_start();
 		{
             querySnapshot.forEach(function(doc)
 			{
-				console.log("entry loop");
-                    var coordinates =
-					{
-                        lat: doc.data().location.latitude,
-                        lng: doc.data().location.longitude
-                    };
+				//console.log("entry loop");
+				var coordinates =
+				{
+					lat: doc.data().location.latitude,
+					lng: doc.data().location.longitude
+				};
 
-                    var fitMarker = new google.maps.Marker
-					({
-                        position: coordinates,
-                        map: map,
-                        icon: { url: "/fitmarker.png" }
-                    });
-                    userMarkers.push(fitMarker);
-					markerID.push(doc.id);
+				var fitMarker = new google.maps.Marker
+				({
+					position: coordinates,
+					map: map,
+					icon: { url: "/fitmarker.png" }
+				});
+				userMarkers.push(fitMarker);
+				markerID.push(doc.id);
 					
             });
         }).catch(function(error)
