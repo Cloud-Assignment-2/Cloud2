@@ -15,6 +15,8 @@ ob_start();
 <!-- include firebase -->
 <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-firestore.js"></script>
+<!-- Jquery -->
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 
 <script>
 	// Your web app's Firebase configuration
@@ -521,7 +523,7 @@ ob_start();
 		
     </script>
     <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFZBF28p1IJCd8JiC1BaV8aNCSYJq6fEo">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFZBF28p1IJCd8JiC1BaV8aNCSYJq6fEo&callback=initMap">
     </script>
 	
 	<!-- Chart code -->
@@ -544,8 +546,7 @@ ob_start();
 	var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 	chart.draw(data, options);
 	}
-	
-	$(window).load(initMap);
+
 	</script>
 
 </head>
