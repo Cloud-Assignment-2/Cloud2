@@ -482,7 +482,7 @@ ob_start();
 		var coordString = lat.toString() + "," + lng.toString();
 		console.log("Snapping: "+coordString);
 
-		$.get('https://roads.googleapis.com/v1/snapToRoads', {
+		map.get('https://roads.googleapis.com/v1/snapToRoads', {
 		interpolate: false,
 		key: "AIzaSyAFZBF28p1IJCd8JiC1BaV8aNCSYJq6fEo",
 		path: coordString
