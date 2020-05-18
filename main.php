@@ -16,7 +16,7 @@ ob_start();
 <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-firestore.js"></script>
 <!-- Jquery -->
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
 
 <script>
 	// Your web app's Firebase configuration
