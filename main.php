@@ -482,7 +482,7 @@ ob_start();
 		var coordString = lat.toString() + "," + lng.toString();
 		console.log("Snapping: "+coordString);
 
-		map.get('https://roads.googleapis.com/v1/snapToRoads', {
+		infoWindow.get('https://roads.googleapis.com/v1/snapToRoads', {
 		interpolate: false,
 		key: "AIzaSyAFZBF28p1IJCd8JiC1BaV8aNCSYJq6fEo",
 		path: coordString
@@ -492,6 +492,7 @@ ob_start();
 		//processSnapToRoadResponse(data);
 		//drawSnappedPolyline();
 		});
+		console.log("End of snap func");
 	}
 	
 	// Get distance between two geopoints
