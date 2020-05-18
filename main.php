@@ -439,6 +439,13 @@ ob_start();
 				lat: userPos.lat+randomLatVariance,
 				lng: userPos.lng+randomLngVariance
 			};
+			
+			// snap the coordinates to the nearest road
+			//https://roads.googleapis.com/v1/snapToRoads?path=-35.27801,149.12958&key=AIzaSyAFZBF28p1IJCd8JiC1BaV8aNCSYJq6fEo
+			console.log("SNAP TO ROAD");
+			
+			snapToRoad(coordinates.lat, coordinates.lng);
+
 
 			var fitMarker = new google.maps.Marker
 			({
@@ -468,6 +475,24 @@ ob_start();
 	// Main interval function to keep track of application state
 	// interval shouldn't be too often to allow time for database updates and whatnot. 30 seconds should be plenty for walking/running.
 	var interval = setInterval(updateLoop, 10000);
+
+	// Snap a user-created polyline to roads and draw the snapped path
+	function snapToRoad(lat, lng)
+	{
+		var coordString = lat.toString() + "," + lng.toString();
+		console.log("Snapping: "+coordString);
+
+		$.get('https://roads.googleapis.com/v1/snapToRoads', {
+		interpolate: false,
+		key: "AIzaSyAFZBF28p1IJCd8JiC1BaV8aNCSYJq6fEo",
+		path: coordString
+		}, function(data)
+		{
+			console.log("Snap done");
+		//processSnapToRoadResponse(data);
+		//drawSnappedPolyline();
+		});
+	}
 	
 	// Get distance between two geopoints
 	function getDistance (lat1, lng1, lat2, lng2 ) 
