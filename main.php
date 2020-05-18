@@ -482,11 +482,13 @@ ob_start();
 		var coordString = lat.toString() + "," + lng.toString();
 		console.log("Snapping: "+coordString);
 
-		infoWindow.get('https://roads.googleapis.com/v1/snapToRoads', {
-		interpolate: false,
-		key: "AIzaSyAFZBF28p1IJCd8JiC1BaV8aNCSYJq6fEo",
-		path: coordString
-		}, function(data)
+		$.get('https://roads.googleapis.com/v1/snapToRoads',
+		{
+			interpolate: false,
+			key: "AIzaSyAFZBF28p1IJCd8JiC1BaV8aNCSYJq6fEo",
+			path: coordString
+		},
+		function(data)
 		{
 			console.log("Snap done");
 		//processSnapToRoadResponse(data);
@@ -519,7 +521,7 @@ ob_start();
 		
     </script>
     <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFZBF28p1IJCd8JiC1BaV8aNCSYJq6fEo&callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFZBF28p1IJCd8JiC1BaV8aNCSYJq6fEo">
     </script>
 	
 	<!-- Chart code -->
@@ -542,6 +544,8 @@ ob_start();
 	var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 	chart.draw(data, options);
 	}
+	
+	$(window).load(initMap);
 	</script>
 
 </head>
