@@ -15,6 +15,8 @@ ob_start();
 <!-- include firebase -->
 <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-firestore.js"></script>
+<!-- Jquery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
 
 <script>
 	// Your web app's Firebase configuration
@@ -38,7 +40,8 @@ ob_start();
 	var userMarkers = [];
 	var markerID = [];
 	
-	var removeID = "none";
+	var removeDistantID = "none"; // distant marker flagged to remove
+	var removeCloseID = "none"; // close marker flagged to remove
 
 	var userPos =
 	{
@@ -53,18 +56,18 @@ ob_start();
 			center: { lat: -37.806, lng: 144.954 },zoom: 14
 		});
 		
-		// get user location
+        infoWindow = new google.maps.InfoWindow;
+		
+		// initialise user location marker
         // Try HTML5 geolocation.
         if (navigator.geolocation) 
 		{
-			// watch user position and call centermap on update.
-			//watchId = navigator.geolocation.watchPosition(centerMap);
-			
             navigator.geolocation.getCurrentPosition(function(position)
 			{
+                // console.log(position.coords.latitude);
 				userPos.lat = position.coords.latitude;
 				userPos.lng = position.coords.longitude;
-				console.log("User pos updated to: "+userPos.lat+", "+userPos.lng);
+				//console.log("User pos updated to: "+userPos.lat+", "+userPos.lng);
 
 				// Update user position
 				// For now add a new marker. In future move the user marker.
@@ -75,39 +78,6 @@ ob_start();
                     map: map
                 });
                 map.setCenter(userPos);
-			},
-			function()
-			{
-				handleLocationError(true, infoWindow, map.getCenter());
-			});
-		}
-		else
-		{
-			// Browser doesn't support Geolocation
-			handleLocationError(false, infoWindow, map.getCenter());
-		}
-		
-        infoWindow = new google.maps.InfoWindow;
-		
-        // Try HTML5 geolocation.
-        if (navigator.geolocation) 
-		{
-            navigator.geolocation.getCurrentPosition(function(position)
-			{
-                // console.log(position.coords.latitude);
-
-                var pos =
-				{
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                };
-				//marker.setPosition(pos);
-                marker = new google.maps.Marker
-				({
-                    position: pos,
-                    map: map
-                });
-                map.setCenter(pos);
 			},
 			function()
 			{
@@ -125,36 +95,27 @@ ob_start();
 		{
             querySnapshot.forEach(function(doc)
 			{
-				console.log("entry loop");
-                    var coordinates =
-					{
-                        lat: doc.data().location.latitude,
-                        lng: doc.data().location.longitude
-                    };
+				//console.log("entry loop");
+				var coordinates =
+				{
+					lat: doc.data().location.latitude,
+					lng: doc.data().location.longitude
+				};
 
-                    var fitMarker = new google.maps.Marker
-					({
-                        position: coordinates,
-                        map: map,
-                        icon: { url: "/fitmarker.png" }
-                    });
-                    userMarkers.push(fitMarker);
-					markerID.push(doc.id);
+				var fitMarker = new google.maps.Marker
+				({
+					position: coordinates,
+					map: map,
+					icon: { url: "/fitmarker.png" }
+				});
+				userMarkers.push(fitMarker);
+				markerID.push(doc.id);
 					
             });
         }).catch(function(error)
 		{
             console.log("Error getting documents: ", error);
         });
-		
-		// console.log("added: "+markers.length+" markers.");
-		
-		// if ( markers.length < 3 )
-		// {
-			// console.log("Need to add more markers.");
-		// }
-
-		// load account data from database
     }
 	
     function handleLocationError(browserHasGeolocation, infoWindow, pos)
@@ -166,22 +127,6 @@ ob_start();
 		infoWindow.open(map);
     }
 
-	// use marker.setPosition(myLatlng) to update a marker
-	// move map and update marker on user movement
-	// function centerMap(location)
-	// {
-		// //alert("map update");
-		// var pos =
-		// {
-			// lat: location.coords.latitude,
-			// lng: location.coords.longitude
-		// };
-		
-		// marker.setPosition(pos);
-		// map.setCenter(pos);
-		// navigator.geolocation.clearWatch(watchId);
-	// }
-	
 	//periodically update map to update user position and check nearby markers.
 	function updateLoop()
 	{
@@ -190,23 +135,17 @@ ob_start();
         if (navigator.geolocation) 
 		{
 			// watch user position and call centermap on update.
-			//watchId = navigator.geolocation.watchPosition(centerMap);
-			
             navigator.geolocation.getCurrentPosition(function(position)
 			{
 				userPos.lat = position.coords.latitude;
 				userPos.lng = position.coords.longitude;
 				console.log("User pos updated to: "+userPos.lat+", "+userPos.lng);
 
-				// Update user position
-				// For now add a new marker. In future move the user marker.
-				// with marker.setPosition(pos);
-                marker = new google.maps.Marker
-				({
-                    position: userPos,
-                    map: map
-                });
+				// Update user position marker
+				marker.setPosition(userPos);
                 map.setCenter(userPos);
+				
+				// we can also calculate distance moved here.
 			},
 			function()
 			{
@@ -225,20 +164,20 @@ ob_start();
 			return;
 		}
 		// step 1: Remove distant markers
-		removeDistantMarkers();
-		
-		// step 2: Credit close markers
-		creditCloseMarkers();
-		
-		//alert("UPDATE MRKR");
-		console.log("update marker");
-		
-		console.log("current markers: "+userMarkers.length);
-		
+		// or credit close markers. Avoid doing both at once
+		// to avoid any sync issues.
+		if (removeDistantMarkers())
+		{
+		}
+		else
+		{
+			creditCloseMarkers();
+		}
+
 		<!-- always maintain 3 markers -->
 		if ( userMarkers.length < 3 )
 		{
-			console.log("Need to add more markers.");
+			//console.log("Need to add more markers.");
 			addNewMarker();
 		}
 	}
@@ -262,7 +201,7 @@ ob_start();
 		{
             querySnapshot.forEach(function(doc)
 			{
-				console.log("entry loop");
+				//console.log("entry loop");
                     var coordinates =
 					{
                         lat: doc.data().location.latitude,
@@ -288,8 +227,7 @@ ob_start();
 	//check if any markers are too far away and should be deleted
 	function removeDistantMarkers()
 	{
-		console.log("Function: Remove distant markers.");
-		//getDistance
+		//console.log("Function: Remove distant markers.");
 		// pull existing markers from db.
         db.collection("marker").get().then(function(querySnapshot)
 		{
@@ -305,10 +243,10 @@ ob_start();
                     var distanceFromUser = getDistance(userPos.lat, userPos.lng, coordinates.lat, coordinates.lng);
 					console.log("Marker dist: "+distanceFromUser);
 					
-					if (distanceFromUser > 200)
+					if (distanceFromUser > 500)
 					{
-						removeID = doc.id;
-						console.log("Removing distant marker: "+removeID);
+						removeDistantID = doc.id;
+						console.log("Removing distant marker: "+removeDistantID);
 					}
 					
             });
@@ -317,28 +255,87 @@ ob_start();
             console.log("Error getting documents: ", error);
         });
 		
-		console.log("Final id: "+removeID);
-		if (removeID.localeCompare("none")!=0)
+		console.log("Final id: "+removeDistantID);
+		if (removeDistantID.localeCompare("none")!=0)
 		{
-			console.log("Remove id: "+removeID);
-
-			db.collection("marker").doc(removeID).delete().then(function()
+			//console.log("Remove id: "+removeDistantID);
+			db.collection("marker").doc(removeDistantID).delete().then(function()
 			{
 				console.log("Document successfully deleted!");
-				console.log("Remove marker.");
-				removeID="none";
+				console.log("Remove distant marker.");
+				removeDistantID="none";
 				updateMarkers();
+				return true;
 				
 			}).catch(function(error) {
 				console.error("Error removing document: ", error);
 			});
 
 		}
+		return false;
 	}
 	
 	function creditCloseMarkers()
 	{
-		console.log("Function: Credit close markers.");
+		//console.log("Function: Credit close markers.");
+		// pull existing markers from db.
+        db.collection("marker").get().then(function(querySnapshot)
+		{
+            querySnapshot.forEach(function(doc)
+			{
+				console.log("entry loop");
+				var coordinates =
+				{
+					lat: doc.data().location.latitude,
+					lng: doc.data().location.longitude
+				};
+
+				var distanceFromUser = getDistance(userPos.lat, userPos.lng, coordinates.lat, coordinates.lng);
+				console.log("Marker dist: "+distanceFromUser);
+				
+				if (distanceFromUser < 50)
+				{
+					removeCloseID = doc.id;
+					console.log("Removing close marker: "+removeCloseID);
+				}
+					
+            });
+        }).catch(function(error)
+		{
+            console.log("Error getting documents: ", error);
+        });
+		
+		//console.log("Final id: "+removeCloseID);
+		if (removeCloseID.localeCompare("none")!=0)
+		{
+			//console.log("Remove id: "+removeCloseID);
+
+			db.collection("marker").doc(removeCloseID).delete().then(function()
+			{
+				//console.log("Document successfully deleted!");
+				//console.log("Remove close marker.");
+				removeCloseID="none";
+				updateMarkers();
+				
+				//credit the player with a point
+				var dbTimestamp = firebase.firestore.Timestamp.fromDate(new Date());
+				
+				// Add a new document in collection "cities"
+				db.collection("points").add
+				({
+					username: "admin",
+					timestamp: dbTimestamp
+				})
+
+				return true;
+				
+			}).catch(function(error)
+			{
+				console.error("Error removing document: ", error);
+			});
+
+		}
+		return false;
 	}
 	
 	// add a random new marker for the user to navigate to
@@ -373,30 +370,57 @@ ob_start();
 				lat: userPos.lat+randomLatVariance,
 				lng: userPos.lng+randomLngVariance
 			};
+			
+			// snap the coordinates to the nearest road
+			var coordString = coordinates.lat.toString() + "," + coordinates.lng.toString();
+			console.log("Snapping: "+coordString);
 
-			var fitMarker = new google.maps.Marker
-			({
-				position: coordinates,
-				map: map,
-				icon: { url: "/fitmarker.png" }
+			$.get('https://roads.googleapis.com/v1/snapToRoads',
+			{
+				interpolate: false,
+				key: "AIzaSyAFZBF28p1IJCd8JiC1BaV8aNCSYJq6fEo",
+				path: coordString
+			},
+			function(data)
+			{
+				placeMarkerAt(data.snappedPoints[0].location.latitude,data.snappedPoints[0].location.longitude);
+				console.log("Snap done");
 			});
-			userMarkers.push(fitMarker);
-			
-			console.log("additional marker added");
-			
-			// add to db.
-			db.collection("marker").add
-			({
-				location: new firebase.firestore.GeoPoint(coordinates.lat, coordinates.lng),
-				user: '<?php echo $_SESSION["login_id"]; ?>'
-			});
-			
-			console.log("marker added to db");
+			console.log("End of snap func");
+
 		}
 		else
 		{
 			console.log("user coords not valid");
 		}
+	}
+	
+	function placeMarkerAt(lat, lng)
+	{
+		var snappedCoordinates =
+		{
+			lat: lat,
+			lng: lng
+		};
+
+		var fitMarker = new google.maps.Marker
+		({
+			position: snappedCoordinates,
+			map: map,
+			icon: { url: "/fitmarker.png" }
+		});
+		userMarkers.push(fitMarker);
+		
+		console.log("additional marker added");
+		
+		// add to db.
+		db.collection("marker").add
+		({
+			location: new firebase.firestore.GeoPoint(snappedCoordinates.lat, snappedCoordinates.lng),
+			user: '<?php echo $_SESSION["login_id"]; ?>'
+		});
+		
+		console.log("marker added to db");
 	}
 	
 	// Main interval function to keep track of application state
@@ -450,6 +474,7 @@ ob_start();
 	var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 	chart.draw(data, options);
 	}
+
 	</script>
 
 </head>

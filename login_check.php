@@ -48,10 +48,12 @@ $entered_password = $_POST['password'];
 		else // document not found
 		{
 			console.log("User not found");
+			window.location.replace("https://cloudfit.info");
 		}
 	}).catch(function(error) // error with database
 	{
 		console.log("Error getting document:", error);
+		window.location.replace("https://cloudfit.info");
 	});
-	window.location.replace("https://cloudfit.info");
+	
 </script>
