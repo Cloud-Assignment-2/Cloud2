@@ -459,34 +459,8 @@ ob_start();
 			},
 			function(data)
 			{
+				placeMarkerAt(data.snappedPoints[0].location.latitude,data.snappedPoints[0].location.longitude);
 				console.log("Snap done");
-				
-				var snappedCoordinates =
-				{
-					lat: data.snappedPoints[0].location.latitude,
-					lng: data.snappedPoints[0].location.longitude
-				};
-
-				var fitMarker = new google.maps.Marker
-				({
-					position: snappedCoordinates,
-					map: map,
-					icon: { url: "/fitmarker.png" }
-				});
-				userMarkers.push(fitMarker);
-				
-				console.log("additional marker added");
-				
-				// add to db.
-				db.collection("marker").add
-				({
-					location: new firebase.firestore.GeoPoint(snappedCoordinates.lat, snappedCoordinates.lng),
-					user: '<?php echo $_SESSION["login_id"]; ?>'
-				});
-				
-				console.log("marker added to db");
-
-
 			});
 			console.log("End of snap func");
 
@@ -495,6 +469,34 @@ ob_start();
 		{
 			console.log("user coords not valid");
 		}
+	}
+	
+	function placeMarkerAt(lat, lng)
+	{
+		var snappedCoordinates =
+		{
+			lat: lat,
+			lng: lng
+		};
+
+		var fitMarker = new google.maps.Marker
+		({
+			position: snappedCoordinates,
+			map: map,
+			icon: { url: "/fitmarker.png" }
+		});
+		userMarkers.push(fitMarker);
+		
+		console.log("additional marker added");
+		
+		// add to db.
+		db.collection("marker").add
+		({
+			location: new firebase.firestore.GeoPoint(snappedCoordinates.lat, snappedCoordinates.lng),
+			user: '<?php echo $_SESSION["login_id"]; ?>'
+		});
+		
+		console.log("marker added to db");
 	}
 	
 	// Main interval function to keep track of application state
