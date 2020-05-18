@@ -56,30 +56,9 @@ ob_start();
 			center: { lat: -37.806, lng: 144.954 },zoom: 14
 		});
 		
-		// get user location
-        // Try HTML5 geolocation.
-        if (navigator.geolocation) 
-		{
-			// watch user position and call centermap on update.
-			//watchId = navigator.geolocation.watchPosition(centerMap);
-			
-            navigator.geolocation.getCurrentPosition(function(position)
-			{
-
-			},
-			function()
-			{
-				handleLocationError(true, infoWindow, map.getCenter());
-			});
-		}
-		else
-		{
-			// Browser doesn't support Geolocation
-			handleLocationError(false, infoWindow, map.getCenter());
-		}
-		
         infoWindow = new google.maps.InfoWindow;
 		
+		// initialise user location marker
         // Try HTML5 geolocation.
         if (navigator.geolocation) 
 		{
@@ -151,15 +130,6 @@ ob_start();
 		{
             console.log("Error getting documents: ", error);
         });
-		
-		// console.log("added: "+markers.length+" markers.");
-		
-		// if ( markers.length < 3 )
-		// {
-			// console.log("Need to add more markers.");
-		// }
-
-		// load account data from database
     }
 	
     function handleLocationError(browserHasGeolocation, infoWindow, pos)
@@ -171,22 +141,6 @@ ob_start();
 		infoWindow.open(map);
     }
 
-	// use marker.setPosition(myLatlng) to update a marker
-	// move map and update marker on user movement
-	// function centerMap(location)
-	// {
-		// //alert("map update");
-		// var pos =
-		// {
-			// lat: location.coords.latitude,
-			// lng: location.coords.longitude
-		// };
-		
-		// marker.setPosition(pos);
-		// map.setCenter(pos);
-		// navigator.geolocation.clearWatch(watchId);
-	// }
-	
 	//periodically update map to update user position and check nearby markers.
 	function updateLoop()
 	{
@@ -195,23 +149,14 @@ ob_start();
         if (navigator.geolocation) 
 		{
 			// watch user position and call centermap on update.
-			//watchId = navigator.geolocation.watchPosition(centerMap);
-			
             navigator.geolocation.getCurrentPosition(function(position)
 			{
 				userPos.lat = position.coords.latitude;
 				userPos.lng = position.coords.longitude;
 				console.log("User pos updated to: "+userPos.lat+", "+userPos.lng);
 
-				// Update user position
-				// For now add a new marker. In future move the user marker.
-				// with marker.setPosition(pos);
+				// Update user position marker
 				marker.setPosition(userPos);
-                // marker = new google.maps.Marker
-				// ({
-                    // position: userPos,
-                    // map: map
-                // });
                 map.setCenter(userPos);
 				
 				// we can also calculate distance moved here.
@@ -242,16 +187,11 @@ ob_start();
 		{
 			creditCloseMarkers();
 		}
-		
-		//alert("UPDATE MRKR");
-		console.log("update marker");
-		
-		console.log("current markers: "+userMarkers.length);
-		
+
 		<!-- always maintain 3 markers -->
 		if ( userMarkers.length < 3 )
 		{
-			console.log("Need to add more markers.");
+			//console.log("Need to add more markers.");
 			addNewMarker();
 		}
 	}
@@ -275,7 +215,7 @@ ob_start();
 		{
             querySnapshot.forEach(function(doc)
 			{
-				console.log("entry loop");
+				//console.log("entry loop");
                     var coordinates =
 					{
                         lat: doc.data().location.latitude,
@@ -301,8 +241,7 @@ ob_start();
 	//check if any markers are too far away and should be deleted
 	function removeDistantMarkers()
 	{
-		console.log("Function: Remove distant markers.");
-		//getDistance
+		//console.log("Function: Remove distant markers.");
 		// pull existing markers from db.
         db.collection("marker").get().then(function(querySnapshot)
 		{
@@ -333,8 +272,7 @@ ob_start();
 		console.log("Final id: "+removeDistantID);
 		if (removeDistantID.localeCompare("none")!=0)
 		{
-			console.log("Remove id: "+removeDistantID);
-
+			//console.log("Remove id: "+removeDistantID);
 			db.collection("marker").doc(removeDistantID).delete().then(function()
 			{
 				console.log("Document successfully deleted!");
@@ -353,28 +291,27 @@ ob_start();
 	
 	function creditCloseMarkers()
 	{
-		console.log("Function: Credit close markers.");
-		//getDistance
+		//console.log("Function: Credit close markers.");
 		// pull existing markers from db.
         db.collection("marker").get().then(function(querySnapshot)
 		{
             querySnapshot.forEach(function(doc)
 			{
 				console.log("entry loop");
-                    var coordinates =
-					{
-                        lat: doc.data().location.latitude,
-                        lng: doc.data().location.longitude
-                    };
+				var coordinates =
+				{
+					lat: doc.data().location.latitude,
+					lng: doc.data().location.longitude
+				};
 
-                    var distanceFromUser = getDistance(userPos.lat, userPos.lng, coordinates.lat, coordinates.lng);
-					console.log("Marker dist: "+distanceFromUser);
-					
-					if (distanceFromUser < 50)
-					{
-						removeCloseID = doc.id;
-						console.log("Removing close marker: "+removeCloseID);
-					}
+				var distanceFromUser = getDistance(userPos.lat, userPos.lng, coordinates.lat, coordinates.lng);
+				console.log("Marker dist: "+distanceFromUser);
+				
+				if (distanceFromUser < 50)
+				{
+					removeCloseID = doc.id;
+					console.log("Removing close marker: "+removeCloseID);
+				}
 					
             });
         }).catch(function(error)
@@ -382,15 +319,15 @@ ob_start();
             console.log("Error getting documents: ", error);
         });
 		
-		console.log("Final id: "+removeCloseID);
+		//console.log("Final id: "+removeCloseID);
 		if (removeCloseID.localeCompare("none")!=0)
 		{
-			console.log("Remove id: "+removeCloseID);
+			//console.log("Remove id: "+removeCloseID);
 
 			db.collection("marker").doc(removeCloseID).delete().then(function()
 			{
-				console.log("Document successfully deleted!");
-				console.log("Remove close marker.");
+				//console.log("Document successfully deleted!");
+				//console.log("Remove close marker.");
 				removeCloseID="none";
 				updateMarkers();
 				
@@ -406,7 +343,8 @@ ob_start();
 
 				return true;
 				
-			}).catch(function(error) {
+			}).catch(function(error)
+			{
 				console.error("Error removing document: ", error);
 			});
 
@@ -448,11 +386,6 @@ ob_start();
 			};
 			
 			// snap the coordinates to the nearest road
-			//https://roads.googleapis.com/v1/snapToRoads?path=-35.27801,149.12958&key=AIzaSyAFZBF28p1IJCd8JiC1BaV8aNCSYJq6fEo
-			console.log("SNAP TO ROAD");
-			
-			//snapToRoad(coordinates.lat, coordinates.lng);
-			
 			var coordString = coordinates.lat.toString() + "," + coordinates.lng.toString();
 			console.log("Snapping: "+coordString);
 
