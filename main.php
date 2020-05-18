@@ -65,19 +65,7 @@ ob_start();
 			
             navigator.geolocation.getCurrentPosition(function(position)
 			{
-				userPos.lat = position.coords.latitude;
-				userPos.lng = position.coords.longitude;
-				console.log("User pos updated to: "+userPos.lat+", "+userPos.lng);
 
-				// Update user position
-				// For now add a new marker. In future move the user marker.
-				// with marker.setPosition(pos);
-                marker = new google.maps.Marker
-				({
-                    position: userPos,
-                    map: map
-                });
-                map.setCenter(userPos);
 			},
 			function()
 			{
@@ -98,19 +86,33 @@ ob_start();
             navigator.geolocation.getCurrentPosition(function(position)
 			{
                 // console.log(position.coords.latitude);
+				
+				userPos.lat = position.coords.latitude;
+				userPos.lng = position.coords.longitude;
+				console.log("User pos updated to: "+userPos.lat+", "+userPos.lng);
 
-                var pos =
-				{
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                };
-				//marker.setPosition(pos);
+				// Update user position
+				// For now add a new marker. In future move the user marker.
+				// with marker.setPosition(pos);
                 marker = new google.maps.Marker
 				({
-                    position: pos,
+                    position: userPos,
                     map: map
                 });
-                map.setCenter(pos);
+                map.setCenter(userPos);
+
+                // var pos =
+				// {
+                    // lat: position.coords.latitude,
+                    // lng: position.coords.longitude
+                // };
+				// //marker.setPosition(pos);
+                // marker = new google.maps.Marker
+				// ({
+                    // position: pos,
+                    // map: map
+                // });
+                // map.setCenter(pos);
 			},
 			function()
 			{
@@ -211,6 +213,8 @@ ob_start();
                     // map: map
                 // });
                 map.setCenter(userPos);
+				
+				// we can also calculate distance moved here.
 			},
 			function()
 			{
