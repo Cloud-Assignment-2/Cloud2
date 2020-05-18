@@ -204,11 +204,12 @@ ob_start();
 				// Update user position
 				// For now add a new marker. In future move the user marker.
 				// with marker.setPosition(pos);
-                marker = new google.maps.Marker
-				({
-                    position: userPos,
-                    map: map
-                });
+				marker.setPosition(userPos);
+                // marker = new google.maps.Marker
+				// ({
+                    // position: userPos,
+                    // map: map
+                // });
                 map.setCenter(userPos);
 			},
 			function()
