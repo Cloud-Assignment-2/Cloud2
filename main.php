@@ -467,7 +467,7 @@ ob_start();
 		}
 		return "";
 	}
-	document.getElementById("welcomeuser").innerHTML = "Welcome user";
+
 		
     </script>
     <script async defer
@@ -519,5 +519,9 @@ ob_start();
 	<div id="piechart" style="width: 900px; height: 500px;"></div>
 
 </body>
+
+<script>
+	document.getElementById("welcomeuser").innerHTML = "Welcome user";
+</script>
 
 </html>

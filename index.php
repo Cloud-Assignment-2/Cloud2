@@ -85,7 +85,7 @@ body
 		document.cookie = idCookie;
 
 		//make sure this user exists in db, otherwise make a record.
-		document.getElementById("gLogin").innerHTML = 'Google Authorisation successful. <a href="https://cloudfit.info/main.php">Continue</a>';
+		document.getElementById("gLogin").innerHTML = 'Google Authorisation successful. <a href="https://cloudfit.info/main.php">Continue with Google account</a>';
 	}
 
 	function setDemo()
