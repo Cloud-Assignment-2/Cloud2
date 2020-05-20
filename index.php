@@ -36,8 +36,10 @@ body
 		var usernameCookie = "username="+profile.getGivenName();
 		var idCookie = "userid="+profile.id_token;
 		
-		document.cookie = usernameCooke;
+		document.cookie = usernameCookie;
 		document.cookie = idCookie;
+		
+		//make sure this user exists in db, otherwise make a record.
 		
 
 		document.getElementById("gLogin").innerHTML = 'Google Authorisation successful. <a href="https://cloudfit.info/main.php">Continue</a>';
