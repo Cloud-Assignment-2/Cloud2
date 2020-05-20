@@ -110,7 +110,7 @@ ob_start();
 		}
 		
 		// pull existing markers from db.
-		db.collection("marker").where("user", "==", "admin").get().then(function(querySnapshot)
+		db.collection("marker").where("user", "==", getCookie("userid")).get().then(function(querySnapshot)
 		{
             querySnapshot.forEach(function(doc)
 			{
@@ -216,7 +216,7 @@ ob_start();
 		markerID = [];
 		
 		// pull existing markers from db.
-		db.collection("marker").where("user", "==", "admin").get().then(function(querySnapshot)
+		db.collection("marker").where("user", "==", getCookie("userid")).get().then(function(querySnapshot)
 		{
             querySnapshot.forEach(function(doc)
 			{
