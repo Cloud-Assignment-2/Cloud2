@@ -92,6 +92,8 @@ body
 	  function setDemo()
 	  {
 		  console.log("SET DEMO");
+			document.cookie = "username=admin";
+			document.cookie = "userid=admin";
 	  }
     </script>
 	
