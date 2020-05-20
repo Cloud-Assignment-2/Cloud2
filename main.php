@@ -89,8 +89,14 @@ ob_start();
 			handleLocationError(false, infoWindow, map.getCenter());
 		}
 		
+				// Create a reference to the cities collection
+		//var citiesRef = db.collection("marker");
+
+		// Create a query against the collection.
+		//var query = citiesRef.where("state", "==", "CA");
+		
 		// pull existing markers from db.
-        db.collection("marker").get().then(function(querySnapshot)
+        db.collection("marker").get().where("user", "==", "admin").then(function(querySnapshot)
 		{
             querySnapshot.forEach(function(doc)
 			{
@@ -196,7 +202,7 @@ ob_start();
 		markerID = [];
 		
 		// pull existing markers from db.
-        db.collection("marker").get().then(function(querySnapshot)
+        db.collection("marker").get().where("user", "==", "admin").then(function(querySnapshot)
 		{
             querySnapshot.forEach(function(doc)
 			{
@@ -322,7 +328,7 @@ ob_start();
 				// Add a new document in collection "cities"
 				db.collection("points").add
 				({
-					username: "admin",
+					username: getCookie("username"),
 					timestamp: dbTimestamp
 				})
 
@@ -416,7 +422,7 @@ ob_start();
 		db.collection("marker").add
 		({
 			location: new firebase.firestore.GeoPoint(snappedCoordinates.lat, snappedCoordinates.lng),
-			user: '<?php echo $_SESSION["login_id"]; ?>'
+			user: getCookie("username")
 		});
 		
 		console.log("marker added to db");
