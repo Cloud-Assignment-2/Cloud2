@@ -32,10 +32,19 @@ body
         // The ID token you need to pass to your backend:
         var id_token = googleUser.getAuthResponse().id_token;
         console.log("ID Token: " + id_token);
+		
+		//redirect to main page
+		//<?php
+		//$_SESSION["login_id"] = 
+		//?>
+		
+		document.getElementById("gLogin").innerHTML = 'Google Authorisation successful. <a href="logout">Continue</a>';
       }
     </script>
 	
 	<h1>CloudFit - Fitness Tracking App</h1>
+	
+	<p id="gLogin"></p>
 	
 	<p>Sign in with your Google account or use the <a href="cloudfit.info/login_test.php">Testing Account</a>.</p>
   </body>
