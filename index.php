@@ -1,38 +1,26 @@
-<?php
-session_start();
-ob_start();
-?>
+<html lang="en">
+  <head>
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+  </head>
+  <body>
+    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+    <script>
+      function onSignIn(googleUser) {
+        // Useful data for your client-side scripts:
+        var profile = googleUser.getBasicProfile();
+        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+        console.log('Full Name: ' + profile.getName());
+        console.log('Given Name: ' + profile.getGivenName());
+        console.log('Family Name: ' + profile.getFamilyName());
+        console.log("Image URL: " + profile.getImageUrl());
+        console.log("Email: " + profile.getEmail());
 
-<html>
-<head>
-<title>Fitness Tracker - Login</title>
-<link rel="stylesheet" type="text/css" href="/css/style.css">
-</head>
-<body>
-
-<h1>Login</h1>
-<p>
-<?php
-if ( $_SESSION["loginSucc"]!== False )
-{
-	echo "User id or password is invalid.<br/>";
-}
-?>
-<br/>
-	<form action="https://cloudfit.info/login_check.php" method="POST">
-	Username: <input type="text" name="username" id="username" maxlength="20" required>
-	<br/><br/>
-	<!--Password: <input type="password" name="password" id="password">-->
-	Password: <input type="text" name="password" id="password" maxlength="20" required>
-	<br/><br/>
-	<button type="submit">Login</button>
-	</form>
-	
-	<p>Testing account: admin.</p>
-	
-	<!--<a href="/main.php">Testing account</a>-->
-	<!--<a href="/register.php">register</a>-->
-<br/>
-</p>
-</body>
+        // The ID token you need to pass to your backend:
+        var id_token = googleUser.getAuthResponse().id_token;
+        console.log("ID Token: " + id_token);
+      }
+    </script>
+  </body>
 </html>
