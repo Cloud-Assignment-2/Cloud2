@@ -38,7 +38,7 @@ body
 		//$_SESSION["login_id"] = 
 		//?>
 		
-		document.getElementById("gLogin").innerHTML = 'Google Authorisation successful. <a href="logout">Continue</a>';
+		document.getElementById("gLogin").innerHTML = 'Google Authorisation successful. <a href="https://cloudfit.info/main.php">Continue</a>';
       }
     </script>
 	
