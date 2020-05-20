@@ -18,6 +18,26 @@ ob_start();
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
 
 <script>
+	function getCookie(cname)
+	{
+		var name = cname + "=";
+		var decodedCookie = decodeURIComponent(document.cookie);
+		var ca = decodedCookie.split(';');
+		for(var i = 0; i <ca.length; i++)
+		{
+			var c = ca[i];
+			while (c.charAt(0) == ' ')
+			{
+				c = c.substring(1);
+			}
+			if (c.indexOf(name) == 0)
+			{
+				return c.substring(name.length, c.length);
+			}
+		}
+		return "";
+	}
+
 	// Your web app's Firebase configuration
 	var firebaseConfig =
 	{
@@ -452,29 +472,7 @@ ob_start();
 	{
 	  var pi = Math.PI;
 	  return degrees * (pi/180);
-	}
-	
-	function getCookie(cname)
-	{
-		var name = cname + "=";
-		var decodedCookie = decodeURIComponent(document.cookie);
-		var ca = decodedCookie.split(';');
-		for(var i = 0; i <ca.length; i++)
-		{
-			var c = ca[i];
-			while (c.charAt(0) == ' ')
-			{
-				c = c.substring(1);
-			}
-			if (c.indexOf(name) == 0)
-			{
-				return c.substring(name.length, c.length);
-			}
-		}
-		return "";
-	}
-
-		
+	}		
     </script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFZBF28p1IJCd8JiC1BaV8aNCSYJq6fEo&callback=initMap">
