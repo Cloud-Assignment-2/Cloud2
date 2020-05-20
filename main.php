@@ -481,6 +481,9 @@ ob_start();
 <script>
 	var x = document.cookie;
 	console.log("Cookie output: "+x);
+	
+	var referrer = document.write(document.referrer);
+	console.log("Referrer: "+referrer);
 </script>
 
 <body class="is-preload">
