@@ -109,13 +109,8 @@ ob_start();
 			handleLocationError(false, infoWindow, map.getCenter());
 		}
 		
-		// Create a reference to the cities collection
-		var markerRef = db.collection("marker");
-		// Create a query against the collection.
-		var query = markerRef.where("user", "==", "admin");
-		
 		// pull existing markers from db.
-        query.then(function(querySnapshot)
+		db.collection("marker").where("user", "==", "admin").get().then(function(querySnapshot)
 		{
             querySnapshot.forEach(function(doc)
 			{
@@ -220,13 +215,8 @@ ob_start();
 		userMarkers = [];
 		markerID = [];
 		
-		// Create a reference to the cities collection
-		var markerRef = db.collection("marker");
-		// Create a query against the collection.
-		var query = markerRef.where("user", "==", "admin");
-		
 		// pull existing markers from db.
-        query.then(function(querySnapshot)
+		db.collection("marker").where("user", "==", "admin").get().then(function(querySnapshot)
 		{
             querySnapshot.forEach(function(doc)
 			{
