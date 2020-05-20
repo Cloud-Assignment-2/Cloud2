@@ -8,8 +8,12 @@
   <body>
  
 <style>
-body {
-  background-image: url('bkg.jpg');
+body
+{
+	background-image: url('bkg.jpg');
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
 }
 </style>
   
