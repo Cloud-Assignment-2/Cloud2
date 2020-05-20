@@ -94,6 +94,6 @@ body
 	
 	<p id="gLogin"></p>
 	
-	<p>Sign in with your Google account or use the <a href="cloudfit.info/login_test.php">Testing Account</a>.</p>
+	<p>Sign in with your Google account or use the <a href="cloudfit.info/login_test.php">Demo Account</a>.</p>
   </body>
 </html>	
