@@ -521,7 +521,7 @@ ob_start();
 </body>
 
 <script>
-	document.getElementById("welcomeuser").innerHTML = "Welcome user";
+	document.getElementById("welcomeuser").innerHTML = "Welcome, "+getCookie("username");
 </script>
 
 </html>
