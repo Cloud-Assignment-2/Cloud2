@@ -33,11 +33,13 @@ body
         var id_token = googleUser.getAuthResponse().id_token;
         console.log("ID Token: " + id_token);
 		
-		//redirect to main page
-		//<?php
-		//$_SESSION["login_id"] = 
-		//?>
+		var usernameCookie = "username="+profile.getGivenName();
+		var idCookie = "userid="+profile.id_token;
 		
+		document.cookie = usernameCooke;
+		document.cookie = idCookie;
+		
+
 		document.getElementById("gLogin").innerHTML = 'Google Authorisation successful. <a href="https://cloudfit.info/main.php">Continue</a>';
       }
     </script>
