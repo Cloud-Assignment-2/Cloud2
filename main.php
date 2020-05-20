@@ -4,7 +4,6 @@ ob_start();
 ?>
 
 <!DOCTYPE HTML>
-
 <html>
 
 <head>
@@ -479,17 +478,20 @@ ob_start();
 
 </head>
 
+<script>
+	var x = document.cookie;
+	console.log("Cookie output: "+x);
+</script>
+
 <body class="is-preload">
 
 	<center>
 	<h1>CloudFit</h1>
 	</center>
 
-	<h2>Welcome, <?php echo $_SESSION["login_id"]; ?></h2>
+	<h2 id="welcomeuser"></h2>
 	<p>
 	<a href="/profile.php">User profile</a>
-	<!--<a href="/name.php">Change name</a>-->
-	<!--<a href="/password.php">Change password</a>-->
 	</p>
 
 	<p>test</p>	
