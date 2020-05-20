@@ -4,9 +4,53 @@
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="60375874577-dikibnuoff7e97jpfe9bk81khld3gc7u.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
+	
+	<!-- include firebase -->
+	<script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-firestore.js"></script>
   </head>
   <body>
- 
+
+<script>
+	// Your web app's Firebase configuration
+	var firebaseConfig =
+	{
+		apiKey: "AIzaSyAFZBF28p1IJCd8JiC1BaV8aNCSYJq6fEo",
+		authDomain: "cloudfit-277211.firebaseapp.com",
+		databaseURL: "https://cloudfit-277211.firebaseio.com",
+		projectId: "cloudfit-277211",
+		storageBucket: "cloudfit-277211.appspot.com",
+		messagingSenderId: "60375874577",
+		appId: "1:60375874577:web:77f5085d5fd62c055c45b0"
+	};
+	// Initialize Firebase
+	firebase.initializeApp(firebaseConfig);
+	var db = firebase.firestore();
+
+	// var docRef = db.collection("user").doc('<?php echo $entered_username; ?>');
+
+	// docRef.get().then(function(doc)
+	// {
+		// if (doc.exists)
+		// {
+			// console.log("Password:", doc.data().password);
+			// <?php $_SESSION["login_id"] = $_POST['username'];?>
+			// window.location.replace("https://cloudfit.info/main.php");
+			// return;
+		// }
+		// else // document not found
+		// {
+			// console.log("User not found");
+			// window.location.replace("https://cloudfit.info");
+		// }
+	// }).catch(function(error) // error with database
+	// {
+		// console.log("Error getting document:", error);
+		// window.location.replace("https://cloudfit.info");
+	// });
+	
+</script>
+
 <style>
 body
 {
