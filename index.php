@@ -54,7 +54,7 @@
 <style>
 body
 {
-	background-image: url('bkg.jpg');
+	background-image: url('bkgCA.jpg');
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-size: cover;
