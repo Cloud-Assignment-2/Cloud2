@@ -88,12 +88,16 @@ body
 
 		document.getElementById("gLogin").innerHTML = 'Google Authorisation successful. <a href="https://cloudfit.info/main.php">Continue</a>';
       }
+	  
+	  function setDemo()
+	  {
+		  console.log("SET DEMO");
+	  }
     </script>
 	
 	<h1>CloudFit - Fitness Tracking App</h1>
 	
 	<p id="gLogin"></p>
-	
-	<p>Sign in with your Google account or use the <a href="https://cloudfit.info/main.php">Demo Account</a>.</p>
+	<p>Sign in with your Google account or use the <a href="https://cloudfit.info/main.php" onclick="setDemo()">Demo Account</a>.</p>
   </body>
 </html>	
