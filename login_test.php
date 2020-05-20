@@ -6,12 +6,11 @@ ob_start();
 ?>
 
 <script>
-function redirect()
-{
-	window.location.replace("https://cloudfit.info/main.php");
-}
-
 	document.cookie = "username=admin";
 	document.cookie = "userid=admin";
-	redirect();
+
+   setTimeout(function () {
+       window.location.href = "https://cloudfit.info/main.php"; //will redirect to your blog page (an ex: blog.html)
+    }, 2000); //will call the function after 2 secs.
+
 </script>
