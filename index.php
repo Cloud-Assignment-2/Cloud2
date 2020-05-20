@@ -6,6 +6,13 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
   </head>
   <body>
+ 
+<style>
+body {
+  background-image: url('bkg.jpg');
+}
+</style>
+  
     <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
     <script>
       function onSignIn(googleUser) {
@@ -26,6 +33,6 @@
 	
 	<h1>CloudFit - Fitness Tracking App</h1>
 	
-	<p>Sign in with your Google account or use the <a href="login_test">Testing Account</a>.</p>
+	<p>Sign in with your Google account or use the <a href="cloudfit.info/login_test.php">Testing Account</a>.</p>
   </body>
 </html>	
