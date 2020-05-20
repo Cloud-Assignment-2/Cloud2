@@ -447,6 +447,27 @@ ob_start();
 	  var pi = Math.PI;
 	  return degrees * (pi/180);
 	}
+	
+	function getCookie(cname)
+	{
+		var name = cname + "=";
+		var decodedCookie = decodeURIComponent(document.cookie);
+		var ca = decodedCookie.split(';');
+		for(var i = 0; i <ca.length; i++)
+		{
+			var c = ca[i];
+			while (c.charAt(0) == ' ')
+			{
+				c = c.substring(1);
+			}
+			if (c.indexOf(name) == 0)
+			{
+				return c.substring(name.length, c.length);
+			}
+		}
+		return "";
+	}
+	document.getElementById("welcomeuser").innerHTML = "Welcome user";
 		
     </script>
     <script async defer
@@ -477,14 +498,6 @@ ob_start();
 	</script>
 
 </head>
-
-<script>
-	var x = document.cookie;
-	console.log("Cookie output: "+x);
-	
-	var referrer = document.write(document.referrer);
-	console.log("Referrer: "+referrer);
-</script>
 
 <body class="is-preload">
 
