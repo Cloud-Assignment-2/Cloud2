@@ -78,7 +78,7 @@ body
         console.log("ID Token: " + id_token);
 		
 		var usernameCookie = "username="+profile.getGivenName();
-		var idCookie = "userid="+profile.id_token;
+		var idCookie = "userid="+id_token;
 		
 		document.cookie = usernameCookie;
 		document.cookie = idCookie;
