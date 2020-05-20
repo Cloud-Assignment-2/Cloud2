@@ -248,7 +248,7 @@ ob_start();
 	{
 		//console.log("Function: Remove distant markers.");
 		// pull existing markers from db.
-        db.collection("marker").get().then(function(querySnapshot)
+		db.collection("marker").where("user", "==", getCookie("userid")).get().then(function(querySnapshot)
 		{
             querySnapshot.forEach(function(doc)
 			{
@@ -298,7 +298,7 @@ ob_start();
 	{
 		//console.log("Function: Credit close markers.");
 		// pull existing markers from db.
-        db.collection("marker").get().then(function(querySnapshot)
+		db.collection("marker").where("user", "==", getCookie("userid")).get().then(function(querySnapshot)
 		{
             querySnapshot.forEach(function(doc)
 			{
@@ -436,7 +436,7 @@ ob_start();
 		db.collection("marker").add
 		({
 			location: new firebase.firestore.GeoPoint(snappedCoordinates.lat, snappedCoordinates.lng),
-			user: getCookie("username")
+			user: getCookie("userid")
 		});
 		
 		console.log("marker added to db");
