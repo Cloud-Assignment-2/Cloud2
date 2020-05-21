@@ -96,7 +96,7 @@ body
 	}
     </script>
 	
-	<h1>CloudFit - Fitness Tracking App</h1>
+	<h1>CloudFit - Fitness Tracking App - test</h1>
 	
 	<p id="gLogin"></p>
 	<p>Sign in with your Google account or use the <a href="https://cloudfit.info/main.php" onclick="setDemo()">Demo Account</a>.</p>
