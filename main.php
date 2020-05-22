@@ -195,6 +195,7 @@ ob_start();
 				userPos.lat = position.coords.latitude;
 				userPos.lng = position.coords.longitude;
 				console.log("User pos updated to: "+userPos.lat+", "+userPos.lng);
+				document.getElementById("htmlPos").innerHTML = 'Current position: '+userPos.lat+', '+userPos.lng;
 
 				// Update user position marker
 				marker.setPosition(userPos);
