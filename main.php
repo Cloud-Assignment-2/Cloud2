@@ -63,7 +63,7 @@ ob_start();
 	var removeCloseID = "none"; // close marker flagged to remove
 	
 	var closestMarkerID=-1;
-	var closestDistance=1000;
+	closestDistance=1000;
 	
 	var MAX_MARKERS = 6; // 6 should be enough to provide good options for a destination.
 	var CREDIT_DISTANCE=55; // distance user must close to a marker to be credited. Shouldn't be too precise because sometimes GPS is inaccurate or slow to update.
