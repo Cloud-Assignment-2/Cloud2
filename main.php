@@ -61,6 +61,9 @@ ob_start();
 	
 	var removeDistantID = "none"; // distant marker flagged to remove
 	var removeCloseID = "none"; // close marker flagged to remove
+	
+	// Elevation service
+	var elevator = new google.maps.ElevationService;
 
 	var userPos =
 	{
@@ -145,6 +148,38 @@ ob_start();
 		'Error: Your browser doesn\'t support geolocation.');
 		infoWindow.open(map);
     }
+	
+	function updateElevation()
+	{
+		//var elevationData = https://maps.googleapis.com/maps/api/elevation/json?locations=39.7391536,-104.9847034&key=YOUR_API_KEY
+		
+		// Initiate the location request
+		elevator.getElevationForLocations
+		({
+			'locations': [userPos]
+		},
+		function(results, status)
+		{
+			if (status === 'OK')
+			{
+				// Retrieve the first result
+				if (results[0])
+				{
+					// Open the infowindow indicating the elevation at the clicked position.
+					console.log('The elevation at this point <br>is ' +
+					results[0].elevation + ' meters.');
+				}
+				else
+				{
+					console.log("No elevation returned for given location.");
+				}
+			}
+			else
+			{
+				console.log('Elevation service failed due to: ' + status);
+			}
+		});
+	}
 
 	//periodically update map to update user position and check nearby markers.
 	function updateLoop()
@@ -199,6 +234,10 @@ ob_start();
 			//console.log("Need to add more markers.");
 			addNewMarker();
 		}
+		
+		
+		// Find elevation for user's current position.
+		updateElevation();
 	}
 	
 	// remove all markers and then pull them from db again.
@@ -508,7 +547,15 @@ ob_start();
 	<a href="/profile.php">User profile</a>
 	</p>
 
-	<p>test</p>	
+	<p id="htmlPos">User coordinates:</p>	
+	<p id="htmlElevation">User elevation:</p>	
+	<p id="htmlPlaces">Nearby places:</p>	
+	<p id="htmlPlaces">Current weather:</p> <!-- api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={your api key} -->	
+	
+	<!-- Distance matrix: https://developers.google.com/maps/documentation/distance-matrix/intro -->
+	<!-- Elevation: https://developers.google.com/maps/documentation/elevation/start -->
+	<!-- Places: https://developers.google.com/places/web-service/intro https://developers.google.com/places/web-service/search -->
+	<!-- Messaging: https://firebase.google.com/docs/cloud-messaging -->
 	
 	<br/>
 
