@@ -245,8 +245,6 @@ ob_start();
 		
 		// Find elevation for user's current position.
 		updateElevation();
-		// Find walking distance to closest marker.
-		updateClosestDistance();
 	}
 	
 	// remove all markers and then pull them from db again.
@@ -342,18 +340,10 @@ ob_start();
 		return false;
 	}
 	
-	function updateClosestDistance()
-	{
-		//document.getElementById("htmlClosest").innerHTML = 'AYY';
-		//if (closestDistance != 1000)
-		//{
-			document.getElementById("htmlClosest").innerHTML = 'Closest marker: '+Math.round(closestDistance)+'m';
-		//}
-	}
-	
 	function creditCloseMarkers()
 	{
 		console.log("Closest dist: "+closestDistance);
+		document.getElementById("htmlClosest").innerHTML = 'Closest marker: '+Math.round(closestDistance)+'m';
 		
 		closestMarkerID=-1;
 		closestDistance=1000;
