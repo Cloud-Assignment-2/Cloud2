@@ -1,15 +1,17 @@
 <html lang="en">
-  <head>
+<head>
 	<meta name="google-site-verification" content="zzpNvvwT05TdkinZokxOQldINIS7UrKSxrQywLqIcSU" />
-    <meta name="google-signin-scope" content="profile email">
-    <meta name="google-signin-client_id" content="60375874577-dikibnuoff7e97jpfe9bk81khld3gc7u.apps.googleusercontent.com">
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-	
+	<meta name="google-signin-scope" content="profile email">
+	<meta name="google-signin-client_id" content="60375874577-dikibnuoff7e97jpfe9bk81khld3gc7u.apps.googleusercontent.com">
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
+
 	<!-- include firebase -->
 	<script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-firestore.js"></script>
-  </head>
-  <body>
+</head>
+<body>
+
+	<div id="page-container"><div id="content-wrap">
 
 <script>
 	// Your web app's Firebase configuration
@@ -101,6 +103,7 @@ body
 	<p id="gLogin"></p>
 	<p>Sign in with your Google account or use the <a href="https://cloudfit.info/main.php" onclick="setDemo()">Demo Account</a>.</p>
   </body>
+  </div></div>
   
   <footer id="footer">
   CloudFit is an academic project and does not store any personal user information.
