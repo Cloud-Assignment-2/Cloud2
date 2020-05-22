@@ -7,9 +7,9 @@ handlers:
 - url: /(.+\.php)$
   script: \1
   
-- url: /(.+\.(gif|png|jpg))$
+- url: /(.+\.(gif|png|jpg|css))$
   static_files: \1
-  upload: .+\.(gif|png|jpg)$
+  upload: .+\.(gif|png|jpg|css)$
   application_readable: true
 
 - url: /.*
