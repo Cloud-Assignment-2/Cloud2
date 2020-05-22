@@ -390,6 +390,8 @@ ob_start();
             console.log("Error getting documents: ", error);
         });
 		
+		console.log("Closest dist: "+closestDistance);
+		
 		//console.log("Final id: "+removeCloseID);
 		if (removeCloseID.localeCompare("none")!=0)
 		{
