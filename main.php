@@ -169,7 +169,7 @@ ob_start();
 					// Update user elevation output
 					//console.log('The elevation at this point <br>is ' +
 					//results[0].elevation + ' meters.');
-					document.getElementById("htmlElevation").innerHTML = 'Current elevation: '+results[0].elevation+' meters.';
+					document.getElementById("htmlElevation").innerHTML = 'Current elevation: '+Math.round(results[0].elevation)+'m';
 				}
 				else
 				{
@@ -408,7 +408,7 @@ ob_start();
 		}
 		else if (closestDistance != -1)
 		{
-			document.getElementById("htmlClosest").innerHTML = 'Closest marker: '+closestDistanc+'metres';
+			document.getElementById("htmlClosest").innerHTML = 'Closest marker: '+Math.round(closestDistance)+'m';
 		}
 		return false;
 	}
