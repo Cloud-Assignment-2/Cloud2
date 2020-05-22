@@ -62,8 +62,10 @@ ob_start();
 	var removeDistantID = "none"; // distant marker flagged to remove
 	var removeCloseID = "none"; // close marker flagged to remove
 	
-	var closestMarkerID;
+	var closestMarkerID=-1;
 	var closestDistance=1000;
+	
+	var MAX_MARKERS = 5; // 5 should be enough to provide good options for a destination.
 
 	var userPos =
 	{
@@ -231,8 +233,8 @@ ob_start();
 			creditCloseMarkers();
 		}
 
-		<!-- always maintain 3 markers -->
-		if ( userMarkers.length < 3 )
+		<!-- always maintain MAX_MARKERS markers -->
+		if ( userMarkers.length < MAX_MARKERS )
 		{
 			//console.log("Need to add more markers.");
 			addNewMarker();
