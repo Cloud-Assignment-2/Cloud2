@@ -62,7 +62,8 @@ ob_start();
 	var removeDistantID = "none"; // distant marker flagged to remove
 	var removeCloseID = "none"; // close marker flagged to remove
 	
-
+	var closestMarkerID;
+	var closestDistance=1000;
 
 	var userPos =
 	{
@@ -335,8 +336,12 @@ ob_start();
 		return false;
 	}
 	
+
+	
 	function creditCloseMarkers()
 	{
+		closestMarkerID=-1;
+		closestDistance=1000;
 		//console.log("Function: Credit close markers.");
 		// pull existing markers from db.
 		db.collection("marker").where("user", "==", getCookie("userid")).get().then(function(querySnapshot)
@@ -353,7 +358,13 @@ ob_start();
 				var distanceFromUser = getDistance(userPos.lat, userPos.lng, coordinates.lat, coordinates.lng);
 				console.log("Marker dist: "+distanceFromUser);
 				
-				if (distanceFromUser < 50)
+				if (distanceFromUser < closestDistance)
+				{
+					closestMarkerID = doc.id;
+					closestDistance = distanceFromUser;
+				}
+				
+				if (distanceFromUser < 60)
 				{
 					removeCloseID = doc.id;
 					console.log("Removing close marker: "+removeCloseID);
@@ -394,6 +405,10 @@ ob_start();
 				console.error("Error removing document: ", error);
 			});
 
+		}
+		else if (closestDistance != -1)
+		{
+			document.getElementById("htmlClosest").innerHTML = 'Closest marker: '+closestDistanc+'metres';
 		}
 		return false;
 	}
@@ -549,10 +564,11 @@ ob_start();
 	<a href="/profile.php">User profile</a>
 	</p>
 
-	<p id="htmlPos">User coordinates:</p>	
-	<p id="htmlElevation">User elevation:</p>	
-	<p id="htmlPlaces">Nearby places:</p>	
-	<p id="htmlPlaces">Current weather:</p> <!-- api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={your api key} -->	
+	<p id="htmlClosest">Walking distance to closest marker:</p>
+	<p id="htmlPos">User coordinates:</p>
+	<p id="htmlElevation">User elevation:</p>
+	<p id="htmlPlaces">Nearby places:</p>
+	<p id="htmlPlaces">Current weather:</p> <!-- api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={your api key} -->
 	
 	<!-- Distance matrix: https://developers.google.com/maps/documentation/distance-matrix/intro -->
 	<!-- Elevation: https://developers.google.com/maps/documentation/elevation/start -->

@@ -12,7 +12,7 @@
 </head>
 <body>
 
-	<div id="page-container"><div id="content-wrap">
+
 
 <script>
 	// Your web app's Firebase configuration
@@ -99,15 +99,18 @@ body
 	}
     </script>
 	
+	<div id="page-container">
+	<div id="content-wrap">
+	
 	<h1>CloudFit - Fitness Tracking App</h1>
 	
 	<p id="gLogin"></p>
 	<p>Sign in with your Google account or use the <a href="https://cloudfit.info/main.php" onclick="setDemo()">Demo Account</a>.</p>
-  </body>
-  </div>
+	</body>
+	</div>
   
-  <footer id="footer">
-  CloudFit is an academic project and does not store any personal user information.
-  </footer>
-  </div>
+	<footer id="footer">
+	CloudFit is an academic project and does not store any personal user information.
+	</footer>
+	</div>
 </html>	
