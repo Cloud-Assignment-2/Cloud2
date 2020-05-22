@@ -67,6 +67,7 @@ ob_start();
 	
 	var MAX_MARKERS = 6; // 6 should be enough to provide good options for a destination.
 	var CREDIT_DISTANCE=55; // distance user must close to a marker to be credited. Shouldn't be too precise because sometimes GPS is inaccurate or slow to update.
+	var UPDATE_INTERVAL = 5000; // 5 seconds should provide enough time between database updates
 
 	var userPos =
 	{
@@ -339,7 +340,13 @@ ob_start();
 		return false;
 	}
 	
-
+	function updateClosestDistance()
+	{
+		if (closestDistance != 1000)
+		{
+			document.getElementById("htmlClosest").innerHTML = 'Closest marker: '+Math.round(closestDistance)+'m';
+		}
+	}
 	
 	function creditCloseMarkers()
 	{
@@ -380,10 +387,7 @@ ob_start();
             console.log("Error getting documents: ", error);
         });
 		
-		if (closestDistance != 1000)
-		{
-			document.getElementById("htmlClosest").innerHTML = 'Closest marker: '+Math.round(closestDistance)+'m';
-		}
+		updateClosestDistance();
 		
 		//console.log("Final id: "+removeCloseID);
 		if (removeCloseID.localeCompare("none")!=0)
@@ -505,7 +509,7 @@ ob_start();
 	
 	// Main interval function to keep track of application state
 	// interval shouldn't be too often to allow time for database updates and whatnot. 30 seconds should be plenty for walking/running.
-	var interval = setInterval(updateLoop, 10000);
+	var interval = setInterval(updateLoop, UPDATE_INTERVAL);
 	
 	// Get distance between two geopoints
 	function getDistance (lat1, lng1, lat2, lng2 ) 
