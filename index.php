@@ -101,4 +101,8 @@ body
 	<p id="gLogin"></p>
 	<p>Sign in with your Google account or use the <a href="https://cloudfit.info/main.php" onclick="setDemo()">Demo Account</a>.</p>
   </body>
+  
+  <footer>
+  CloudFit is an academic project and does not store any personal user information.
+  </footer>
 </html>	
