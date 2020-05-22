@@ -380,6 +380,11 @@ ob_start();
             console.log("Error getting documents: ", error);
         });
 		
+		if (closestDistance != 1000)
+		{
+			document.getElementById("htmlClosest").innerHTML = 'Closest marker: '+Math.round(closestDistance)+'m';
+		}
+		
 		//console.log("Final id: "+removeCloseID);
 		if (removeCloseID.localeCompare("none")!=0)
 		{
@@ -409,10 +414,6 @@ ob_start();
 				console.error("Error removing document: ", error);
 			});
 
-		}
-		if (closestDistance != 1000)
-		{
-			document.getElementById("htmlClosest").innerHTML = 'Closest marker: '+Math.round(closestDistance)+'m';
 		}
 		return false;
 	}
