@@ -408,7 +408,7 @@ ob_start();
 			});
 
 		}
-		else if (closestDistance != -1)
+		else if (closestDistance != 1000)
 		{
 			document.getElementById("htmlClosest").innerHTML = 'Closest marker: '+Math.round(closestDistance)+'m';
 		}
