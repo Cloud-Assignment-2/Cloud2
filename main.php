@@ -152,9 +152,8 @@ ob_start();
 	{
 		// Elevation service
 		var elevator = new google.maps.ElevationService;
-		//var elevationData = https://maps.googleapis.com/maps/api/elevation/json?locations=39.7391536,-104.9847034&key=YOUR_API_KEY
 		
-		// Initiate the location request
+		// Initiate the elevation request
 		elevator.getElevationForLocations
 		({
 			'locations': [userPos]
@@ -166,9 +165,10 @@ ob_start();
 				// Retrieve the first result
 				if (results[0])
 				{
-					// Open the infowindow indicating the elevation at the clicked position.
-					console.log('The elevation at this point <br>is ' +
-					results[0].elevation + ' meters.');
+					// Update user elevation output
+					//console.log('The elevation at this point <br>is ' +
+					//results[0].elevation + ' meters.');
+					document.getElementById("htmlElevation").innerHTML = 'Current elevation: '+results[0].elevation+' meters.';
 				}
 				else
 				{
