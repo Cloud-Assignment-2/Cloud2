@@ -62,8 +62,7 @@ ob_start();
 	var removeDistantID = "none"; // distant marker flagged to remove
 	var removeCloseID = "none"; // close marker flagged to remove
 	
-	// Elevation service
-	var elevator = new google.maps.ElevationService;
+
 
 	var userPos =
 	{
@@ -151,6 +150,8 @@ ob_start();
 	
 	function updateElevation()
 	{
+		// Elevation service
+		var elevator = new google.maps.ElevationService;
 		//var elevationData = https://maps.googleapis.com/maps/api/elevation/json?locations=39.7391536,-104.9847034&key=YOUR_API_KEY
 		
 		// Initiate the location request
