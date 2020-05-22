@@ -344,11 +344,11 @@ ob_start();
 	
 	function updateClosestDistance()
 	{
-		document.getElementById("htmlClosest").innerHTML = 'AYY';
-		if (closestDistance != 1000)
-		{
+		//document.getElementById("htmlClosest").innerHTML = 'AYY';
+		//if (closestDistance != 1000)
+		//{
 			document.getElementById("htmlClosest").innerHTML = 'Closest marker: '+Math.round(closestDistance)+'m';
-		}
+		//}
 	}
 	
 	function creditCloseMarkers()
@@ -577,7 +577,6 @@ ob_start();
 	<p id="htmlClosest">Walking distance to closest marker:</p>
 	<p id="htmlPos">User coordinates:</p>
 	<p id="htmlElevation">User elevation:</p>
-	<p id="htmlPlaces">Nearby places:</p>
 	<p id="htmlPlaces">Current weather:</p> <!-- api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={your api key} -->
 	
 	<!-- Distance matrix: https://developers.google.com/maps/documentation/distance-matrix/intro -->
