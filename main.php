@@ -63,7 +63,7 @@ ob_start();
 	var removeCloseID = "none"; // close marker flagged to remove
 	
 	var closestMarkerID=-1;
-	closestDistance=1000;
+	var closestDistance=1000;
 	
 	var MAX_MARKERS = 6; // 6 should be enough to provide good options for a destination.
 	var CREDIT_DISTANCE=55; // distance user must close to a marker to be credited. Shouldn't be too precise because sometimes GPS is inaccurate or slow to update.
@@ -353,6 +353,8 @@ ob_start();
 	
 	function creditCloseMarkers()
 	{
+		console.log("Closest dist: "+closestDistance);
+		
 		closestMarkerID=-1;
 		closestDistance=1000;
 		//console.log("Function: Credit close markers.");
@@ -389,8 +391,6 @@ ob_start();
 		{
             console.log("Error getting documents: ", error);
         });
-		
-		console.log("Closest dist: "+closestDistance);
 		
 		//console.log("Final id: "+removeCloseID);
 		if (removeCloseID.localeCompare("none")!=0)
