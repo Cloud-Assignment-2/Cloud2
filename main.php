@@ -245,6 +245,8 @@ ob_start();
 		
 		// Find elevation for user's current position.
 		updateElevation();
+		// Find walking distance to closest marker.
+		updateClosestDistance();
 	}
 	
 	// remove all markers and then pull them from db again.
@@ -342,6 +344,7 @@ ob_start();
 	
 	function updateClosestDistance()
 	{
+		document.getElementById("htmlClosest").innerHTML = 'AYY';
 		if (closestDistance != 1000)
 		{
 			document.getElementById("htmlClosest").innerHTML = 'Closest marker: '+Math.round(closestDistance)+'m';
@@ -386,8 +389,6 @@ ob_start();
 		{
             console.log("Error getting documents: ", error);
         });
-		
-		updateClosestDistance();
 		
 		//console.log("Final id: "+removeCloseID);
 		if (removeCloseID.localeCompare("none")!=0)
