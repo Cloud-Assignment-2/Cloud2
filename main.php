@@ -4,7 +4,6 @@ ob_start();
 ?>
 
 <!DOCTYPE HTML>
-
 <html>
 
 <head>
@@ -19,6 +18,26 @@ ob_start();
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
 
 <script>
+	function getCookie(cname)
+	{
+		var name = cname + "=";
+		var decodedCookie = decodeURIComponent(document.cookie);
+		var ca = decodedCookie.split(';');
+		for(var i = 0; i <ca.length; i++)
+		{
+			var c = ca[i];
+			while (c.charAt(0) == ' ')
+			{
+				c = c.substring(1);
+			}
+			if (c.indexOf(name) == 0)
+			{
+				return c.substring(name.length, c.length);
+			}
+		}
+		return "";
+	}
+
 	// Your web app's Firebase configuration
 	var firebaseConfig =
 	{
@@ -42,6 +61,13 @@ ob_start();
 	
 	var removeDistantID = "none"; // distant marker flagged to remove
 	var removeCloseID = "none"; // close marker flagged to remove
+	
+	var closestMarkerID=-1;
+	var closestDistance=1000;
+	
+	var MAX_MARKERS = 6; // 6 should be enough to provide good options for a destination.
+	var CREDIT_DISTANCE=55; // distance user must close to a marker to be credited. Shouldn't be too precise because sometimes GPS is inaccurate or slow to update.
+	var UPDATE_INTERVAL = 5000; // 5 seconds should provide enough time between database updates
 
 	var userPos =
 	{
@@ -91,7 +117,7 @@ ob_start();
 		}
 		
 		// pull existing markers from db.
-        db.collection("marker").get().then(function(querySnapshot)
+		db.collection("marker").where("user", "==", getCookie("userid")).get().then(function(querySnapshot)
 		{
             querySnapshot.forEach(function(doc)
 			{
@@ -126,6 +152,40 @@ ob_start();
 		'Error: Your browser doesn\'t support geolocation.');
 		infoWindow.open(map);
     }
+	
+	function updateElevation()
+	{
+		// Elevation service
+		var elevator = new google.maps.ElevationService;
+		
+		// Initiate the elevation request
+		elevator.getElevationForLocations
+		({
+			'locations': [userPos]
+		},
+		function(results, status)
+		{
+			if (status === 'OK')
+			{
+				// Retrieve the first result
+				if (results[0])
+				{
+					// Update user elevation output
+					//console.log('The elevation at this point <br>is ' +
+					//results[0].elevation + ' meters.');
+					document.getElementById("htmlElevation").innerHTML = 'Current elevation: '+Math.round(results[0].elevation)+'m';
+				}
+				else
+				{
+					console.log("No elevation returned for given location.");
+				}
+			}
+			else
+			{
+				console.log('Elevation service failed due to: ' + status);
+			}
+		});
+	}
 
 	//periodically update map to update user position and check nearby markers.
 	function updateLoop()
@@ -140,6 +200,7 @@ ob_start();
 				userPos.lat = position.coords.latitude;
 				userPos.lng = position.coords.longitude;
 				console.log("User pos updated to: "+userPos.lat+", "+userPos.lng);
+				document.getElementById("htmlPos").innerHTML = 'Current position: '+userPos.lat+', '+userPos.lng;
 
 				// Update user position marker
 				marker.setPosition(userPos);
@@ -174,12 +235,16 @@ ob_start();
 			creditCloseMarkers();
 		}
 
-		<!-- always maintain 3 markers -->
-		if ( userMarkers.length < 3 )
+		<!-- always maintain MAX_MARKERS markers -->
+		if ( userMarkers.length < MAX_MARKERS )
 		{
 			//console.log("Need to add more markers.");
 			addNewMarker();
 		}
+		
+		
+		// Find elevation for user's current position.
+		updateElevation();
 	}
 	
 	// remove all markers and then pull them from db again.
@@ -197,7 +262,7 @@ ob_start();
 		markerID = [];
 		
 		// pull existing markers from db.
-        db.collection("marker").get().then(function(querySnapshot)
+		db.collection("marker").where("user", "==", getCookie("userid")).get().then(function(querySnapshot)
 		{
             querySnapshot.forEach(function(doc)
 			{
@@ -229,7 +294,7 @@ ob_start();
 	{
 		//console.log("Function: Remove distant markers.");
 		// pull existing markers from db.
-        db.collection("marker").get().then(function(querySnapshot)
+		db.collection("marker").where("user", "==", getCookie("userid")).get().then(function(querySnapshot)
 		{
             querySnapshot.forEach(function(doc)
 			{
@@ -277,9 +342,14 @@ ob_start();
 	
 	function creditCloseMarkers()
 	{
+		console.log("Closest dist: "+closestDistance);
+		document.getElementById("htmlClosest").innerHTML = 'Closest marker: '+Math.round(closestDistance)+'m';
+		
+		closestMarkerID=-1;
+		closestDistance=1000;
 		//console.log("Function: Credit close markers.");
 		// pull existing markers from db.
-        db.collection("marker").get().then(function(querySnapshot)
+		db.collection("marker").where("user", "==", getCookie("userid")).get().then(function(querySnapshot)
 		{
             querySnapshot.forEach(function(doc)
 			{
@@ -293,7 +363,14 @@ ob_start();
 				var distanceFromUser = getDistance(userPos.lat, userPos.lng, coordinates.lat, coordinates.lng);
 				console.log("Marker dist: "+distanceFromUser);
 				
-				if (distanceFromUser < 50)
+				if (distanceFromUser < closestDistance)
+				{
+					closestMarkerID = doc.id;
+					closestDistance = distanceFromUser;
+					console.log("update close dist to "+closestDistance);
+				}
+				
+				if (distanceFromUser < CREDIT_DISTANCE)
 				{
 					removeCloseID = doc.id;
 					console.log("Removing close marker: "+removeCloseID);
@@ -323,7 +400,7 @@ ob_start();
 				// Add a new document in collection "cities"
 				db.collection("points").add
 				({
-					username: "admin",
+					username: getCookie("username"),
 					timestamp: dbTimestamp
 				})
 
@@ -417,7 +494,7 @@ ob_start();
 		db.collection("marker").add
 		({
 			location: new firebase.firestore.GeoPoint(snappedCoordinates.lat, snappedCoordinates.lng),
-			user: '<?php echo $_SESSION["login_id"]; ?>'
+			user: getCookie("userid")
 		});
 		
 		console.log("marker added to db");
@@ -425,7 +502,7 @@ ob_start();
 	
 	// Main interval function to keep track of application state
 	// interval shouldn't be too often to allow time for database updates and whatnot. 30 seconds should be plenty for walking/running.
-	var interval = setInterval(updateLoop, 10000);
+	var interval = setInterval(updateLoop, UPDATE_INTERVAL);
 	
 	// Get distance between two geopoints
 	function getDistance (lat1, lng1, lat2, lng2 ) 
@@ -447,8 +524,7 @@ ob_start();
 	{
 	  var pi = Math.PI;
 	  return degrees * (pi/180);
-	}
-		
+	}		
     </script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFZBF28p1IJCd8JiC1BaV8aNCSYJq6fEo&callback=initMap">
@@ -485,14 +561,20 @@ ob_start();
 	<h1>CloudFit</h1>
 	</center>
 
-	<h2>Welcome, <?php echo $_SESSION["login_id"]; ?></h2>
+	<h2 id="welcomeuser"></h2>
 	<p>
 	<a href="/profile.php">User profile</a>
-	<!--<a href="/name.php">Change name</a>-->
-	<!--<a href="/password.php">Change password</a>-->
 	</p>
 
-	<p>test</p>	
+	<p id="htmlClosest">Walking distance to closest marker:</p>
+	<p id="htmlPos">User coordinates:</p>
+	<p id="htmlElevation">User elevation:</p>
+	<p id="htmlPlaces">Current weather:</p> <!-- api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={your api key} -->
+	
+	<!-- Distance matrix: https://developers.google.com/maps/documentation/distance-matrix/intro -->
+	<!-- Elevation: https://developers.google.com/maps/documentation/elevation/start -->
+	<!-- Places: https://developers.google.com/places/web-service/intro https://developers.google.com/places/web-service/search -->
+	<!-- Messaging: https://firebase.google.com/docs/cloud-messaging -->
 	
 	<br/>
 
@@ -501,5 +583,9 @@ ob_start();
 	<div id="piechart" style="width: 900px; height: 500px;"></div>
 
 </body>
+
+<script>
+	document.getElementById("welcomeuser").innerHTML = "Welcome, "+getCookie("username");
+</script>
 
 </html>
