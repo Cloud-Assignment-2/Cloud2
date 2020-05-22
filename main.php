@@ -66,6 +66,7 @@ ob_start();
 	var closestDistance=1000;
 	
 	var MAX_MARKERS = 5; // 5 should be enough to provide good options for a destination.
+	var CREDIT_DISTANCE=55; // distance user must close to a marker to be credited. Shouldn't be too precise because sometimes GPS is inaccurate or slow to update.
 
 	var userPos =
 	{
@@ -366,7 +367,7 @@ ob_start();
 					closestDistance = distanceFromUser;
 				}
 				
-				if (distanceFromUser < 60)
+				if (distanceFromUser < CREDIT_DISTANCE)
 				{
 					removeCloseID = doc.id;
 					console.log("Removing close marker: "+removeCloseID);
