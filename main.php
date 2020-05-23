@@ -162,7 +162,7 @@ ob_start();
 		function(data)
 		{
 			//placeMarkerAt(data.snappedPoints[0].location.latitude,data.snappedPoints[0].location.longitude);
-			console.log("Weather update "+data);
+			console.log("Weather update "+data.weather);
 		});
 	}
 	
