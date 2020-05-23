@@ -213,6 +213,9 @@ ob_start();
 	
 	function updateDistanceMatrix()
 	{
+		if (closestMarkerPos.lat == 0.0)
+		{ return; }
+		
 		console.log("update distance matrix");
 		// var origin1 = new google.maps.LatLng(55.930385, -3.118425);
 		// var origin2 = 'Greenwich, England';
