@@ -218,12 +218,7 @@ ob_start();
 		{
 			origins: [origin1, origin2],
 			destinations: [destinationA, destinationB],
-			travelMode: 'DRIVING',
-			transitOptions: TransitOptions,
-			drivingOptions: DrivingOptions,
-			unitSystem: UnitSystem,
-			avoidHighways: Boolean,
-			avoidTolls: Boolean,
+			travelMode: 'WALKING',
 		}, callback);
 
 		function callback(response, status) {
