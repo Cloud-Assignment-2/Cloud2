@@ -157,8 +157,11 @@ ob_start();
 	
     function updateWeather()
 	{
+		var query = "https://api.openweathermap.org/data/2.5/weather?lat="+userPos.lat+"&lon="+userPos.lng+"&appid=a17a7543c275c8b5d7f4452e1104a330";
+		
         //$.getJSON("https://api.openweathermap.org/data/2.5/weather?q=London&APPID=a17a7543c275c8b5d7f4452e1104a330",function(json)
-        $.getJSON("https://api.openweathermap.org/data/2.5/weather?lat=-37.878873&lon=145.089415&appid=a17a7543c275c8b5d7f4452e1104a330",function(json)
+        //$.getJSON("https://api.openweathermap.org/data/2.5/weather?lat=-37.878873&lon=145.089415&appid=a17a7543c275c8b5d7f4452e1104a330",function(json)
+        $.getJSON(query,function(json)
 		{
             //document.write(JSON.stringify(json));
 			var temp = json["main"]["temp"]-273.15;
@@ -568,30 +571,6 @@ ob_start();
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFZBF28p1IJCd8JiC1BaV8aNCSYJq6fEo&callback=initMap">
     </script>
-	
-	<!-- Chart code -->
-	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-	<script type="text/javascript">
-	google.charts.load('current', {'packages':['corechart']});
-	google.charts.setOnLoadCallback(drawChart);
-	function drawChart() {
-	var data = google.visualization.arrayToDataTable([
-	['Task', 'Hours per Day'],
-	['Work', 11],
-	['Eat', 2],
-	['Commute', 2],
-	['Watch TV', 2],
-	['Sleep', 7]
-	]);
-	var options = {
-	title: 'Example chart, to be used for user stats'
-	};
-	var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-	chart.draw(data, options);
-	}
-	
-	</script>
-
 </head>
 
 <body class="is-preload">
@@ -608,18 +587,13 @@ ob_start();
 	<p id="htmlClosest">Walking distance to closest marker:</p>
 	<p id="htmlPos">User coordinates:</p>
 	<p id="htmlElevation">User elevation:</p>
-	<p id="htmlTemp">Current temperature:</p> <!-- api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={your api key} -->
+	<p id="htmlTemp">Current temperature:</p>
 	
 	<!-- Distance matrix: https://developers.google.com/maps/documentation/distance-matrix/intro -->
-	<!-- Elevation: https://developers.google.com/maps/documentation/elevation/start -->
-	<!-- Places: https://developers.google.com/places/web-service/intro https://developers.google.com/places/web-service/search -->
-	<!-- Messaging: https://firebase.google.com/docs/cloud-messaging -->
 	
 	<br/>
 
 	<div id="map" style="height:800px;"></div>
-	
-	<div id="piechart" style="width: 900px; height: 500px;"></div>
 
 </body>
 
