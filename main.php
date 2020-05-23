@@ -209,15 +209,15 @@ ob_start();
 	function updateDistanceMatrix()
 	{
 		console.log("update distance matrix");
-		var origin1 = new google.maps.LatLng(55.930385, -3.118425);
-		var origin2 = 'Greenwich, England';
-		var destinationA = 'Stockholm, Sweden';
-		var destinationB = new google.maps.LatLng(50.087692, 14.421150);
+		// var origin1 = new google.maps.LatLng(55.930385, -3.118425);
+		// var origin2 = 'Greenwich, England';
+		// var destinationA = 'Stockholm, Sweden';
+		// var destinationB = new google.maps.LatLng(50.087692, 14.421150);
 
 		distanceService.getDistanceMatrix(
 		{
-			origins: [origin1, origin2],
-			destinations: [destinationA, destinationB],
+			origins: [userPos],
+			destinations: ['Melbourne, Australia'],
 			travelMode: 'WALKING',
 		}, callback);
 		
