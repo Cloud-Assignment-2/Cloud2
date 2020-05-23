@@ -214,7 +214,7 @@ ob_start();
 		var destinationA = 'Stockholm, Sweden';
 		var destinationB = new google.maps.LatLng(50.087692, 14.421150);
 
-		service.getDistanceMatrix(
+		distanceService.getDistanceMatrix(
 		{
 			origins: [origin1, origin2],
 			destinations: [destinationA, destinationB],
