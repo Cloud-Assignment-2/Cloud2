@@ -239,7 +239,7 @@ ob_start();
 					for (var j = 0; j < results.length; j++)
 					{
 						var element = results[j];
-						var distance = element.distance.text;
+						var distance = element.distance;
 						var duration = element.duration.text;
 						var from = origins[i];
 						var to = destinations[j];
