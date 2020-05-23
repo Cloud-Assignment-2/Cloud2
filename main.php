@@ -165,7 +165,7 @@ ob_start();
 		{
             //document.write(JSON.stringify(json));
 			var temp = json["main"]["temp"]-273.15;
-			document.getElementById("htmlTemp").innerHTML = 'Current temperature: '+Math.round(temp)+' degrees celsius.';
+			document.getElementById("htmlTemp").innerHTML = 'Current temperature: '+Math.round(temp)+'ºC';
         });
     }
 	
