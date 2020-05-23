@@ -153,6 +153,19 @@ ob_start();
 		infoWindow.open(map);
     }
 	
+	function updateWeather()
+	{ 
+		//api.openweathermap.org/data/2.5/weather?lat=-37.879313&lon=145.090102&appid=a17a7543c275c8b5d7f4452e1104a330
+		$.get('api.openweathermap.org/data/2.5/weather?lat=-37.879313&lon=145.090102&appid=a17a7543c275c8b5d7f4452e1104a330',
+		{
+		},
+		function(data)
+		{
+			//placeMarkerAt(data.snappedPoints[0].location.latitude,data.snappedPoints[0].location.longitude);
+			console.log("Weather update "+data);
+		});
+	}
+	
 	function updateElevation()
 	{
 		// Elevation service
@@ -243,6 +256,8 @@ ob_start();
 		}
 		// Find elevation for user's current position.
 		updateElevation();
+		// Get temperature at user's current position
+		updateWeather();
 	}
 	
 	// remove all markers and then pull them from db again.
@@ -574,7 +589,7 @@ ob_start();
 	var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 	chart.draw(data, options);
 	}
-
+	
 	</script>
 
 </head>
