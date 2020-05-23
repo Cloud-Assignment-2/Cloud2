@@ -157,11 +157,12 @@ ob_start();
 	
     function updateWeather()
 	{
-        $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=London&APPID=a17a7543c275c8b5d7f4452e1104a330",function(json)
+        //$.getJSON("https://api.openweathermap.org/data/2.5/weather?q=London&APPID=a17a7543c275c8b5d7f4452e1104a330",function(json)
+        $.getJSON("https://api.openweathermap.org/data/2.5/weather?lat=-37.878873&lon=145.089415&appid=a17a7543c275c8b5d7f4452e1104a330",function(json)
 		{
             //document.write(JSON.stringify(json));
 			var temp = json["main"]["temp"]-273.15;
-			document.getElementById("htmlTemp").innerHTML = 'Current temperature: '+temp+' degrees celsius.';
+			document.getElementById("htmlTemp").innerHTML = 'Current temperature: '+Math.round(temp)+' degrees celsius.';
         });
     }
 	
