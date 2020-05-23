@@ -246,7 +246,7 @@ ob_start();
 						
 						//update distance
 						console.log("distance matrix returns: "+distance);
-						document.getElementById("htmlClosest").innerHTML = 'Dist matrix Closest marker: '+distance;
+						document.getElementById("htmlClosest").innerHTML = 'Distance to closest marker: '+distance + 'm';
 						
 					}
 				}
