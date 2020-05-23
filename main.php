@@ -580,9 +580,6 @@ ob_start();
 	</center>
 
 	<h2 id="welcomeuser"></h2>
-	<p>
-	<a href="/profile.php">User profile</a>
-	</p>
 
 	<p id="htmlClosest">Walking distance to closest marker:</p>
 	<p id="htmlPos">User coordinates:</p>
