@@ -240,7 +240,8 @@ ob_start();
 						var to = destinations[j];
 						
 						//update distance
-						document.getElementById("htmlClosest").innerHTML = 'Closest marker: '+distance;
+						console.log("distance matrix returns: "+distance);
+						document.getElementById("htmlClosest").innerHTML = 'Dist matrix Closest marker: '+distance;
 						
 					}
 				}
