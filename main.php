@@ -195,8 +195,6 @@ ob_start();
 				if (results[0])
 				{
 					// Update user elevation output
-					//console.log('The elevation at this point <br>is ' +
-					//results[0].elevation + ' meters.');
 					document.getElementById("htmlElevation").innerHTML = 'Current elevation: '+Math.round(results[0].elevation)+'m';
 				}
 				else
@@ -217,10 +215,6 @@ ob_start();
 		{ return; }
 		
 		console.log("update distance matrix");
-		// var origin1 = new google.maps.LatLng(55.930385, -3.118425);
-		// var origin2 = 'Greenwich, England';
-		// var destinationA = 'Stockholm, Sweden';
-		// var destinationB = new google.maps.LatLng(50.087692, 14.421150);
 
 		distanceService.getDistanceMatrix(
 		{
@@ -269,7 +263,7 @@ ob_start();
 			{
 				userPos.lat = position.coords.latitude;
 				userPos.lng = position.coords.longitude;
-				console.log("User pos updated to: "+userPos.lat+", "+userPos.lng);
+				//console.log("User pos updated to: "+userPos.lat+", "+userPos.lng);
 				document.getElementById("htmlPos").innerHTML = 'Current position: '+userPos.lat+', '+userPos.lng;
 
 				// Update user position marker
@@ -305,7 +299,7 @@ ob_start();
 			creditCloseMarkers();
 		}
 
-		<!-- always maintain MAX_MARKERS markers -->
+		// always maintain MAX_MARKERS markers
 		if ( userMarkers.length < MAX_MARKERS )
 		{
 			//console.log("Need to add more markers.");
@@ -326,8 +320,6 @@ ob_start();
 		for (var i = 0; i < arrayLength; i++)
 		{
 			userMarkers[i].setMap(null);
-			//console.log(myStringArray[i]);
-			//Do something
 		}
 		
 		userMarkers = [];
@@ -338,7 +330,6 @@ ob_start();
 		{
             querySnapshot.forEach(function(doc)
 			{
-				//console.log("entry loop");
                     var coordinates =
 					{
                         lat: doc.data().location.latitude,
@@ -370,7 +361,6 @@ ob_start();
 		{
             querySnapshot.forEach(function(doc)
 			{
-				console.log("entry loop");
                     var coordinates =
 					{
                         lat: doc.data().location.latitude,
@@ -395,7 +385,6 @@ ob_start();
 		console.log("Final id: "+removeDistantID);
 		if (removeDistantID.localeCompare("none")!=0)
 		{
-			//console.log("Remove id: "+removeDistantID);
 			db.collection("marker").doc(removeDistantID).delete().then(function()
 			{
 				console.log("Document successfully deleted!");
@@ -414,15 +403,9 @@ ob_start();
 	
 	function creditCloseMarkers()
 	{
-		//console.log("Closest dist: "+closestDistance);
-		if (closestDistance<1000)
-		{
-			//document.getElementById("htmlClosest").innerHTML = 'Closest marker: '+Math.round(closestDistance)+'m';
-		}
-		
 		closestMarkerID=-1;
 		closestDistance=1000;
-		//console.log("Function: Credit close markers.");
+
 		// pull existing markers from db.
 		db.collection("marker").where("user", "==", getCookie("userid")).get().then(function(querySnapshot)
 		{
@@ -460,15 +443,10 @@ ob_start();
             console.log("Error getting documents: ", error);
         });
 		
-		//console.log("Final id: "+removeCloseID);
 		if (removeCloseID.localeCompare("none")!=0)
 		{
-			//console.log("Remove id: "+removeCloseID);
-
 			db.collection("marker").doc(removeCloseID).delete().then(function()
 			{
-				//console.log("Document successfully deleted!");
-				//console.log("Remove close marker.");
 				removeCloseID="none";
 				updateMarkers();
 				
@@ -518,8 +496,6 @@ ob_start();
 		// make sure user has valid coordinates
 		if ( userPos.lat != 0 && userPos.lng != 0)
 		{
-			//console.log("set relative to user here");
-			
 			var coordinates =
 			{
 				lat: userPos.lat+randomLatVariance,
