@@ -55,7 +55,7 @@ ob_start();
 	firebase.initializeApp(firebaseConfig);
 	var db = firebase.firestore();
 	
-    var map, infoWindow;
+    var map, infoWindow, distanceService;
 	var marker; // player marker
 	var watchId; // map updater
 	var userMarkers = [];
@@ -79,6 +79,8 @@ ob_start();
 
     function initMap()
 	{
+		distanceService = new google.maps.DistanceMatrixService();
+		
 		map = new google.maps.Map(document.getElementById('map'),
 		{
 			center: { lat: -37.806, lng: 144.954 },zoom: 14
@@ -519,28 +521,31 @@ ob_start();
 		console.log("marker added to db");
 	}
 	
-	var origin1 = new google.maps.LatLng(55.930385, -3.118425);
-	var origin2 = 'Greenwich, England';
-	var destinationA = 'Stockholm, Sweden';
-	var destinationB = new google.maps.LatLng(50.087692, 14.421150);
+	function updateDistanceMatrix()
+	{
+		var origin1 = new google.maps.LatLng(55.930385, -3.118425);
+		var origin2 = 'Greenwich, England';
+		var destinationA = 'Stockholm, Sweden';
+		var destinationB = new google.maps.LatLng(50.087692, 14.421150);
 
-	var service = new google.maps.DistanceMatrixService();
-	// service.getDistanceMatrix(
-	// {
-	// origins: [origin1, origin2],
-	// destinations: [destinationA, destinationB],
-	// travelMode: 'DRIVING',
-	// transitOptions: TransitOptions,
-	// drivingOptions: DrivingOptions,
-	// unitSystem: UnitSystem,
-	// avoidHighways: Boolean,
-	// avoidTolls: Boolean,
-	// }, callback);
+		//var distanceService = new google.maps.DistanceMatrixService();
+		// service.getDistanceMatrix(
+		// {
+		// origins: [origin1, origin2],
+		// destinations: [destinationA, destinationB],
+		// travelMode: 'DRIVING',
+		// transitOptions: TransitOptions,
+		// drivingOptions: DrivingOptions,
+		// unitSystem: UnitSystem,
+		// avoidHighways: Boolean,
+		// avoidTolls: Boolean,
+		// }, callback);
 
-	// function callback(response, status) {
-	// // See Parsing the Results for
-	// // the basics of a callback function.
-	// }
+		// function callback(response, status) {
+		// // See Parsing the Results for
+		// // the basics of a callback function.
+		// }
+	}
 	
 	// Main interval function to keep track of application state
 	// interval shouldn't be too often to allow time for database updates and whatnot. 30 seconds should be plenty for walking/running.
