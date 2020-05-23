@@ -159,7 +159,7 @@ ob_start();
 	{
         $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=London&APPID=a17a7543c275c8b5d7f4452e1104a330",function(json){
             //document.write(JSON.stringify(json));
-			console.log(JSON.stringify(json)["main"]);
+			console.log(json["main"]);
         });
     }
 	
