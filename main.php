@@ -157,9 +157,11 @@ ob_start();
 	
     function updateWeather()
 	{
-        $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=London&APPID=a17a7543c275c8b5d7f4452e1104a330",function(json){
+        $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=London&APPID=a17a7543c275c8b5d7f4452e1104a330",function(json)
+		{
             //document.write(JSON.stringify(json));
-			console.log(json["main"]["temp"]);
+			var temp = json["main"]["temp"]-273.15;
+			document.getElementById("htmlTemp").innerHTML = 'Current temperature: '+temp+' degrees celsius.';
         });
     }
 	
@@ -605,7 +607,7 @@ ob_start();
 	<p id="htmlClosest">Walking distance to closest marker:</p>
 	<p id="htmlPos">User coordinates:</p>
 	<p id="htmlElevation">User elevation:</p>
-	<p id="htmlPlaces">Current weather:</p> <!-- api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={your api key} -->
+	<p id="htmlTemp">Current temperature:</p> <!-- api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={your api key} -->
 	
 	<!-- Distance matrix: https://developers.google.com/maps/documentation/distance-matrix/intro -->
 	<!-- Elevation: https://developers.google.com/maps/documentation/elevation/start -->
