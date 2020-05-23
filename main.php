@@ -16,6 +16,8 @@ ob_start();
 <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-firestore.js"></script>
 <!-- Jquery -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+<!-- OpenWeatherMap API -->
+<!-- <script type="text/javascript" src="weather.js"></script> -->
 
 <script>
 	function getCookie(cname)
@@ -142,6 +144,9 @@ ob_start();
 		{
             console.log("Error getting documents: ", error);
         });
+		
+		console.log("Setting weather API key");
+		Weather.setApiKey(a17a7543c275c8b5d7f4452e1104a330);
     }
 	
     function handleLocationError(browserHasGeolocation, infoWindow, pos)
@@ -156,13 +161,19 @@ ob_start();
 	function updateWeather()
 	{ 
 		//api.openweathermap.org/data/2.5/weather?lat=-37.879313&lon=145.090102&appid=a17a7543c275c8b5d7f4452e1104a330
-		$.get('api.openweathermap.org/data/2.5/weather?lat=-37.879313&lon=145.090102&appid=a17a7543c275c8b5d7f4452e1104a330',
+		// $.get('api.openweathermap.org/data/2.5/weather?lat=-37.879313&lon=145.090102&appid=a17a7543c275c8b5d7f4452e1104a330',
+		// {
+		// },
+		// function(data)
+		// {
+			// //placeMarkerAt(data.snappedPoints[0].location.latitude,data.snappedPoints[0].location.longitude);
+			// console.log("Weather update "+data.weather);
+		// });
+
+		http.get(URL.parse('api.openweathermap.org/data/2.5/weather?lat=-37.879313&lon=145.090102&appid=a17a7543c275c8b5d7f4452e1104a330'), function(response)
 		{
-		},
-		function(data)
-		{
-			//placeMarkerAt(data.snappedPoints[0].location.latitude,data.snappedPoints[0].location.longitude);
-			console.log("Weather update "+data.weather);
+			console.log("Weather returning: "+callback(response.body));
+			//return callback(response.body);
 		});
 	}
 	
