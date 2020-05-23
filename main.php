@@ -158,24 +158,13 @@ ob_start();
 		infoWindow.open(map);
     }
 	
-	function updateWeather()
-	{ 
-		//api.openweathermap.org/data/2.5/weather?lat=-37.879313&lon=145.090102&appid=a17a7543c275c8b5d7f4452e1104a330
-		// $.get('api.openweathermap.org/data/2.5/weather?lat=-37.879313&lon=145.090102&appid=a17a7543c275c8b5d7f4452e1104a330',
-		// {
-		// },
-		// function(data)
-		// {
-			// //placeMarkerAt(data.snappedPoints[0].location.latitude,data.snappedPoints[0].location.longitude);
-			// console.log("Weather update "+data.weather);
-		// });
-
-		http.get(URL.parse('api.openweathermap.org/data/2.5/weather?lat=-37.879313&lon=145.090102&appid=a17a7543c275c8b5d7f4452e1104a330'), function(response)
-		{
-			console.log("Weather returning: "+callback(response.body));
-			//return callback(response.body);
-		});
-	}
+    function updateWeather()
+	{
+        $.getJSON("http://api.openweathermap.org/data/2.5/weather?q=London&APPID=ee6596241130f193adf1ba90e625cc10",function(json){
+            //document.write(JSON.stringify(json));
+			console.log(JSON.stringify(json));
+        });
+    }
 	
 	function updateElevation()
 	{
