@@ -76,6 +76,11 @@ ob_start();
 		lat:0.0,
 		lng:0.0
 	};
+	var closestMarkerPos =
+	{
+		lat:0.0,
+		lng:0.0
+	};
 
     function initMap()
 	{
@@ -217,7 +222,7 @@ ob_start();
 		distanceService.getDistanceMatrix(
 		{
 			origins: [userPos],
-			destinations: ['Melbourne, Australia'],
+			destinations: [closestMarkerPos],
 			travelMode: 'WALKING',
 		}, callback);
 		
@@ -435,6 +440,9 @@ ob_start();
 					closestMarkerID = doc.id;
 					closestDistance = distanceFromUser;
 					console.log("update close dist to "+closestDistance);
+					
+					closestMarkerPos.lat = coordinates.lat;
+					closestMarkerPos.lng = coordinates.lng;
 				}
 				
 				if (distanceFromUser < CREDIT_DISTANCE)
