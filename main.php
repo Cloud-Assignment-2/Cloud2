@@ -205,6 +205,32 @@ ob_start();
 			}
 		});
 	}
+	
+	function updateDistanceMatrix()
+	{
+		console.log("update distance matrix");
+		var origin1 = new google.maps.LatLng(55.930385, -3.118425);
+		var origin2 = 'Greenwich, England';
+		var destinationA = 'Stockholm, Sweden';
+		var destinationB = new google.maps.LatLng(50.087692, 14.421150);
+
+		service.getDistanceMatrix(
+		{
+			origins: [origin1, origin2],
+			destinations: [destinationA, destinationB],
+			travelMode: 'DRIVING',
+			transitOptions: TransitOptions,
+			drivingOptions: DrivingOptions,
+			unitSystem: UnitSystem,
+			avoidHighways: Boolean,
+			avoidTolls: Boolean,
+		}, callback);
+
+		function callback(response, status) {
+		// See Parsing the Results for
+		// the basics of a callback function.
+		}
+	}
 
 	//periodically update map to update user position and check nearby markers.
 	function updateLoop()
@@ -264,6 +290,8 @@ ob_start();
 		updateElevation();
 		// Get temperature at user's current position
 		updateWeather();
+		// update walking distance to nearest marker
+		updateDistanceMatrix();
 	}
 	
 	// remove all markers and then pull them from db again.
@@ -520,31 +548,6 @@ ob_start();
 		});
 		
 		console.log("marker added to db");
-	}
-	
-	function updateDistanceMatrix()
-	{
-		var origin1 = new google.maps.LatLng(55.930385, -3.118425);
-		var origin2 = 'Greenwich, England';
-		var destinationA = 'Stockholm, Sweden';
-		var destinationB = new google.maps.LatLng(50.087692, 14.421150);
-
-		service.getDistanceMatrix(
-		{
-			origins: [origin1, origin2],
-			destinations: [destinationA, destinationB],
-			travelMode: 'DRIVING',
-			transitOptions: TransitOptions,
-			drivingOptions: DrivingOptions,
-			unitSystem: UnitSystem,
-			avoidHighways: Boolean,
-			avoidTolls: Boolean,
-		}, callback);
-
-		function callback(response, status) {
-		// See Parsing the Results for
-		// the basics of a callback function.
-		}
 	}
 	
 	// Main interval function to keep track of application state
