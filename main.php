@@ -415,7 +415,7 @@ ob_start();
 		{
             querySnapshot.forEach(function(doc)
 			{
-				totalPoints++;
+				totalPoints = totalPoints+1;
 				//console.log("point counted");
             });
         }).catch(function(error)
