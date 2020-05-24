@@ -407,7 +407,7 @@ ob_start();
 	function getUserCredits()
 	{
 		var totalPoints = 0;
-		db.collection("points").where("user", "==", getCookie("userid")).get().then(function(querySnapshot)
+		db.collection("points").where("username", "==", getCookie("userid")).get().then(function(querySnapshot)
 		{
             querySnapshot.forEach(function(doc)
 			{
