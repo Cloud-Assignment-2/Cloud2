@@ -311,6 +311,9 @@ ob_start();
 		updateWeather();
 		// update walking distance to nearest marker
 		updateDistanceMatrix();
+		
+		//update player score
+		document.getElementById("htmlScore").innerHTML = 'Total score: '+getUserCredits();
 	}
 	
 	// remove all markers and then pull them from db again.
@@ -399,6 +402,23 @@ ob_start();
 
 		}
 		return false;
+	}
+	
+	function getUserCredits()
+	{
+		var totalPoints = 0;
+		db.collection("points").where("user", "==", getCookie("userid")).get().then(function(querySnapshot)
+		{
+            querySnapshot.forEach(function(doc)
+			{
+				totalPoints++;
+            });
+        }).catch(function(error)
+		{
+            console.log("Error getting documents: ", error);
+        });
+		
+		return totalPoints;
 	}
 	
 	function creditCloseMarkers()
@@ -593,7 +613,8 @@ ob_start();
 
 	<h2 id="welcomeuser"></h2>
 
-	<p id="htmlClosest">Walking distance to closest marker:</p>
+	<p id="htmlScore">Total score:</p>
+	<p id="htmlClosest">Distance to closest marker:</p>
 	<p id="htmlPos">User coordinates:</p>
 	<p id="htmlElevation">User elevation:</p>
 	<p id="htmlTemp">Current temperature:</p>
