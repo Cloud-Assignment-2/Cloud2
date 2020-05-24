@@ -294,6 +294,7 @@ ob_start();
 		
 		//update player score
 		document.getElementById("htmlScore").innerHTML = 'Total score: '+totalPoints;
+		getUserCredits();
 		
 		// Remove distant markers
 		// or credit close markers. Avoid doing both at once
