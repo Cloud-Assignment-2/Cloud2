@@ -412,12 +412,13 @@ ob_start();
             querySnapshot.forEach(function(doc)
 			{
 				totalPoints++;
+				console.log("point counted");
             });
         }).catch(function(error)
 		{
             console.log("Error getting documents: ", error);
         });
-		
+		console.log("returning points: "+totalPoints);
 		return totalPoints;
 	}
 	
