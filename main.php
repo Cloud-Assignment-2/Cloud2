@@ -67,6 +67,9 @@ ob_start();
 	var closestMarkerID=-1;
 	var closestDistance=1000;
 	
+	// count of user's point total.
+	var totalPoints = 0;
+	
 	var MAX_MARKERS = 6; // 6 should be enough to provide good options for a destination.
 	var CREDIT_DISTANCE=55; // distance user must close to a marker to be credited. Shouldn't be too precise because sometimes GPS is inaccurate or slow to update.
 	var UPDATE_INTERVAL = 5000; // 5 seconds should provide enough time between database updates
@@ -288,7 +291,11 @@ ob_start();
 			console.log("Not initialized yet, returning update");
 			return;
 		}
-		// step 1: Remove distant markers
+		
+		//update player score
+		document.getElementById("htmlScore").innerHTML = 'Total score: '+totalPoints;
+		
+		// Remove distant markers
 		// or credit close markers. Avoid doing both at once
 		// to avoid any sync issues.
 		if (removeDistantMarkers())
@@ -311,9 +318,6 @@ ob_start();
 		updateWeather();
 		// update walking distance to nearest marker
 		updateDistanceMatrix();
-		
-		//update player score
-		document.getElementById("htmlScore").innerHTML = 'Total score: '+getUserCredits();
 	}
 	
 	// remove all markers and then pull them from db again.
@@ -406,20 +410,19 @@ ob_start();
 	
 	function getUserCredits()
 	{
-		var totalPoints = 0;
+		totalPoints=0;
 		db.collection("points").where("username", "==", getCookie("userid")).get().then(function(querySnapshot)
 		{
             querySnapshot.forEach(function(doc)
 			{
 				totalPoints++;
-				console.log("point counted");
+				//console.log("point counted");
             });
         }).catch(function(error)
 		{
             console.log("Error getting documents: ", error);
         });
-		console.log("returning points: "+totalPoints);
-		return totalPoints;
+		//console.log("returning points: "+totalPoints);
 	}
 	
 	function creditCloseMarkers()
