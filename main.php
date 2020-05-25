@@ -16,6 +16,8 @@ ob_start();
 <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-firestore.js"></script>
 <!-- Jquery -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+<!-- OpenWeatherMap API -->
+<!-- <script type="text/javascript" src="weather.js"></script> -->
 
 <script>
 	function getCookie(cname)
@@ -53,7 +55,7 @@ ob_start();
 	firebase.initializeApp(firebaseConfig);
 	var db = firebase.firestore();
 	
-    var map, infoWindow;
+    var map, infoWindow, distanceService;
 	var marker; // player marker
 	var watchId; // map updater
 	var userMarkers = [];
@@ -65,6 +67,9 @@ ob_start();
 	var closestMarkerID=-1;
 	var closestDistance=1000;
 	
+	// count of user's point total.
+	var totalPoints = 0;
+	
 	var MAX_MARKERS = 6; // 6 should be enough to provide good options for a destination.
 	var CREDIT_DISTANCE=55; // distance user must close to a marker to be credited. Shouldn't be too precise because sometimes GPS is inaccurate or slow to update.
 	var UPDATE_INTERVAL = 5000; // 5 seconds should provide enough time between database updates
@@ -74,9 +79,17 @@ ob_start();
 		lat:0.0,
 		lng:0.0
 	};
+	var closestMarkerPos =
+	{
+		lat:0.0,
+		lng:0.0
+	};
 
     function initMap()
 	{
+		// initialize distance matrix service
+		distanceService = new google.maps.DistanceMatrixService();
+		
 		map = new google.maps.Map(document.getElementById('map'),
 		{
 			center: { lat: -37.806, lng: 144.954 },zoom: 14
@@ -153,6 +166,20 @@ ob_start();
 		infoWindow.open(map);
     }
 	
+    function updateWeather()
+	{
+		var query = "https://api.openweathermap.org/data/2.5/weather?lat="+userPos.lat+"&lon="+userPos.lng+"&appid=a17a7543c275c8b5d7f4452e1104a330";
+		
+        //$.getJSON("https://api.openweathermap.org/data/2.5/weather?q=London&APPID=a17a7543c275c8b5d7f4452e1104a330",function(json)
+        //$.getJSON("https://api.openweathermap.org/data/2.5/weather?lat=-37.878873&lon=145.089415&appid=a17a7543c275c8b5d7f4452e1104a330",function(json)
+        $.getJSON(query,function(json)
+		{
+            //document.write(JSON.stringify(json));
+			var temp = json["main"]["temp"]-273.15;
+			document.getElementById("htmlTemp").innerHTML = 'Current temperature: '+Math.round(temp)+'ºC';
+        });
+    }
+	
 	function updateElevation()
 	{
 		// Elevation service
@@ -171,8 +198,6 @@ ob_start();
 				if (results[0])
 				{
 					// Update user elevation output
-					//console.log('The elevation at this point <br>is ' +
-					//results[0].elevation + ' meters.');
 					document.getElementById("htmlElevation").innerHTML = 'Current elevation: '+Math.round(results[0].elevation)+'m';
 				}
 				else
@@ -185,6 +210,48 @@ ob_start();
 				console.log('Elevation service failed due to: ' + status);
 			}
 		});
+	}
+	
+	function updateDistanceMatrix()
+	{
+		if (closestMarkerPos.lat == 0.0)
+		{ return; }
+		
+		console.log("update distance matrix");
+
+		distanceService.getDistanceMatrix(
+		{
+			origins: [userPos],
+			destinations: [closestMarkerPos],
+			travelMode: 'WALKING',
+		}, callback);
+		
+		function callback(response, status)
+		{
+			if (status == 'OK')
+			{
+				var origins = response.originAddresses;
+				var destinations = response.destinationAddresses;
+
+				for (var i = 0; i < origins.length; i++)
+				{
+					var results = response.rows[i].elements;
+					for (var j = 0; j < results.length; j++)
+					{
+						var element = results[j];
+						var distance = element.distance.value;
+						var duration = element.duration.text;
+						var from = origins[i];
+						var to = destinations[j];
+						
+						//update distance
+						console.log("distance matrix returns: "+distance);
+						document.getElementById("htmlClosest").innerHTML = 'Distance to closest marker: '+distance + 'm';
+						
+					}
+				}
+			}
+		}
 	}
 
 	//periodically update map to update user position and check nearby markers.
@@ -199,7 +266,7 @@ ob_start();
 			{
 				userPos.lat = position.coords.latitude;
 				userPos.lng = position.coords.longitude;
-				console.log("User pos updated to: "+userPos.lat+", "+userPos.lng);
+				//console.log("User pos updated to: "+userPos.lat+", "+userPos.lng);
 				document.getElementById("htmlPos").innerHTML = 'Current position: '+userPos.lat+', '+userPos.lng;
 
 				// Update user position marker
@@ -224,7 +291,12 @@ ob_start();
 			console.log("Not initialized yet, returning update");
 			return;
 		}
-		// step 1: Remove distant markers
+		
+		//update player score
+		document.getElementById("htmlScore").innerHTML = 'Total score: '+totalPoints;
+		getUserCredits();
+		
+		// Remove distant markers
 		// or credit close markers. Avoid doing both at once
 		// to avoid any sync issues.
 		if (removeDistantMarkers())
@@ -235,16 +307,18 @@ ob_start();
 			creditCloseMarkers();
 		}
 
-		<!-- always maintain MAX_MARKERS markers -->
+		// always maintain MAX_MARKERS markers
 		if ( userMarkers.length < MAX_MARKERS )
 		{
 			//console.log("Need to add more markers.");
 			addNewMarker();
 		}
-		
-		
 		// Find elevation for user's current position.
 		updateElevation();
+		// Get temperature at user's current position
+		updateWeather();
+		// update walking distance to nearest marker
+		updateDistanceMatrix();
 	}
 	
 	// remove all markers and then pull them from db again.
@@ -254,8 +328,6 @@ ob_start();
 		for (var i = 0; i < arrayLength; i++)
 		{
 			userMarkers[i].setMap(null);
-			//console.log(myStringArray[i]);
-			//Do something
 		}
 		
 		userMarkers = [];
@@ -266,7 +338,6 @@ ob_start();
 		{
             querySnapshot.forEach(function(doc)
 			{
-				//console.log("entry loop");
                     var coordinates =
 					{
                         lat: doc.data().location.latitude,
@@ -298,7 +369,6 @@ ob_start();
 		{
             querySnapshot.forEach(function(doc)
 			{
-				console.log("entry loop");
                     var coordinates =
 					{
                         lat: doc.data().location.latitude,
@@ -323,7 +393,6 @@ ob_start();
 		console.log("Final id: "+removeDistantID);
 		if (removeDistantID.localeCompare("none")!=0)
 		{
-			//console.log("Remove id: "+removeDistantID);
 			db.collection("marker").doc(removeDistantID).delete().then(function()
 			{
 				console.log("Document successfully deleted!");
@@ -340,14 +409,28 @@ ob_start();
 		return false;
 	}
 	
+	function getUserCredits()
+	{
+		totalPoints=0;
+		db.collection("points").where("username", "==", getCookie("userid")).get().then(function(querySnapshot)
+		{
+            querySnapshot.forEach(function(doc)
+			{
+				totalPoints = totalPoints+1;
+				//console.log("point counted");
+            });
+        }).catch(function(error)
+		{
+            console.log("Error getting documents: ", error);
+        });
+		//console.log("returning points: "+totalPoints);
+	}
+	
 	function creditCloseMarkers()
 	{
-		console.log("Closest dist: "+closestDistance);
-		document.getElementById("htmlClosest").innerHTML = 'Closest marker: '+Math.round(closestDistance)+'m';
-		
 		closestMarkerID=-1;
 		closestDistance=1000;
-		//console.log("Function: Credit close markers.");
+
 		// pull existing markers from db.
 		db.collection("marker").where("user", "==", getCookie("userid")).get().then(function(querySnapshot)
 		{
@@ -368,6 +451,9 @@ ob_start();
 					closestMarkerID = doc.id;
 					closestDistance = distanceFromUser;
 					console.log("update close dist to "+closestDistance);
+					
+					closestMarkerPos.lat = coordinates.lat;
+					closestMarkerPos.lng = coordinates.lng;
 				}
 				
 				if (distanceFromUser < CREDIT_DISTANCE)
@@ -382,15 +468,10 @@ ob_start();
             console.log("Error getting documents: ", error);
         });
 		
-		//console.log("Final id: "+removeCloseID);
 		if (removeCloseID.localeCompare("none")!=0)
 		{
-			//console.log("Remove id: "+removeCloseID);
-
 			db.collection("marker").doc(removeCloseID).delete().then(function()
 			{
-				//console.log("Document successfully deleted!");
-				//console.log("Remove close marker.");
 				removeCloseID="none";
 				updateMarkers();
 				
@@ -440,8 +521,6 @@ ob_start();
 		// make sure user has valid coordinates
 		if ( userPos.lat != 0 && userPos.lng != 0)
 		{
-			//console.log("set relative to user here");
-			
 			var coordinates =
 			{
 				lat: userPos.lat+randomLatVariance,
@@ -529,30 +608,6 @@ ob_start();
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFZBF28p1IJCd8JiC1BaV8aNCSYJq6fEo&callback=initMap">
     </script>
-	
-	<!-- Chart code -->
-	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-	<script type="text/javascript">
-	google.charts.load('current', {'packages':['corechart']});
-	google.charts.setOnLoadCallback(drawChart);
-	function drawChart() {
-	var data = google.visualization.arrayToDataTable([
-	['Task', 'Hours per Day'],
-	['Work', 11],
-	['Eat', 2],
-	['Commute', 2],
-	['Watch TV', 2],
-	['Sleep', 7]
-	]);
-	var options = {
-	title: 'Example chart, to be used for user stats'
-	};
-	var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-	chart.draw(data, options);
-	}
-
-	</script>
-
 </head>
 
 <body class="is-preload">
@@ -562,25 +617,18 @@ ob_start();
 	</center>
 
 	<h2 id="welcomeuser"></h2>
-	<p>
-	<a href="/profile.php">User profile</a>
-	</p>
 
-	<p id="htmlClosest">Walking distance to closest marker:</p>
+	<p id="htmlScore">Total score:</p>
+	<p id="htmlClosest">Distance to closest marker:</p>
 	<p id="htmlPos">User coordinates:</p>
 	<p id="htmlElevation">User elevation:</p>
-	<p id="htmlPlaces">Current weather:</p> <!-- api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={your api key} -->
+	<p id="htmlTemp">Current temperature:</p>
 	
 	<!-- Distance matrix: https://developers.google.com/maps/documentation/distance-matrix/intro -->
-	<!-- Elevation: https://developers.google.com/maps/documentation/elevation/start -->
-	<!-- Places: https://developers.google.com/places/web-service/intro https://developers.google.com/places/web-service/search -->
-	<!-- Messaging: https://firebase.google.com/docs/cloud-messaging -->
 	
 	<br/>
 
 	<div id="map" style="height:800px;"></div>
-	
-	<div id="piechart" style="width: 900px; height: 500px;"></div>
 
 </body>
 
